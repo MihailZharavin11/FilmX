@@ -1,0 +1,28 @@
+.header {
+  padding: 10px;
+  background: transparent;
+  line-height: 50px;
+  background: #f0f2f5;
+}
+
+.logo {
+  font-size: 27px;
+  margin: 0;
+  padding: 0;
+}
+
+.menu {
+  background: transparent;
+}
+
+.dropMenu {
+  font-size: 30px;
+  color: #000;
+  display: block;
+}
+
+.avatar {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}

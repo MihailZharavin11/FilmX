@@ -1,0 +1,14 @@
+.contentHome {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 70px);
+  h1 {
+    font-size: 64px;
+  }
+  .button {
+    color: #000;
+    border-color: #000;
+  }
+}
