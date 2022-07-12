@@ -1,7 +1,7 @@
 import { Layout } from 'antd';
 import { Header, Content, Footer } from 'antd/lib/layout/layout';
 import React from 'react';
-import ContentHome from '../components/Content/ContentHome';
+import ContentHome from '../components/HomeContent/ContentHome';
 import HeaderFixed from '../components/Header/HeaderFixed';
 
 const Home: React.FC = () => {

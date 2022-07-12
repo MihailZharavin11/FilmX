@@ -1,5 +1,6 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import api from '../../api';
+import { RootState } from '../store';
 
 export interface IFilmsState {
   topFilms: Film[] | [];
@@ -13,7 +14,7 @@ enum LoadingStatus {
   ERROR = 'error',
 }
 
-type Film = {
+export type Film = {
   id: string;
   rank: string;
   title: string;
@@ -31,11 +32,11 @@ const initialState: IFilmsState = {
   loadingStatus: LoadingStatus.IDLE,
 };
 
-export const getFilms = createAsyncThunk<void, void, { rejectValue: string }>(
+export const getFilms = createAsyncThunk<void, string | undefined, { rejectValue: string }>(
   'films/getFilms',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (categories, { dispatch, rejectWithValue }) => {
     try {
-      const films: Film[] = await api.getTopFilms();
+      const films = await api.getTopFilms(categories);
       dispatch(addFilms(films));
     } catch (err) {
       if (err instanceof Error) {
@@ -60,7 +61,6 @@ const handleFulfilledStatus = (state: IFilmsState) => {
 const handleRejectedStatus = (state: IFilmsState, action: string) => {
   state.loadingStatus = LoadingStatus.ERROR;
   state.error = action;
-  debugger;
 };
 
 const filmsSlice = createSlice({
@@ -86,6 +86,15 @@ const filmsSlice = createSlice({
       });
   },
 });
+
+export const getTopFilms = (counter: number) => (state: RootState) =>
+  state.films.topFilms.slice(0, counter);
+
+// export const getTenTopFilms = (counter: number) =>
+//   createSelector([getTopFilms], (topFilms) => {
+//     const topTenFilms = topFilms.slice(counter, counter + 10);
+//     return topTenFilms;
+//   });
 
 const { reducer, actions } = filmsSlice;
 
