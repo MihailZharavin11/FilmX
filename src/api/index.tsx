@@ -1,19 +1,26 @@
 import axios from 'axios';
-import { Film } from '../redux/slices/filmsTopSlice';
+import { TData } from '../redux/slices/filmsTopSlice';
 
-const getTopFilms = async (categoriesArgs?: string) => {
+const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   let categories = categoriesArgs;
 
   if (!categories) {
-    categories = 'Top250TVs';
+    categories = 'TOP_250_BEST_FILMS';
   }
-  const films: Film[] = await axios
-    .get(`https://imdb-api.com/en/API/${categories}/k_gbwirt8c`)
-    .then((response) => {
-      const data: Film[] = response.data.items;
-      return data;
-    });
-  return films;
+
+  const data = await axios({
+    method: 'GET',
+    url: `https://kinopoiskapiunofficial.tech/api/v2.2/films/top?type=${categories}&page=${currentPage}`,
+    headers: {
+      'X-API-KEY': 'da939efc-f1df-48db-92a8-f687212274b5',
+      'Content-Type': 'application/json',
+    },
+  }).then((response) => {
+    const { films, pagesCount }: TData = response.data;
+    return { films, pagesCount };
+  });
+
+  return data;
 };
 
 export default { getTopFilms };

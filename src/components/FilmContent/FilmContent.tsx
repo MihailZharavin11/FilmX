@@ -1,22 +1,62 @@
-import React, { useEffect } from 'react';
-import { Film } from '../../redux/slices/filmsTopSlice';
+import { Col, Pagination, Row } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { getFilms } from '../../redux/slices/filmsTopSlice';
 import FilmItem from '../FilmItem/FilmItem';
+import styles from './filmContent.module.scss';
+import type { PaginationProps } from 'antd';
+import { useAppDispatch, useAppSelector } from '../../redux/store';
+import { useParams } from 'react-router-dom';
 
-type FilmContentProps = {
-  films: Film[];
-};
+const FilmContent: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useAppDispatch();
+  const { topFilms, totalPage } = useAppSelector((state) => state.films);
+  let { categories } = useParams();
 
-const FilmContent: React.FC<FilmContentProps> = ({ films }) => {
-  const renderFilmItem = films.map((element) => (
-    <FilmItem
-      key={element.id}
-      title={element.title}
-      imDbRating={element.imDbRating}
-      image={element.image}
-    />
+  useEffect(() => {
+    dispatch(getFilms({ categories, currentPage }));
+  }, [dispatch, categories, currentPage]);
+
+  const renderFilmItem = topFilms.map((element) => (
+    <Col className={styles.column} span={6}>
+      <FilmItem
+        key={element.filmId}
+        title={element.nameEn ? element.nameEn : element.nameRu}
+        rating={element.rating}
+        posterUrlPreview={element.posterUrlPreview}
+      />
+    </Col>
   ));
 
-  return <div>{renderFilmItem}</div>;
+  const onChange: PaginationProps['onChange'] = (page) => {
+    setCurrentPage(page);
+  };
+
+  return (
+    <>
+      <Row
+        style={{
+          marginTop: '30px',
+        }}
+        gutter={[0, 30]}>
+        {renderFilmItem}
+      </Row>
+      <Row
+        style={{
+          margin: '20px 0px',
+        }}>
+        <Col push={1} span={10}>
+          <Pagination
+            simple
+            defaultPageSize={20}
+            current={currentPage}
+            onChange={onChange}
+            total={20 * totalPage}
+          />
+        </Col>
+      </Row>
+    </>
+  );
 };
 
 export default FilmContent;

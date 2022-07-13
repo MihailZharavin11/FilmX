@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import { AppstoreOutlined, MailOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
+import { Link } from 'react-router-dom';
 
 type MenuItem = Required<MenuProps>['items'][number];
+
+type TItemCategories = {
+  name: string;
+  path: string;
+};
 
 function getItem(
   label: React.ReactNode,
@@ -21,15 +27,29 @@ function getItem(
   } as MenuItem;
 }
 
-const itemTop = ['Top250 Films', 'Top250 Serials'];
+const itemTop = ['Top250 Films', 'Top100 Popular Films', 'Top Await Films'];
+const itemTopCategories: TItemCategories[] = [
+  {
+    name: 'Top250 Films',
+    path: 'TOP_250_BEST_FILMS',
+  },
+  {
+    name: 'Top100 Popular Films',
+    path: 'TOP_100_POPULAR_FILMS',
+  },
+  {
+    name: 'Top Await Films',
+    path: 'TOP_AWAIT_FILMS',
+  },
+];
 
 const items: MenuItem[] = [
   getItem(
     'TOP',
     'sub1',
     <MailOutlined />,
-    itemTop.map((element, index) => {
-      return getItem(element, index);
+    itemTopCategories.map((element, index) => {
+      return getItem(<Link to={element.path}>{element.name}</Link>, index);
     }),
   ),
   getItem('Categories', 'sub2', <AppstoreOutlined />, [

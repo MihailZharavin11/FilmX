@@ -3,9 +3,10 @@ import api from '../../api';
 import { RootState } from '../store';
 
 export interface IFilmsState {
-  topFilms: Film[] | [];
+  topFilms: TFilm[] | [];
   error: string;
   loadingStatus: LoadingStatus;
+  totalPage: number;
 }
 
 enum LoadingStatus {
@@ -14,40 +15,51 @@ enum LoadingStatus {
   ERROR = 'error',
 }
 
-export type Film = {
-  id: string;
-  rank: string;
-  title: string;
-  fullTitle: string;
+export type TFilm = {
+  countries: Array<Object>;
+  filmId: number;
+  filmLength: string;
+  genres: Array<Object>;
+  nameEn: string;
+  nameRu: string;
+  posterUrl: string;
+  posterUrlPreview: string;
+  rating: string;
+  ratingChange: null | string;
+  ratingVoteCount: number;
   year: string;
-  image: string;
-  crew: string;
-  imDbRating: string;
-  imDbRatingCount: string;
+};
+
+export type TData = {
+  films: TFilm[];
+  pagesCount: number;
 };
 
 const initialState: IFilmsState = {
   topFilms: [],
   error: '',
   loadingStatus: LoadingStatus.IDLE,
+  totalPage: 0,
 };
 
-export const getFilms = createAsyncThunk<void, string | undefined, { rejectValue: string }>(
-  'films/getFilms',
-  async (categories, { dispatch, rejectWithValue }) => {
-    try {
-      const films = await api.getTopFilms(categories);
-      dispatch(addFilms(films));
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch(setError(err.message));
-        return rejectWithValue(err.message);
-      } else {
-        console.log('Unexpected error', err);
-      }
+export const getFilms = createAsyncThunk<
+  void,
+  { categories: string | undefined; currentPage: number },
+  { rejectValue: string }
+>('films/getFilms', async ({ categories, currentPage }, { dispatch, rejectWithValue }) => {
+  try {
+    const { films, pagesCount }: TData = await api.getTopFilms(currentPage, categories);
+    dispatch(addFilms(films));
+    dispatch(addTotalPage(pagesCount));
+  } catch (err) {
+    if (err instanceof Error) {
+      dispatch(setError(err.message));
+      return rejectWithValue(err.message);
+    } else {
+      console.log('Unexpected error', err);
     }
-  },
-);
+  }
+});
 
 const handlePendingStatus = (state: IFilmsState) => {
   state.loadingStatus = LoadingStatus.LOADING;
@@ -73,6 +85,9 @@ const filmsSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    addTotalPage: (state, action) => {
+      state.totalPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -87,17 +102,8 @@ const filmsSlice = createSlice({
   },
 });
 
-export const getTopFilms = (counter: number) => (state: RootState) =>
-  state.films.topFilms.slice(0, counter);
-
-// export const getTenTopFilms = (counter: number) =>
-//   createSelector([getTopFilms], (topFilms) => {
-//     const topTenFilms = topFilms.slice(counter, counter + 10);
-//     return topTenFilms;
-//   });
-
 const { reducer, actions } = filmsSlice;
 
 export default reducer;
 
-export const { addFilms, setError } = actions;
+export const { addFilms, setError, addTotalPage } = actions;
