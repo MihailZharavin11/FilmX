@@ -1,4 +1,4 @@
-import { Col, Pagination, Row } from 'antd';
+import { Col, Pagination, Row, Spin } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { getFilms } from '../../redux/slices/filmsTopSlice';
 import FilmItem from '../FilmItem/FilmItem';
@@ -10,7 +10,7 @@ import { useParams } from 'react-router-dom';
 const FilmContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { topFilms, totalPage } = useAppSelector((state) => state.films);
+  const { topFilms, totalPage, loadingStatus } = useAppSelector((state) => state.films);
   let { categories } = useParams();
 
   useEffect(() => {
@@ -31,6 +31,10 @@ const FilmContent: React.FC = () => {
   const onChange: PaginationProps['onChange'] = (page) => {
     setCurrentPage(page);
   };
+
+  if (loadingStatus === 'loading') {
+    return <Spin className={styles.loading} size="large" />;
+  }
 
   return (
     <>
