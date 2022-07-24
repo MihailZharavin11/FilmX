@@ -101,7 +101,7 @@ const FimlsPageHeader: React.FC = () => {
     <Menu
       disabled={loadingStatus === "loading" ? true : false}
       onClick={onClick}
-      style={{ width: 256, height: 500 }}
+      style={{ width: 256, height: "100%", background: "#f0f2f5" }}
       selectedKeys={[current]}
       mode="inline"
       items={items}

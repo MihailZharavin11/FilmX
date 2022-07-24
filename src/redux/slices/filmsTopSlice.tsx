@@ -8,7 +8,8 @@ import api from "../../api";
 import { RootState } from "../store";
 
 export interface IFilmsState {
-  topFilms: TFilm[] | [];
+  topFilms: TTopFilm[] | [];
+  filmsByGenre: TGenreFilm[] | [];
   error: string;
   loadingStatus: LoadingStatus;
   totalPage: number;
@@ -20,7 +21,7 @@ enum LoadingStatus {
   ERROR = "error",
 }
 
-export type TFilm = {
+export type TTopFilm = {
   countries: Array<Object>;
   filmId: number;
   filmLength: string;
@@ -35,13 +36,30 @@ export type TFilm = {
   year: string;
 };
 
+export type TGenreFilm = {
+  countries: Array<Object>;
+  genres: Array<Object>;
+  imdbId: string;
+  kinopoiskId: number;
+  nameEn: string;
+  nameOriginal: string;
+  nameRu: string;
+  posterUrl: string;
+  posterUrlPreview: string;
+  ratingImdb: number;
+  ratingKinopoisk: number;
+  type: string;
+  year: number;
+};
+
 export type TData = {
-  films: TFilm[];
+  films: TTopFilm[];
   pagesCount: number;
 };
 
 const initialState: IFilmsState = {
   topFilms: [],
+  filmsByGenre: [],
   error: "",
   loadingStatus: LoadingStatus.IDLE,
   totalPage: 0,
@@ -59,7 +77,7 @@ export const getTopFilms = createAsyncThunk<
         currentPage,
         categories
       );
-      dispatch(addFilms(films));
+      dispatch(addTopFilms(films));
       dispatch(addTotalPage(pagesCount));
     } catch (err) {
       if (err instanceof Error) {
@@ -84,7 +102,7 @@ export const getMovieByGenre = createAsyncThunk<
         currentPage,
         genre
       );
-      dispatch(addFilms(items));
+      dispatch(addFilmsByGenre(items));
       dispatch(addTotalPage(totalPages));
     } catch (err) {
       if (err instanceof Error) {
@@ -115,8 +133,11 @@ const filmsSlice = createSlice({
   name: "films",
   initialState,
   reducers: {
-    addFilms: (state, action) => {
+    addTopFilms: (state, action) => {
       state.topFilms = action.payload;
+    },
+    addFilmsByGenre: (state, action) => {
+      state.filmsByGenre = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -150,4 +171,4 @@ const { reducer, actions } = filmsSlice;
 
 export default reducer;
 
-export const { addFilms, setError, addTotalPage } = actions;
+export const { addTopFilms, setError, addTotalPage, addFilmsByGenre } = actions;

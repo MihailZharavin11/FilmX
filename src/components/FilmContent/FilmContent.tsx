@@ -10,11 +10,10 @@ import { useParams } from "react-router-dom";
 const FilmContent: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { topFilms, totalPage, loadingStatus } = useAppSelector(
+  const { topFilms, totalPage, loadingStatus, filmsByGenre } = useAppSelector(
     (state) => state.films
   );
   let { categories, genre } = useParams();
-  console.log(totalPage);
 
   useEffect(() => {
     if (categories) {
@@ -25,16 +24,33 @@ const FilmContent: React.FC = () => {
     }
   }, [dispatch, categories, currentPage, genre]);
 
-  const renderFilmItem = topFilms.map((element) => (
-    <Col className={styles.column} span={6}>
-      <FilmItem
-        key={element.filmId}
-        title={element.nameEn ? element.nameEn : element.nameRu}
-        rating={element.rating}
-        posterUrlPreview={element.posterUrlPreview}
-      />
-    </Col>
-  ));
+  const renderFilmItem = () => {
+    if (categories) {
+      return topFilms.map((element) => (
+        <Col className={styles.column} span={6}>
+          <FilmItem
+            key={element.filmId}
+            title={element.nameEn ? element.nameEn : element.nameRu}
+            rating={element.rating ? element.rating : element.year}
+            posterUrlPreview={element.posterUrlPreview}
+          />
+        </Col>
+      ));
+    }
+    if (genre) {
+      return filmsByGenre.map((element) => (
+        <Col className={styles.column} span={6}>
+          <FilmItem
+            key={element.kinopoiskId}
+            title={element.nameEn ? element.nameEn : element.nameOriginal}
+            rating={element.ratingKinopoisk}
+            posterUrlPreview={element.posterUrlPreview}
+          />
+        </Col>
+      ));
+    }
+    return "abc";
+  };
 
   const onChange: PaginationProps["onChange"] = (page) => {
     setCurrentPage(page);
@@ -52,7 +68,7 @@ const FilmContent: React.FC = () => {
         }}
         gutter={[0, 30]}
       >
-        {renderFilmItem}
+        {renderFilmItem()}
       </Row>
       <Row
         style={{

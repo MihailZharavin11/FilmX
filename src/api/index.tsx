@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { TData, TFilm } from "../redux/slices/filmsTopSlice";
+import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
 
 type TCategories = {
   genres: TGenre[];
@@ -55,8 +55,7 @@ const getListFilmsByGenre = async (currentPage: number, genreArgs?: string) => {
       `?genres=${genreArgs}&order=RATING&type=ALL&ratingFrom=0&ratingTo=10&yearFrom=1000&yearTo=3000&page=${currentPage}`
     )
     .then((response) => {
-      console.log(response);
-      const { items, totalPages }: { items: TFilm[]; totalPages: number } =
+      const { items, totalPages }: { items: TGenreFilm[]; totalPages: number } =
         response.data;
       return { items, totalPages };
     });
