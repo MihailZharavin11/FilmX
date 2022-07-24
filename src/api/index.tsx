@@ -1,9 +1,8 @@
-import axios, { AxiosResponse } from 'axios';
-import { TData } from '../redux/slices/filmsTopSlice';
+import axios, { AxiosResponse } from "axios";
+import { TData, TFilm } from "../redux/slices/filmsTopSlice";
 
 type TCategories = {
   genres: TGenre[];
-  countries: TCountry[];
 };
 
 export type TGenre = {
@@ -11,16 +10,11 @@ export type TGenre = {
   genre: string;
 };
 
-export type TCountry = {
-  id: number;
-  country: string;
-};
-
 const instance = axios.create({
-  baseURL: 'https://kinopoiskapiunofficial.tech/api/v2.2/films/',
+  baseURL: "https://kinopoiskapiunofficial.tech/api/v2.2/films",
   headers: {
-    'X-API-KEY': 'da939efc-f1df-48db-92a8-f687212274b5',
-    'Content-Type': 'application/json',
+    "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
+    "Content-Type": "application/json",
   },
 });
 
@@ -28,7 +22,7 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   let categories = categoriesArgs;
 
   if (!categories) {
-    categories = 'TOP_250_BEST_FILMS';
+    categories = "TOP_250_BEST_FILMS";
   }
 
   const data = await instance
@@ -42,12 +36,31 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
 };
 
 const getCategories = async () => {
-  const data = await instance.get('/filters').then((response) => {
-    const { genres, countries }: TCategories = response.data;
-    return { genres, countries };
+  const data = await instance.get("/filters").then((response) => {
+    const { genres }: TCategories = response.data;
+    return { genres };
   });
 
   return data;
 };
 
-export default { getTopFilms, getCategories };
+const getListFilmsByGenre = async (currentPage: number, genreArgs?: string) => {
+  let genre = Number(genreArgs);
+
+  if (!genre) {
+    genre = 1;
+  }
+  const data = await instance
+    .get(
+      `?genres=${genreArgs}&order=RATING&type=ALL&ratingFrom=0&ratingTo=10&yearFrom=1000&yearTo=3000&page=${currentPage}`
+    )
+    .then((response) => {
+      console.log(response);
+      const { items, totalPages }: { items: TFilm[]; totalPages: number } =
+        response.data;
+      return { items, totalPages };
+    });
+  return data;
+};
+
+export default { getTopFilms, getCategories, getListFilmsByGenre };
