@@ -1,37 +1,22 @@
-import { Card } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getFilmInfo } from "../../redux/slices/filmItemSlice";
+import { useAppDispatch } from "../../redux/store";
+import styles from "./filmItem.module.scss";
 
-type FilmItemProps = {
-  title: string;
-  rating: string | number;
-  posterUrlPreview: string;
-};
+const FilmItem = () => {
+  const { id } = useParams();
+  const dispatch = useAppDispatch();
 
-const { Meta } = Card;
+  useEffect(() => {
+    if (!id) return;
+    dispatch(getFilmInfo(id));
+  });
 
-const FilmItem: React.FC<FilmItemProps> = ({
-  title,
-  rating,
-  posterUrlPreview,
-}) => {
   return (
-    <div className="film__item">
-      <Card
-        hoverable
-        bordered
-        style={{ width: 180, height: 360 }}
-        cover={
-          <img
-            style={{
-              height: "270px",
-            }}
-            alt="example"
-            src={posterUrlPreview}
-          />
-        }
-      >
-        <Meta title={title} description={rating} />
-      </Card>
+    <div className={styles.wrapper}>
+      <div className="image">img</div>
+      <div className="description">desc</div>
     </div>
   );
 };

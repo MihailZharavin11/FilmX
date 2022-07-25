@@ -1,7 +1,7 @@
 import { Col, Pagination, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { getMovieByGenre, getTopFilms } from "../../redux/slices/filmsTopSlice";
-import FilmItem from "../FilmItem/FilmItem";
+import FilmItem from "../FilmCard/FilmCard";
 import styles from "./filmContent.module.scss";
 import type { PaginationProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
@@ -16,7 +16,7 @@ const FilmContent: React.FC = () => {
   let { categories, genre } = useParams();
 
   useEffect(() => {
-    if (categories) {
+    if (categories || (!genre && !categories)) {
       dispatch(getTopFilms({ categories, currentPage }));
     }
     if (genre) {
@@ -25,11 +25,12 @@ const FilmContent: React.FC = () => {
   }, [dispatch, categories, currentPage, genre]);
 
   const renderFilmItem = () => {
-    if (categories) {
+    if (categories || (!genre && !categories)) {
       return topFilms.map((element) => (
         <Col className={styles.column} span={6}>
           <FilmItem
             key={element.filmId}
+            id={element.filmId}
             title={element.nameEn ? element.nameEn : element.nameRu}
             rating={element.rating ? element.rating : element.year}
             posterUrlPreview={element.posterUrlPreview}
@@ -42,6 +43,7 @@ const FilmContent: React.FC = () => {
         <Col className={styles.column} span={6}>
           <FilmItem
             key={element.kinopoiskId}
+            id={element.kinopoiskId}
             title={element.nameEn ? element.nameEn : element.nameOriginal}
             rating={element.ratingKinopoisk}
             posterUrlPreview={element.posterUrlPreview}
@@ -49,7 +51,6 @@ const FilmContent: React.FC = () => {
         </Col>
       ));
     }
-    return "abc";
   };
 
   const onChange: PaginationProps["onChange"] = (page) => {

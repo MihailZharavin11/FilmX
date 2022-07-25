@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HeaderFixed from "./components/Header/HeaderFixed";
+import FilmItem from "./components/FilmItem/FilmItem";
 import Films from "./pages/Films";
 import Home from "./pages/Home";
 
@@ -15,12 +16,10 @@ const App: React.FC = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/films" element={<Films />}>
-          {/* <Route path=":categories" element={<Films />} />
-          <Route path="genre" element={<div>asd</div>} /> */}
-        </Route>
+        <Route path="/films" element={<Films />} />
         <Route path="/films/TOP/:categories" element={<Films />} />
         <Route path="/films/GENRE/:genre" element={<Films />} />
+        <Route path="/films/:id" element={<FilmItem />} />
       </Routes>
     </div>
   );
