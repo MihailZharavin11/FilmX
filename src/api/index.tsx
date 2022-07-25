@@ -1,4 +1,5 @@
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
+import { IFilmById } from "../redux/slices/filmItemSlice";
 import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
 
 type TCategories = {
@@ -64,9 +65,29 @@ const getListFilmsByGenre = async (currentPage: number, genreArgs?: string) => {
 };
 
 const getFilmById = async (id: string) => {
-  const data = await instance.get(`/${id}`).then((response) => {
-    console.log(response);
+  const film = await instance.get(`/${id}`).then((response) => {
+    return response.data;
   });
+  const FilmById: IFilmById = {
+    countries: film.countries,
+    description: film.description,
+    filmLength: film.filmLength,
+    genres: film.genres,
+    has3D: film.has3D,
+    hasImax: film.hasImax,
+    nameEn: film.nameEn,
+    nameOriginal: film.nameOriginal,
+    nameRu: film.nameRu,
+    posterUrl: film.posterUrl,
+    posterUrlPreview: film.posterUrlPreview,
+    ratingAgeLimits: film.ratingAgeLimit,
+    ratingImdb: film.ratingImdb,
+    ratingKinopoisk: film.ratingKinopoisk,
+    slogan: film.slogan,
+    type: film.type,
+    year: film.year,
+  };
+  return FilmById;
 };
 
 export default { getTopFilms, getCategories, getListFilmsByGenre, getFilmById };

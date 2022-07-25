@@ -1,8 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
 
+export interface IFilmById {
+  countries: Array<Object>;
+  description: string;
+  filmLength: number;
+  genres: Array<Object>;
+  has3D: boolean;
+  hasImax: boolean;
+  nameEn: string;
+  nameOriginal: string;
+  nameRu: string;
+  posterUrl: string;
+  posterUrlPreview: string;
+  ratingAgeLimits: string;
+  ratingImdb: number;
+  ratingKinopoisk: number;
+  slogan: string;
+  type: string;
+  year: number;
+}
+
 const initialState = {
-  selectFilm: "",
+  selectFilm: {},
 };
 
 export const getFilmInfo = createAsyncThunk<
@@ -11,7 +31,8 @@ export const getFilmInfo = createAsyncThunk<
   { rejectValue: string }
 >("filmItem/getFilmInfo", async (id, { dispatch, rejectWithValue }) => {
   try {
-    const abc = await api.getFilmById(id);
+    const film = await api.getFilmById(id);
+    dispatch(addItemFilm(film));
   } catch (err) {
     if (err instanceof Error) {
       return rejectWithValue(err.message);
