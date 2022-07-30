@@ -22,7 +22,7 @@ const FilmItem: React.FC<FilmItemProps> = ({
       <Card
         hoverable
         bordered
-        style={{ width: 180, height: 360 }}
+        style={{ maxWidth: "185px", height: 360, overflow: "hidden" }}
         cover={
           <Link to={`${id}`}>
             <img

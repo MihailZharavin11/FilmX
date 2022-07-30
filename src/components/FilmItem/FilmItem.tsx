@@ -1,7 +1,9 @@
+import { Card } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getFilmInfo } from "../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
 import styles from "./filmItem.module.scss";
 
 const FilmItem = () => {
@@ -9,7 +11,21 @@ const FilmItem = () => {
   const dispatch = useAppDispatch();
   const { selectFilm } = useAppSelector((state) => state.filmItem);
 
-  console.log(selectFilm);
+  const setClassForRaiting = (raiting: number | undefined) => {
+    let style;
+    if (raiting) {
+      if (raiting >= 7) {
+        style = styles.presentationFilm__raitingNumberGreen;
+      }
+      if (raiting < 7 && raiting >= 4) {
+        style = styles.presentationFilm__raitingNumberYellow;
+      }
+      if (raiting < 4) {
+        style = styles.presentationFilm__raitingNumberRed;
+      }
+    }
+    return style;
+  };
 
   useEffect(() => {
     if (!id) return;
@@ -18,8 +34,63 @@ const FilmItem = () => {
 
   return (
     <div className={styles.wrapper}>
-      <div className="image">img</div>
-      <div className="description">desc</div>
+      <div className={styles.presentationFilm}>
+        <div className={styles.presentationFilm__image}>
+          <Card
+            style={{ width: "90%" }}
+            cover={<img alt="PosterImg" src={selectFilm?.posterUrl} />}
+            bodyStyle={{ display: "none" }}
+            actions={[
+              <HeartTwoTone twoToneColor="#eb2f96" key={"heart"} />,
+              <EyeTwoTone key={"eye"} />,
+              <FireTwoTone twoToneColor="#fc032c" key={"fire"} />,
+            ]}
+          ></Card>
+        </div>
+        <div className={styles.presentationFilm__raiting}>
+          <Card
+            headStyle={{ textAlign: "center", border: "none" }}
+            bodyStyle={{ textAlign: "center", padding: 0 }}
+            bordered={false}
+            title="IMDB"
+          >
+            <p
+              className={`${
+                styles.presentationFilm__raitingNumber
+              } ${setClassForRaiting(selectFilm?.ratingImdb)}`}
+            >
+              {selectFilm?.ratingImdb}
+            </p>
+          </Card>
+          <Card
+            headStyle={{ textAlign: "center", border: "none" }}
+            bodyStyle={{ textAlign: "center", padding: 0 }}
+            bordered={false}
+            title="Kinopoisk"
+          >
+            <p
+              className={`${
+                styles.presentationFilm__raitingNumber
+              } ${setClassForRaiting(selectFilm?.ratingKinopoisk)}`}
+            >
+              {selectFilm?.ratingKinopoisk}
+            </p>
+          </Card>
+        </div>
+      </div>
+      <div className={styles.description}>
+        <div className={styles.description__header}>
+          <h1 className={styles.description__headerTitle}>
+            {selectFilm?.nameRu ? selectFilm.nameRu : selectFilm?.nameEn} (
+            {selectFilm?.nameOriginal})
+          </h1>
+          <p className={styles.description__headerYear}>{selectFilm?.year}</p>
+          <p className={styles.description__headerSlogan}>
+            {selectFilm?.slogan}
+          </p>
+        </div>
+        <div className="description__about"></div>
+      </div>
     </div>
   );
 };

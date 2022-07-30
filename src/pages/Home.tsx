@@ -1,8 +1,7 @@
-import { Layout } from 'antd';
-import { Header, Content, Footer } from 'antd/lib/layout/layout';
-import React from 'react';
-import ContentHome from '../components/HomeContent/ContentHome';
-import HeaderFixed from '../components/Header/HeaderFixed';
+import { Layout } from "antd";
+import { Content } from "antd/lib/layout/layout";
+import React from "react";
+import ContentHome from "../components/HomeContent/ContentHome";
 
 const Home: React.FC = () => {
   return (

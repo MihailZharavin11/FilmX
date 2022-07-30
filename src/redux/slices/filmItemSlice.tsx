@@ -21,8 +21,12 @@ export interface IFilmById {
   year: number;
 }
 
-const initialState = {
-  selectFilm: {},
+export interface IFilmItemSlice {
+  selectFilm: IFilmById | null;
+}
+
+const initialState: IFilmItemSlice = {
+  selectFilm: null,
 };
 
 export const getFilmInfo = createAsyncThunk<
