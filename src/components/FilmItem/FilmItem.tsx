@@ -1,4 +1,4 @@
-import { Card } from "antd";
+import { Card, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getFilmInfo } from "../../redux/slices/filmItemSlice";
@@ -9,7 +9,9 @@ import styles from "./filmItem.module.scss";
 const FilmItem = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const { selectFilm } = useAppSelector((state) => state.filmItem);
+  const { selectFilm, loadingStatus, error } = useAppSelector(
+    (state) => state.filmItem
+  );
 
   console.log(selectFilm);
 
@@ -33,6 +35,20 @@ const FilmItem = () => {
     if (!id) return;
     dispatch(getFilmInfo(id));
   }, [dispatch, id]);
+
+  if (loadingStatus === "loading") {
+    return (
+      <Spin
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 70px)",
+        }}
+        size="large"
+      />
+    );
+  }
 
   return (
     <div className={styles.wrapper}>
@@ -83,8 +99,8 @@ const FilmItem = () => {
       <div className={styles.description}>
         <div className={styles.description__header}>
           <h1 className={styles.description__headerTitle}>
-            {selectFilm?.nameRu ? selectFilm.nameRu : selectFilm?.nameEn} (
-            {selectFilm?.nameOriginal})
+            {selectFilm?.nameRu ? selectFilm.nameRu : selectFilm?.nameEn}
+            {selectFilm?.nameOriginal ? ` (${selectFilm.nameOriginal})` : ""}
           </h1>
           <p className={styles.description__headerYear}>
             {selectFilm?.year} г.

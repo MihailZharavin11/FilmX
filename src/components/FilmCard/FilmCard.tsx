@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import React from "react";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { StarTwoTone } from "@ant-design/icons";
 
 type FilmItemProps = {
   title: string;
@@ -9,7 +10,19 @@ type FilmItemProps = {
   posterUrlPreview: string;
 };
 
+type RaitingComponentsProps = {
+  raiting: string | number;
+};
+
 const { Meta } = Card;
+
+const RaitingComponents: React.FC<RaitingComponentsProps> = ({ raiting }) => {
+  return (
+    <>
+      {raiting} <StarTwoTone twoToneColor="#ffd900" />
+    </>
+  );
+};
 
 const FilmItem: React.FC<FilmItemProps> = ({
   id,
@@ -35,7 +48,10 @@ const FilmItem: React.FC<FilmItemProps> = ({
           </Link>
         }
       >
-        <Meta title={title} description={rating} />
+        <Meta
+          title={title}
+          description={<RaitingComponents raiting={rating} />}
+        />
       </Card>
     </div>
   );

@@ -25,12 +25,22 @@ export interface IFilmById {
   year: number;
 }
 
+enum LoadingStatus {
+  IDLE = "idle",
+  LOADING = "loading",
+  ERROR = "error",
+}
+
 export interface IFilmItemSlice {
   selectFilm: IFilmById | null;
+  loadingStatus: LoadingStatus;
+  error: null | string;
 }
 
 const initialState: IFilmItemSlice = {
   selectFilm: null,
+  loadingStatus: LoadingStatus.IDLE,
+  error: null,
 };
 
 export const getFilmInfo = createAsyncThunk<
@@ -50,6 +60,19 @@ export const getFilmInfo = createAsyncThunk<
   }
 });
 
+const handlePendingStatus = (state: IFilmItemSlice) => {
+  state.loadingStatus = LoadingStatus.LOADING;
+};
+
+const handleFulfilledStatus = (state: IFilmItemSlice) => {
+  state.loadingStatus = LoadingStatus.IDLE;
+};
+
+const handleRejectedStatus = (state: IFilmItemSlice, action: string) => {
+  state.loadingStatus = LoadingStatus.ERROR;
+  state.error = action;
+};
+
 const filmtItemSlice = createSlice({
   name: "filmItem",
   initialState,
@@ -57,6 +80,16 @@ const filmtItemSlice = createSlice({
     addItemFilm: (state, action) => {
       state.selectFilm = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getFilmInfo.pending, handlePendingStatus)
+      .addCase(getFilmInfo.fulfilled, handleFulfilledStatus)
+      .addCase(getFilmInfo.rejected, (state, action) => {
+        if (action.payload) {
+          handleRejectedStatus(state, action.payload);
+        }
+      });
   },
 });
 

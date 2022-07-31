@@ -29,7 +29,6 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   const data = await instance
     .get(`/top?type=${categories}&page=${currentPage}`)
     .then((response) => {
-      debugger;
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
@@ -90,4 +89,18 @@ const getFilmById = async (id: string) => {
   return FilmById;
 };
 
-export default { getTopFilms, getCategories, getListFilmsByGenre, getFilmById };
+const getFilmBySearchValue = async (searchValue: string) => {
+  const searchFilmValue = await instance
+    .get(`/search-by-keyword?keyword=${searchValue}&page=1`)
+    .then((data) => {
+      console.log(data);
+    });
+};
+
+export default {
+  getTopFilms,
+  getCategories,
+  getListFilmsByGenre,
+  getFilmById,
+  getFilmBySearchValue,
+};

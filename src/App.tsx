@@ -6,6 +6,7 @@ import HeaderFixed from "./components/Header/HeaderFixed";
 import FilmItem from "./components/FilmItem/FilmItem";
 import Films from "./pages/Films";
 import Home from "./pages/Home";
+import EmptyContent from "./components/EmptyContent/EmptyContent";
 
 const App: React.FC = () => {
   return (
@@ -20,6 +21,7 @@ const App: React.FC = () => {
         <Route path="/films/TOP/:categories" element={<Films />} />
         <Route path="/films/GENRE/:genre" element={<Films />} />
         <Route path="/films/:id" element={<FilmItem />} />
+        <Route path="*" element={<EmptyContent />} />
       </Routes>
     </div>
   );
