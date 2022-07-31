@@ -1,6 +1,6 @@
 import { Card } from "antd";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 type FilmItemProps = {
   title: string;
@@ -24,7 +24,7 @@ const FilmItem: React.FC<FilmItemProps> = ({
         bordered
         style={{ maxWidth: "185px", height: 360, overflow: "hidden" }}
         cover={
-          <Link to={`${id}`}>
+          <Link to={`/films/${id}`}>
             <img
               style={{
                 height: "270px",
