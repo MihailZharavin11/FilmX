@@ -80,7 +80,7 @@ const getFilmById = async (id: string) => {
     nameRu: film.nameRu,
     posterUrl: film.posterUrl,
     posterUrlPreview: film.posterUrlPreview,
-    ratingAgeLimits: film.ratingAgeLimit,
+    ratingAgeLimits: parseInt(film.ratingAgeLimits.match(/\d+/)),
     ratingImdb: film.ratingImdb,
     ratingKinopoisk: film.ratingKinopoisk,
     slogan: film.slogan,

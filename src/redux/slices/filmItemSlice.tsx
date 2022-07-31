@@ -1,8 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
 
+type TCountries = {
+  country: string;
+};
+
 export interface IFilmById {
-  countries: Array<Object>;
+  countries: TCountries[];
   description: string;
   filmLength: number;
   genres: Array<Object>;
@@ -13,7 +17,7 @@ export interface IFilmById {
   nameRu: string;
   posterUrl: string;
   posterUrlPreview: string;
-  ratingAgeLimits: string;
+  ratingAgeLimits: number;
   ratingImdb: number;
   ratingKinopoisk: number;
   slogan: string;
