@@ -1,38 +1,60 @@
-import { Select } from "antd";
-import React, { useState } from "react";
+import { Select, Spin } from "antd";
+import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
-import { useAppDispatch } from "../../redux/store";
-import { searchFilm } from "../../redux/slices/filmsTopSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { searchFilm } from "../../redux/slices/searchSlice";
 
 const SearchField = () => {
-  const [valueSearch, setValueSearch] = useState("");
+  const [valueSearch, setValueSearch] = useState<string>("");
   const dispatch = useAppDispatch();
-  const { Option } = Select;
+  const { filmBySearch } = useAppSelector((state) => state.search);
+  const inputRef = useRef(null);
 
-  const handleSearch = debounce((str: string) => {
-    debugger;
-    dispatch(searchFilm(str));
-  }, 1000);
+  const updateSearchValue = useCallback(
+    debounce((str: string) => {
+      dispatch(searchFilm(str));
+    }, 1000),
+    [inputRef]
+  );
 
-  const handleChange = (value: string) => {
-    setValueSearch(value);
+  const onChangeInput = (str: string) => {
+    setValueSearch(str);
+    updateSearchValue(str);
   };
 
   return (
     <>
       <Select
+        ref={inputRef}
         style={{
           width: "100%",
         }}
         placeholder="Search..."
         showSearch
-        value={valueSearch}
-        onChange={handleChange}
-        onSearch={handleSearch}
         showArrow={false}
-      >
-        <Option key={"as"}>{"item"}</Option>
-      </Select>
+        searchValue={valueSearch}
+        onSearch={onChangeInput}
+        dropdownRender={() => {
+          return (
+            <>
+              {filmBySearch.length > 0
+                ? filmBySearch.map((element) => {
+                    return (
+                      <div
+                        style={{
+                          color: "black",
+                        }}
+                        key={element.filmId}
+                      >
+                        {element.nameEn}
+                      </div>
+                    );
+                  })
+                : "Ничего не найдено..."}{" "}
+            </>
+          );
+        }}
+      ></Select>
     </>
   );
 };

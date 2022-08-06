@@ -115,23 +115,6 @@ export const getMovieByGenre = createAsyncThunk<
   }
 );
 
-export const searchFilm = createAsyncThunk<
-  void,
-  string,
-  { rejectValue: string }
->("films/searchFilm", async (searchValue, { dispatch, rejectWithValue }) => {
-  try {
-    const abc = api.getFilmBySearchValue(searchValue);
-  } catch (err) {
-    if (err instanceof Error) {
-      dispatch(setError(err.message));
-      return rejectWithValue(err.message);
-    } else {
-      console.log("Error", err);
-    }
-  }
-});
-
 const handlePendingStatus = (state: IFilmsState) => {
   state.loadingStatus = LoadingStatus.LOADING;
 };
@@ -168,16 +151,16 @@ const filmsSlice = createSlice({
       .addCase(getTopFilms.pending, handlePendingStatus)
       .addCase(getTopFilms.fulfilled, handleFulfilledStatus)
       .addCase(getTopFilms.rejected, (state: IFilmsState, action) => {
-        state.loadingStatus = LoadingStatus.ERROR;
         if (action.payload) {
+          state.loadingStatus = LoadingStatus.ERROR;
           handleRejectedStatus(state, action.payload);
         }
       })
       .addCase(getMovieByGenre.pending, handlePendingStatus)
       .addCase(getMovieByGenre.fulfilled, handleFulfilledStatus)
       .addCase(getMovieByGenre.rejected, (state, action) => {
-        state.loadingStatus = LoadingStatus.ERROR;
         if (action.payload) {
+          state.loadingStatus = LoadingStatus.ERROR;
           handleRejectedStatus(state, action.payload);
         }
       });

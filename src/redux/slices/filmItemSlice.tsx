@@ -73,7 +73,7 @@ const handleRejectedStatus = (state: IFilmItemSlice, action: string) => {
   state.error = action;
 };
 
-const filmtItemSlice = createSlice({
+const filmItemSlice = createSlice({
   name: "filmItem",
   initialState,
   reducers: {
@@ -93,7 +93,7 @@ const filmtItemSlice = createSlice({
   },
 });
 
-const { reducer, actions } = filmtItemSlice;
+const { reducer, actions } = filmItemSlice;
 
 export default reducer;
 
