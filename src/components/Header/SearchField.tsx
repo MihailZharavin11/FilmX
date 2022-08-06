@@ -1,8 +1,9 @@
-import { Select, Spin } from "antd";
+import { Select } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { searchFilm } from "../../redux/slices/searchSlice";
+import styles from "./headerFixed.module.scss";
 
 const SearchField = () => {
   const [valueSearch, setValueSearch] = useState<string>("");
@@ -40,13 +41,21 @@ const SearchField = () => {
               {filmBySearch.length > 0
                 ? filmBySearch.map((element) => {
                     return (
-                      <div
-                        style={{
-                          color: "black",
-                        }}
-                        key={element.filmId}
-                      >
-                        {element.nameEn}
+                      <div className={styles.search} key={element.filmId}>
+                        <div className={styles.search__image}>
+                          <img src={element.posterUrl} alt="poster" />
+                        </div>
+                        <div className={styles.search__description}>
+                          <h4 className={styles.search__descriptionTitle}>
+                            {element.nameEn}
+                          </h4>
+                          <p className="search__description-text">
+                            <span className="search__description-textRaiting">
+                              {element.rating},
+                            </span>
+                            {element.nameRu}, {element.year}
+                          </p>
+                        </div>
                       </div>
                     );
                   })
