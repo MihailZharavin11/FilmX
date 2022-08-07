@@ -38,7 +38,7 @@ const FilmItem = () => {
       <div className={styles.presentationFilm}>
         <div className={styles.presentationFilm__image}>
           <Card
-            style={{ width: "90%" }}
+            style={{ width: "80%" }}
             cover={<img alt="PosterImg" src={selectFilm?.posterUrl} />}
             bodyStyle={{ display: "none" }}
             actions={[

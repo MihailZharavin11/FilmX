@@ -1,0 +1,31 @@
+@import "../../../styles/raiting.scss";
+
+
+.search{
+    display: flex;
+    gap:10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    &:hover{
+      background-color: #f0f2f5;
+    }
+    .search__image{
+      width: 45px;
+      height: auto;
+    }
+    .search__description{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      .search__descriptionTitle{
+        font-size: 15px;
+      }
+      .search__descriptionText{
+        color:#000;
+        .search__descriptionTextRaiting{
+          color:green;
+          padding: 3px;
+        }
+      }
+    }
+  }

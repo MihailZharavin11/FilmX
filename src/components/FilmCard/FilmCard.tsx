@@ -44,6 +44,7 @@ const FilmItem: React.FC<FilmItemProps> = ({
             <img
               style={{
                 height: "270px",
+                width: "100%",
               }}
               alt="example"
               src={posterUrlPreview}
