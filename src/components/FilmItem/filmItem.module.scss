@@ -1,3 +1,5 @@
+@import "../../styles/raiting.scss";
+
 .wrapper{
     padding: 10px;
     margin-top: 6px;
@@ -17,16 +19,6 @@
         grid-template: 1fr/1fr 1fr;
         .presentationFilm__raitingNumber{
             font-size: 24px;
-            &.presentationFilm__raitingNumberGreen{
-                color:#64C80A
-            }
-            .presentationFilm__raitingNumberRed{
-                color:red
-            }
-            
-            .presentationFilm__raitingNumberYellow{
-                color:#FD9B27
-            }
         }
         
     }

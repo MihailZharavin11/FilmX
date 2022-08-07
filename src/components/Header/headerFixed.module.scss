@@ -1,3 +1,5 @@
+@import "../../styles/raiting.scss";
+
 .header {
   padding: 10px;
   background: transparent;
@@ -43,6 +45,13 @@
     justify-content: center;
     .search__descriptionTitle{
       font-size: 15px;
+    }
+    .search__descriptionText{
+      color:#000;
+      .search__descriptionTextRaiting{
+        color:green;
+        padding: 3px;
+      }
     }
   }
 }

@@ -5,6 +5,7 @@ import { getFilmInfo } from "../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
 import styles from "./filmItem.module.scss";
+import { setClassForRaiting } from "../../lib/raitingFunc";
 
 const FilmItem = () => {
   const { id } = useParams();
@@ -12,24 +13,6 @@ const FilmItem = () => {
   const { selectFilm, loadingStatus, error } = useAppSelector(
     (state) => state.filmItem
   );
-
-  console.log(selectFilm);
-
-  const setClassForRaiting = (raiting: number | undefined) => {
-    let style;
-    if (raiting) {
-      if (raiting >= 7) {
-        style = styles.presentationFilm__raitingNumberGreen;
-      }
-      if (raiting < 7 && raiting >= 4) {
-        style = styles.presentationFilm__raitingNumberYellow;
-      }
-      if (raiting < 4) {
-        style = styles.presentationFilm__raitingNumberRed;
-      }
-    }
-    return style;
-  };
 
   useEffect(() => {
     if (!id) return;
@@ -73,9 +56,9 @@ const FilmItem = () => {
             title="IMDB"
           >
             <p
-              className={`${
-                styles.presentationFilm__raitingNumber
-              } ${setClassForRaiting(selectFilm?.ratingImdb)}`}
+              className={`${styles.presentationFilm__raitingNumber} ${
+                styles[setClassForRaiting(selectFilm?.ratingImdb)]
+              }`}
             >
               {selectFilm?.ratingImdb}
             </p>
@@ -87,9 +70,9 @@ const FilmItem = () => {
             title="Kinopoisk"
           >
             <p
-              className={`${
-                styles.presentationFilm__raitingNumber
-              } ${setClassForRaiting(selectFilm?.ratingKinopoisk)}`}
+              className={`${styles.presentationFilm__raitingNumber} ${
+                styles[setClassForRaiting(selectFilm?.ratingKinopoisk)]
+              }`}
             >
               {selectFilm?.ratingKinopoisk}
             </p>

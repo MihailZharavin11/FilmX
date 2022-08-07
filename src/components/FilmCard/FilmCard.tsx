@@ -2,6 +2,8 @@ import { Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarTwoTone } from "@ant-design/icons";
+import "../../styles/raiting.scss";
+import { setClassForRaiting } from "../../lib/raitingFunc";
 
 type FilmItemProps = {
   title: string;
@@ -19,7 +21,8 @@ const { Meta } = Card;
 const RaitingComponents: React.FC<RaitingComponentsProps> = ({ raiting }) => {
   return (
     <>
-      {raiting} <StarTwoTone twoToneColor="#ffd900" />
+      <span className={setClassForRaiting(Number(raiting))}>{raiting}</span>{" "}
+      <StarTwoTone twoToneColor="#ffd900" />
     </>
   );
 };

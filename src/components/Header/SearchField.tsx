@@ -4,6 +4,7 @@ import debounce from "lodash.debounce";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { searchFilm } from "../../redux/slices/searchSlice";
 import styles from "./headerFixed.module.scss";
+import { setClassForRaiting } from "../../lib/raitingFunc";
 
 const SearchField = () => {
   const [valueSearch, setValueSearch] = useState<string>("");
@@ -49,9 +50,20 @@ const SearchField = () => {
                           <h4 className={styles.search__descriptionTitle}>
                             {element.nameEn}
                           </h4>
-                          <p className="search__description-text">
-                            <span className="search__description-textRaiting">
-                              {element.rating},
+                          <p className={styles.search__descriptionText}>
+                            <span
+                              className={styles.search__descriptionTextRaiting}
+                            >
+                              <span
+                                className={
+                                  styles[
+                                    setClassForRaiting(Number(element.rating))
+                                  ]
+                                }
+                              >
+                                {element.rating}
+                              </span>
+                              ,
                             </span>
                             {element.nameRu}, {element.year}
                           </p>
