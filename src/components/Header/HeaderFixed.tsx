@@ -1,17 +1,16 @@
-import React, { useState } from "react";
-import { Col, Row, Select } from "antd";
-import Input from "antd/lib/input/Input";
-import { useLocation, useMatch } from "react-router-dom";
+import React from "react";
+import { Col, Row } from "antd";
+import { useLocation, useMatch, useParams } from "react-router-dom";
 import AvatarZone from "./AvatarZone";
 import styles from "./headerFixed.module.scss";
 import Logo from "./Logo";
 import MenuFixed from "./MenuFixed";
-import { SearchOutlined } from "@ant-design/icons";
 import SearchField from "./SearchField";
 
 const HeaderFixed: React.FC = () => {
   let { pathname } = useLocation();
-  let match = useMatch("/films/");
+  const reg = "/films/[A-Z]";
+  let match = useMatch(reg);
 
   return (
     <div className={styles.header}>
@@ -22,7 +21,9 @@ const HeaderFixed: React.FC = () => {
         <Col span={6}>
           <MenuFixed />
         </Col>
-        <Col span={6}>{pathname !== "/films" ? "" : <SearchField />}</Col>
+        <Col span={6}>
+          {pathname.includes("/films") ? <SearchField /> : null}
+        </Col>
         <Col span={3}></Col>
         <Col
           style={{
