@@ -25,7 +25,7 @@ export interface IFilmById {
   year: number;
 }
 
-enum LoadingStatus {
+export enum LoadingStatus {
   IDLE = "idle",
   LOADING = "loading",
   ERROR = "error",

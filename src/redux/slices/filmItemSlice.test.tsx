@@ -1,5 +1,6 @@
 import api from "../../api";
-import { getFilmInfo, IFilmById } from "./filmItemSlice";
+import { getFilmInfo, IFilmById, LoadingStatus } from "./filmItemSlice";
+import filmItemReducer from "./filmItemSlice";
 
 jest.mock("../../api");
 
@@ -41,14 +42,14 @@ const result: IFilmById = {
   year: 1999,
 };
 
-describe("test filmItemSlice thunk", () => {
+describe("test filmItemSlice", () => {
   const dispatchMock = jest.fn();
   const getStateMock = jest.fn();
 
   test("testing thunk getFilmInfo with resolved", async () => {
     const thunk = getFilmInfo("435");
 
-    apiMock.getFilmById.mockReturnValue(Promise.resolve(result));
+    apiMock.getFilmById.mockResolvedValue(result);
 
     await thunk(dispatchMock, getStateMock, {});
 
@@ -74,5 +75,52 @@ describe("test filmItemSlice thunk", () => {
     expect(start[0].type).toBe("filmItem/getFilmInfo/pending");
     expect(middle[0].type).toBe("filmItem/getFilmInfo/rejected");
     expect(middle[0].payload).toBe("error");
+  });
+
+  test("testing change status with getFilmInfo.pending actions", () => {
+    const initialState = {
+      selectFilm: null,
+      loadingStatus: LoadingStatus.IDLE,
+      error: null,
+    };
+    const state = filmItemReducer(initialState, getFilmInfo.pending("", ""));
+    expect(state.loadingStatus).toBe(LoadingStatus.LOADING);
+  });
+
+  test("testing change status with getFilmInfo.fullfilled actions", () => {
+    const initialState = {
+      selectFilm: null,
+      loadingStatus: LoadingStatus.IDLE,
+      error: null,
+    };
+    let nothing: void = undefined;
+    const state = filmItemReducer(
+      initialState,
+      getFilmInfo.fulfilled(nothing, "", "")
+    );
+    expect(state.loadingStatus).toBe(LoadingStatus.IDLE);
+  });
+
+  test("testing change status with getFilmInfo.rejected actions", () => {
+    const initialState = {
+      selectFilm: null,
+      loadingStatus: LoadingStatus.IDLE,
+      error: null,
+    };
+    const state = filmItemReducer(
+      initialState,
+      getFilmInfo.rejected(
+        new Error("error"),
+        "something",
+        "something",
+        "error"
+      )
+    );
+    expect(state.loadingStatus).toBe("error");
+    expect(state).toEqual({
+      selectFilm: null,
+      loadingStatus: LoadingStatus.ERROR,
+      error: "error",
+    });
   });
 });
