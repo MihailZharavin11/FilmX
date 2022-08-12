@@ -41,20 +41,38 @@ const result: IFilmById = {
   year: 1999,
 };
 
-test("testing thunk getFilmInfo", async () => {
-  const thunk = getFilmInfo("435");
+describe("test filmItemSlice thunk", () => {
   const dispatchMock = jest.fn();
   const getStateMock = jest.fn();
 
-  apiMock.getFilmById.mockReturnValue(Promise.resolve(result));
+  test("testing thunk getFilmInfo with resolved", async () => {
+    const thunk = getFilmInfo("435");
 
-  await thunk(dispatchMock, getStateMock, {});
+    apiMock.getFilmById.mockReturnValue(Promise.resolve(result));
 
-  const { calls } = dispatchMock.mock;
+    await thunk(dispatchMock, getStateMock, {});
 
-  const [start, middle, end] = calls;
-  expect(start[0].type).toBe("filmItem/getFilmInfo/pending");
-  expect(middle[0].type).toBe("filmItem/addItemFilm");
-  expect(middle[0].payload).toBe(result);
-  expect(end[0].type).toBe("filmItem/getFilmInfo/fulfilled");
+    const { calls } = dispatchMock.mock;
+
+    const [start, middle, end] = calls;
+    expect(start[0].type).toBe("filmItem/getFilmInfo/pending");
+    expect(middle[0].type).toBe("filmItem/addItemFilm");
+    expect(middle[0].payload).toBe(result);
+    expect(end[0].type).toBe("filmItem/getFilmInfo/fulfilled");
+  });
+
+  test("testing thunk getFilmInfo with rejected", async () => {
+    const thunk = getFilmInfo("435");
+
+    apiMock.getFilmById.mockRejectedValue(new Error("error"));
+
+    await thunk(dispatchMock, getStateMock, {});
+
+    const { calls } = dispatchMock.mock;
+
+    const [start, middle] = calls;
+    expect(start[0].type).toBe("filmItem/getFilmInfo/pending");
+    expect(middle[0].type).toBe("filmItem/getFilmInfo/rejected");
+    expect(middle[0].payload).toBe("error");
+  });
 });
