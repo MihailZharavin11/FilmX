@@ -1,11 +1,9 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import App from "./App";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import HeaderFixed from "./components/Header/HeaderFixed";
 import MenuFixed from "./components/Header/MenuFixed";
 
 describe("Checking the Display of Components", () => {
