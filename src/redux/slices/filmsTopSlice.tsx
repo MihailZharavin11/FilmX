@@ -1,11 +1,5 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-  PayloadAction,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
-import { RootState } from "../store";
 
 export interface IFilmsState {
   topFilms: TTopFilm[] | [];
