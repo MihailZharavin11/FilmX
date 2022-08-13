@@ -45,6 +45,11 @@ const result: IFilmById = {
 describe("test filmItemSlice", () => {
   const dispatchMock = jest.fn();
   const getStateMock = jest.fn();
+  const initialState = {
+    selectFilm: null,
+    loadingStatus: LoadingStatus.IDLE,
+    error: null,
+  };
 
   test("testing thunk getFilmInfo with resolved", async () => {
     const thunk = getFilmInfo("435");
@@ -78,21 +83,11 @@ describe("test filmItemSlice", () => {
   });
 
   test("testing change status with getFilmInfo.pending actions", () => {
-    const initialState = {
-      selectFilm: null,
-      loadingStatus: LoadingStatus.IDLE,
-      error: null,
-    };
     const state = filmItemReducer(initialState, getFilmInfo.pending("", ""));
     expect(state.loadingStatus).toBe(LoadingStatus.LOADING);
   });
 
   test("testing change status with getFilmInfo.fullfilled actions", () => {
-    const initialState = {
-      selectFilm: null,
-      loadingStatus: LoadingStatus.IDLE,
-      error: null,
-    };
     let nothing: void = undefined;
     const state = filmItemReducer(
       initialState,
@@ -102,11 +97,6 @@ describe("test filmItemSlice", () => {
   });
 
   test("testing change status with getFilmInfo.rejected actions", () => {
-    const initialState = {
-      selectFilm: null,
-      loadingStatus: LoadingStatus.IDLE,
-      error: null,
-    };
     const state = filmItemReducer(
       initialState,
       getFilmInfo.rejected(
