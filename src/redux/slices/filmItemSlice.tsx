@@ -31,14 +31,26 @@ export enum LoadingStatus {
   ERROR = "error",
 }
 
+export interface IActorsById {
+  staffId: number;
+  nameRu: string;
+  nameEn: string;
+  description: null | string;
+  posterUrl: string;
+  professionText: string;
+  professionKey: string;
+}
+
 export interface IFilmItemSlice {
   selectFilm: IFilmById | null;
+  actors: IActorsById | null;
   loadingStatus: LoadingStatus;
   error: null | string;
 }
 
 const initialState: IFilmItemSlice = {
   selectFilm: null,
+  actors: null,
   loadingStatus: LoadingStatus.IDLE,
   error: null,
 };
@@ -58,6 +70,16 @@ export const getFilmInfo = createAsyncThunk<
       console.log("Error", err);
     }
   }
+});
+
+export const getActors = createAsyncThunk<
+  void,
+  string,
+  { rejectValue: string }
+>("filmtItem/getActors", async (id, { dispatch, rejectWithValue }) => {
+  try {
+    const actors = api.getActorsById(id);
+  } catch (err) {}
 });
 
 const handlePendingStatus = (state: IFilmItemSlice) => {

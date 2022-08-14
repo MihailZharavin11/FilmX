@@ -1,7 +1,7 @@
 import { Card, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getFilmInfo } from "../../redux/slices/filmItemSlice";
+import { getActors, getFilmInfo } from "../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
 import styles from "./filmItem.module.scss";
@@ -17,6 +17,7 @@ const FilmItem = () => {
   useEffect(() => {
     if (!id) return;
     dispatch(getFilmInfo(id));
+    dispatch(getActors(id));
   }, [dispatch, id]);
 
   if (loadingStatus === "loading") {

@@ -97,6 +97,17 @@ const getFilmById = async (id: string) => {
   return FilmById;
 };
 
+export const getActorsById = async (id: string) => {
+  const foundActor = await axios
+    .get(`https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=${id}`, {
+      headers: {
+        "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => {});
+};
+
 const getFilmBySearchValue = async (searchValue: string) => {
   const searchFilmValue: TTopFilm[] = await instanceV2_1
     .get(`/search-by-keyword?keyword=${searchValue}&page=1`)
@@ -113,4 +124,5 @@ export default {
   getListFilmsByGenre,
   getFilmById,
   getFilmBySearchValue,
+  getActorsById,
 };

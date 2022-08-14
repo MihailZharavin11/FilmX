@@ -47,6 +47,7 @@ describe("test filmItemSlice", () => {
   const getStateMock = jest.fn();
   const initialState = {
     selectFilm: null,
+    actors: null,
     loadingStatus: LoadingStatus.IDLE,
     error: null,
   };
