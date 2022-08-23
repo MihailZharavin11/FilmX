@@ -40,6 +40,7 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
+  debugger;
 
   return data;
 };
@@ -105,7 +106,10 @@ export const getActorsById = async (id: string) => {
         "Content-Type": "application/json",
       },
     })
-    .then((response) => {});
+    .then((response) => {
+      return response.data;
+    });
+  return foundActor;
 };
 
 const getFilmBySearchValue = async (searchValue: string) => {
