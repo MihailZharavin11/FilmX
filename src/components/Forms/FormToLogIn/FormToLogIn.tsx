@@ -16,6 +16,7 @@ const FormToLogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { isAuth } = useAuth();
   const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
   const changeShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -29,6 +30,7 @@ const FormToLogIn = () => {
     password: string;
   }) => {
     dispatch(userLogIn({ email, password }));
+    form.resetFields();
   };
 
   useEffect(() => {

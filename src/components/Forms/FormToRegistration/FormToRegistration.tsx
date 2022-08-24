@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   UserOutlined,
   EyeTwoTone,
@@ -8,24 +8,31 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import styles from "../forms.module.scss";
-import fireBaseAuth from "../../../fireBaseAuth";
 import { useAppDispatch } from "../../../redux/store";
-import { createNewUser, setUser } from "../../../redux/slices/userSlice";
+import { createNewUser } from "../../../redux/slices/userSlice";
+import { useAuth } from "../../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const FormToRegistration: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useAppDispatch();
+  const { isAuth } = useAuth();
+  const navigate = useNavigate();
 
   const changeShowPassword = () => {
     setShowPassword(!showPassword);
   };
 
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
+
   const onFinish = ({
-    name,
     email,
     password,
   }: {
-    name: string;
     email: string;
     password: string;
   }) => {

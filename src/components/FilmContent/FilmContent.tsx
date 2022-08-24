@@ -27,7 +27,7 @@ const FilmContent: React.FC = () => {
   const renderFilmItem = () => {
     if (categories || (!genre && !categories)) {
       return topFilms.map((element) => (
-        <Col className={styles.column} span={6}>
+        <Col key={element.filmId} className={styles.column} span={6}>
           <FilmItem
             key={element.filmId}
             id={element.filmId}
