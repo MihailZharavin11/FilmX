@@ -2,24 +2,16 @@ import { Avatar, Col, Dropdown, Menu, Typography } from "antd";
 import React from "react";
 import { UserOutlined, SmallDashOutlined } from "@ant-design/icons";
 import styles from "./headerFixed.module.scss";
+import { Link } from "react-router-dom";
 
 const AvatarZone = () => {
   const dropMenu = (
     <Menu
       selectable
-      defaultSelectedKeys={["3"]}
       items={[
         {
-          key: "1",
-          label: "Item 1",
-        },
-        {
-          key: "2",
-          label: "Item 2",
-        },
-        {
-          key: "3",
-          label: "Item 3",
+          key: "LogIn",
+          label: <Link to="/login">Log In</Link>,
         },
       ]}
     />
