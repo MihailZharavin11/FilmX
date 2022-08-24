@@ -1,4 +1,4 @@
-import { Card, Spin } from "antd";
+import { Avatar, Card, List, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { getActors, getFilmInfo } from "../../redux/slices/filmItemSlice";
@@ -10,7 +10,7 @@ import { setClassForRaiting } from "../../lib/raitingFunc";
 const FilmItem = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const { selectFilm, loadingStatus, error } = useAppSelector(
+  const { selectFilm, loadingStatus, error, actors } = useAppSelector(
     (state) => state.filmItem
   );
 
@@ -131,7 +131,22 @@ const FilmItem = () => {
               </div>
             </div>
           </div>
-          <div className="description__nav"></div>
+          <div className="description__nav">
+            <h3>Главные актеры</h3>
+            <List
+              itemLayout="horizontal"
+              dataSource={actors ? actors : []}
+              renderItem={(item) => (
+                <List.Item key={item.staffId}>
+                  <List.Item.Meta
+                    avatar={<Avatar src={item.posterUrl} />}
+                    title={item.nameRu}
+                    description={item.professionText}
+                  />
+                </List.Item>
+              )}
+            />
+          </div>
         </div>
       </div>
     </div>

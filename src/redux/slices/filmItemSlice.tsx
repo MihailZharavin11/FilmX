@@ -43,7 +43,7 @@ export interface IActorsById {
 
 export interface IFilmItemSlice {
   selectFilm: IFilmById | null;
-  actors: IActorsById | null;
+  actors: IActorsById[] | null;
   loadingStatus: LoadingStatus;
   error: null | string;
 }
@@ -78,7 +78,8 @@ export const getActors = createAsyncThunk<
   { rejectValue: string }
 >("filmtItem/getActors", async (id, { dispatch, rejectWithValue }) => {
   try {
-    const actors = api.getActorsById(id);
+    const actors = await api.getActorsById(id);
+    dispatch(addActors(actors));
   } catch (err) {}
 });
 
@@ -102,12 +103,22 @@ const filmItemSlice = createSlice({
     addItemFilm: (state, action) => {
       state.selectFilm = action.payload;
     },
+    addActors: (state, action) => {
+      state.actors = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(getFilmInfo.pending, handlePendingStatus)
       .addCase(getFilmInfo.fulfilled, handleFulfilledStatus)
       .addCase(getFilmInfo.rejected, (state, action) => {
+        if (action.payload) {
+          handleRejectedStatus(state, action.payload);
+        }
+      })
+      .addCase(getActors.pending, handlePendingStatus)
+      .addCase(getActors.fulfilled, handleFulfilledStatus)
+      .addCase(getActors.rejected, (state, action) => {
         if (action.payload) {
           handleRejectedStatus(state, action.payload);
         }
@@ -119,4 +130,4 @@ const { reducer, actions } = filmItemSlice;
 
 export default reducer;
 
-export const { addItemFilm } = actions;
+export const { addItemFilm, addActors } = actions;

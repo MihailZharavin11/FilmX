@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IFilmById } from "../redux/slices/filmItemSlice";
+import { IActorsById, IFilmById } from "../redux/slices/filmItemSlice";
 import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
 
 type TCategories = {
@@ -98,7 +98,7 @@ const getFilmById = async (id: string) => {
 };
 
 export const getActorsById = async (id: string) => {
-  const foundActor = await axios
+  const foundActors: IActorsById[] = await axios
     .get(`https://kinopoiskapiunofficial.tech/api/v1/staff?filmId=${id}`, {
       headers: {
         "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
@@ -108,7 +108,7 @@ export const getActorsById = async (id: string) => {
     .then((response) => {
       return response.data;
     });
-  return foundActor;
+  return foundActors.slice(0, 5);
 };
 
 const getFilmBySearchValue = async (searchValue: string) => {
