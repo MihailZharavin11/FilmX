@@ -8,15 +8,28 @@ import {
 } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import styles from "../forms.module.scss";
+import fireBaseAuth from "../../../fireBaseAuth";
+import { useAppDispatch } from "../../../redux/store";
+import { createNewUser, setUser } from "../../../redux/slices/userSlice";
 
 const FormToRegistration: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+  const dispatch = useAppDispatch();
 
   const changeShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const onFinish = ({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    dispatch(createNewUser({ email, password }));
   };
 
   return (
@@ -26,21 +39,6 @@ const FormToRegistration: React.FC = () => {
       initialValues={{ remember: true }}
       onFinish={onFinish}
     >
-      <Form.Item
-        name="name"
-        rules={[
-          {
-            type: "string",
-            required: true,
-            message: "Please input your name!",
-          },
-        ]}
-      >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="name"
-        />
-      </Form.Item>
       <Form.Item
         name="email"
         rules={[

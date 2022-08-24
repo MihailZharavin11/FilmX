@@ -4,12 +4,14 @@ import type { TypedUseSelectorHook } from 'react-redux';
 import filmsSlice from './slices/filmsTopSlice';
 import filmItemSlice from './slices/filmItemSlice';
 import searchSlice from './slices/searchSlice';
+import userSlice from './slices/userSlice';
 
 export const store = configureStore({
   reducer: {
     films: filmsSlice,
     filmItem:filmItemSlice,
-    search:searchSlice
+    search:searchSlice,
+    user: userSlice
   },
 });
 

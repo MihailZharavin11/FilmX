@@ -40,7 +40,6 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
-  debugger;
 
   return data;
 };

@@ -1,24 +1,41 @@
 import { Button, Form, Input } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   EyeTwoTone,
   EyeInvisibleTwoTone,
   MailOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../forms.module.scss";
+import { useAppDispatch } from "../../../redux/store";
+import { userLogIn } from "../../../redux/slices/userSlice";
+import { useAuth } from "../../../hooks/useAuth";
 
 const FormToLogIn = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
-
   const [showPassword, setShowPassword] = useState(false);
-
+  const { isAuth } = useAuth();
+  const dispatch = useAppDispatch();
   const changeShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  const navigate = useNavigate();
+
+  const onFinish = ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
+    dispatch(userLogIn({ email, password }));
+  };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
 
   return (
     <Form
@@ -47,6 +64,7 @@ const FormToLogIn = () => {
           prefix={<LockOutlined />}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
+          autoComplete="on"
           suffix={
             showPassword ? (
               <EyeTwoTone onClick={changeShowPassword} />

@@ -146,7 +146,6 @@ const filmsSlice = createSlice({
       .addCase(getTopFilms.fulfilled, handleFulfilledStatus)
       .addCase(getTopFilms.rejected, (state: IFilmsState, action) => {
         if (action.payload) {
-          state.loadingStatus = LoadingStatus.ERROR;
           handleRejectedStatus(state, action.payload);
         }
       })
@@ -154,7 +153,6 @@ const filmsSlice = createSlice({
       .addCase(getMovieByGenre.fulfilled, handleFulfilledStatus)
       .addCase(getMovieByGenre.rejected, (state, action) => {
         if (action.payload) {
-          state.loadingStatus = LoadingStatus.ERROR;
           handleRejectedStatus(state, action.payload);
         }
       });
