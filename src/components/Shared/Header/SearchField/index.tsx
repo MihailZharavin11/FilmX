@@ -1,8 +1,8 @@
 import { Select } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { searchFilm } from "../../../redux/slices/searchSlice";
+import { useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { searchFilm } from "../../../../redux/slices/searchSlice";
 import { Link } from "react-router-dom";
 import SearchRender from "./SearchRender";
 

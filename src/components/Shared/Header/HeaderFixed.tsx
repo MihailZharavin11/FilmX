@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Row } from "antd";
-import { useLocation, useMatch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AvatarZone from "./AvatarZone";
 import styles from "./headerFixed.module.scss";
 import Logo from "./Logo";
@@ -9,8 +9,6 @@ import SearchField from "./SearchField";
 
 const HeaderFixed: React.FC = () => {
   let { pathname } = useLocation();
-  const reg = "/films/[A-Z]";
-  let match = useMatch(reg);
 
   return (
     <div className={styles.header}>

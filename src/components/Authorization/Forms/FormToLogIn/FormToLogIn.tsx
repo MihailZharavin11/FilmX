@@ -1,33 +1,26 @@
+import { Button, Form, Input } from "antd";
 import React, { useEffect, useState } from "react";
 import {
-  UserOutlined,
   EyeTwoTone,
   EyeInvisibleTwoTone,
   MailOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import styles from "../forms.module.scss";
-import { useAppDispatch } from "../../../redux/store";
-import { createNewUser } from "../../../redux/slices/userSlice";
-import { useAuth } from "../../../hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../../../../redux/store";
+import { userLogIn } from "../../../../redux/slices/userSlice";
+import { useAuth } from "../../../../hooks/useAuth";
 
-const FormToRegistration: React.FC = () => {
+const FormToLogIn = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const dispatch = useAppDispatch();
   const { isAuth } = useAuth();
-  const navigate = useNavigate();
-
+  const dispatch = useAppDispatch();
+  const [form] = Form.useForm();
   const changeShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
-  useEffect(() => {
-    if (isAuth) {
-      navigate("/");
-    }
-  }, [isAuth, navigate]);
+  const navigate = useNavigate();
 
   const onFinish = ({
     email,
@@ -36,8 +29,15 @@ const FormToRegistration: React.FC = () => {
     email: string;
     password: string;
   }) => {
-    dispatch(createNewUser({ email, password }));
+    dispatch(userLogIn({ email, password }));
+    form.resetFields();
   };
+
+  useEffect(() => {
+    if (isAuth) {
+      navigate("/");
+    }
+  }, [isAuth, navigate]);
 
   return (
     <Form
@@ -66,6 +66,7 @@ const FormToRegistration: React.FC = () => {
           prefix={<LockOutlined />}
           type={showPassword ? "text" : "password"}
           placeholder="Password"
+          autoComplete="on"
           suffix={
             showPassword ? (
               <EyeTwoTone onClick={changeShowPassword} />
@@ -80,9 +81,12 @@ const FormToRegistration: React.FC = () => {
         <Button type="primary" htmlType="submit" className="login-form-button">
           Log in
         </Button>
+        <div className="login__registration">
+          Or <Link to="/registration">register now!</Link>
+        </div>
       </Form.Item>
     </Form>
   );
 };
 
-export default FormToRegistration;
+export default FormToLogIn;

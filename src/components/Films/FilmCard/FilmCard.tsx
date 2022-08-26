@@ -2,8 +2,8 @@ import { Card } from "antd";
 import React from "react";
 import { Link } from "react-router-dom";
 import { StarTwoTone } from "@ant-design/icons";
-import "../../styles/raiting.scss";
-import { setClassForRaiting } from "../../lib/raitingFunc";
+import "../../../styles/raiting.scss";
+import { setClassForRaiting } from "../../../lib/raitingFunc";
 
 type FilmItemProps = {
   title: string;

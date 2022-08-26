@@ -1,8 +1,8 @@
 import { Layout } from "antd";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import FilmContent from "../components/FilmContent/FilmContent";
-import FimlsPageHeader from "../components/FilmsPageHeader/FilmsPageHeader";
+import FilmLayout from "../components/Films/FilmLayout/FilmLayout";
+import FilmNav from "../components/Films/FilmNav/FilmNav";
 import { useAuth } from "../hooks/useAuth";
 
 const { Sider, Content } = Layout;
@@ -25,10 +25,10 @@ const Films: React.FC = () => {
     <Layout>
       <Layout>
         <Sider width={256}>
-          <FimlsPageHeader />
+          <FilmNav />
         </Sider>
         <Content>
-          <FilmContent />
+          <FilmLayout />
         </Content>
       </Layout>
     </Layout>

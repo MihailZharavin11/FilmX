@@ -1,6 +1,6 @@
 import { Col, Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./headerFixed.module.scss";
 
 const MenuFixed: React.FC = () => {

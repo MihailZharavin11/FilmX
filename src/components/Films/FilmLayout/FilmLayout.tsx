@@ -1,13 +1,16 @@
 import { Col, Pagination, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import { getMovieByGenre, getTopFilms } from "../../redux/slices/filmsTopSlice";
+import {
+  getMovieByGenre,
+  getTopFilms,
+} from "../../../redux/slices/filmsTopSlice";
 import FilmItem from "../FilmCard/FilmCard";
-import styles from "./filmContent.module.scss";
+import styles from "./filmLayout.module.scss";
 import type { PaginationProps } from "antd";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { useParams } from "react-router-dom";
 
-const FilmContent: React.FC = () => {
+const FilmLayout: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
   const { topFilms, totalPage, loadingStatus, filmsByGenre } = useAppSelector(
@@ -90,4 +93,4 @@ const FilmContent: React.FC = () => {
   );
 };
 
-export default FilmContent;
+export default FilmLayout;

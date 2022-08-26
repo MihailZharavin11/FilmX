@@ -1,16 +1,16 @@
 import { Avatar, Card, List, Spin } from "antd";
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getActors, getFilmInfo } from "../../redux/slices/filmItemSlice";
-import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { getActors, getFilmInfo } from "../../../redux/slices/filmItemSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
-import styles from "./filmItem.module.scss";
-import { setClassForRaiting } from "../../lib/raitingFunc";
+import styles from "./filmContent.module.scss";
+import { setClassForRaiting } from "../../../lib/raitingFunc";
 
-const FilmItem = () => {
+const FilmContent: React.FC = () => {
   const { id } = useParams();
   const dispatch = useAppDispatch();
-  const { selectFilm, loadingStatus, error, actors } = useAppSelector(
+  const { selectFilm, loadingStatus, actors } = useAppSelector(
     (state) => state.filmItem
   );
 
@@ -153,4 +153,4 @@ const FilmItem = () => {
   );
 };
 
-export default FilmItem;
+export default FilmContent;

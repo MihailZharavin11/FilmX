@@ -1,5 +1,5 @@
 import React from "react";
-import { setClassForRaiting } from "../../../lib/raitingFunc";
+import { setClassForRaiting } from "../../../../lib/raitingFunc";
 import styles from "./searchField.module.scss";
 
 type SearchRenderProps = {

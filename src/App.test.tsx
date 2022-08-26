@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home";
-import MenuFixed from "./components/Header/MenuFixed";
+import MenuFixed from "./components/Shared/Header/MenuFixed";
 
 describe("Checking the Display of Components", () => {
   beforeAll(() => {

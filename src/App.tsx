@@ -2,14 +2,14 @@ import { Header } from "antd/lib/layout/layout";
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import HeaderFixed from "./components/Header/HeaderFixed";
-import FilmItem from "./components/FilmItem/FilmItem";
+import HeaderFixed from "./components/Shared/Header/HeaderFixed";
+import FilmContent from "./components/Films/FilmContent/FilmContent";
 import Films from "./pages/Films";
 import Home from "./pages/Home";
-import EmptyContent from "./components/EmptyContent/EmptyContent";
-import Auth from "./components/Auth/Auth";
-import FormToRegistration from "./components/Forms/FormToRegistration/FormToRegistration";
-import FormToLogIn from "./components/Forms/FormToLogIn/FormToLogIn";
+import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
+import Auth from "./components/Authorization/Auth/Auth";
+import FormToRegistration from "./components/Authorization/Forms/FormToRegistration/FormToRegistration";
+import FormToLogIn from "./components/Authorization/Forms/FormToLogIn/FormToLogIn";
 
 const App: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const App: React.FC = () => {
         <Route path="/films" element={<Films />} />
         <Route path="/films/TOP/:categories" element={<Films />} />
         <Route path="/films/GENRE/:genre" element={<Films />} />
-        <Route path="/films/:id" element={<FilmItem />} />
+        <Route path="/films/:id" element={<FilmContent />} />
         <Route
           path="/registration"
           element={

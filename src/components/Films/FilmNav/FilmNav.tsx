@@ -7,8 +7,8 @@ import {
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { Link } from "react-router-dom";
-import api, { TGenre } from "../../api/index";
-import { useAppSelector } from "../../redux/store";
+import api, { TGenre } from "../../../api/index";
+import { useAppSelector } from "../../../redux/store";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -17,7 +17,7 @@ type TItemCategories = {
   path: string;
 };
 
-const FimlsPageHeader: React.FC = () => {
+const FilmNav: React.FC = () => {
   const [current, setCurrent] = useState("0");
   const { loadingStatus } = useAppSelector((state) => state.films);
   const [genre, setGenre] = useState<TGenre[] | null>();
@@ -109,4 +109,4 @@ const FimlsPageHeader: React.FC = () => {
   );
 };
 
-export default FimlsPageHeader;
+export default FilmNav;
