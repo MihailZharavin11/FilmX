@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./filmHeader.module.scss";
+import styles from "./cardInnerHeader.module.scss";
 
 type FilmHeaderProps = {
   title: string;
@@ -8,7 +8,7 @@ type FilmHeaderProps = {
   text?: string;
 };
 
-const FilmHeader: React.FC<FilmHeaderProps> = ({
+const CardInnerHeader: React.FC<FilmHeaderProps> = ({
   title,
   titleOriginal,
   subTitle,
@@ -26,4 +26,4 @@ const FilmHeader: React.FC<FilmHeaderProps> = ({
   );
 };
 
-export default FilmHeader;
+export default CardInnerHeader;

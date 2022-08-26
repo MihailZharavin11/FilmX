@@ -1,7 +1,7 @@
 import { Card } from "antd";
 import React from "react";
 import { setClassForRaiting } from "../../../lib/raitingFunc";
-import styles from "./filmImage.module.scss";
+import styles from "./cardInnerImage.module.scss";
 import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
 
 type FilmImageProps = {

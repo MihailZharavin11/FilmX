@@ -10,11 +10,8 @@ import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
 import Auth from "./components/Authorization/Auth/Auth";
 import FormToRegistration from "./components/Authorization/Forms/FormToRegistration/FormToRegistration";
 import FormToLogIn from "./components/Authorization/Forms/FormToLogIn/FormToLogIn";
-import FilmImage from "./components/Films/FilmImage/FilmImage";
-import { useAppSelector } from "./redux/store";
 
 const App: React.FC = () => {
-  const { selectFilm } = useAppSelector((state) => state.filmItem);
   return (
     <div className="App">
       <Header className="header">

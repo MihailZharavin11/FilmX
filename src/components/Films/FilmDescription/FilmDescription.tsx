@@ -4,6 +4,7 @@ import styles from "./filmDescription.module.scss";
 
 const FilmDescription = () => {
   const { selectFilm } = useAppSelector((state) => state.filmItem);
+
   return (
     <div className={styles.description__aboutFilm}>
       <h3 className={styles.description__aboutFimTitle}>О фильме</h3>
