@@ -1,0 +1,13 @@
+@import "../../../styles/raiting.scss";
+
+.presentationFilm__image {
+  display: flex;
+  justify-content: center;
+}
+.presentationFilm__raiting {
+  display: grid;
+  grid-template: 1fr/1fr 1fr;
+  .presentationFilm__raitingNumber {
+    font-size: 24px;
+  }
+}

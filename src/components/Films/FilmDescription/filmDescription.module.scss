@@ -1,0 +1,16 @@
+.description__aboutFilm {
+  .description__aboutFimTitle {
+    font-size: 24px;
+  }
+  .description__aboutFilmTable {
+    display: grid;
+    grid-template: 1fr/1fr 3fr;
+    .description__aboutFilmTableItem {
+      padding: 10px;
+      color: grey;
+    }
+    .description__aboutFilmTableDescription {
+      padding: 10px;
+    }
+  }
+}
