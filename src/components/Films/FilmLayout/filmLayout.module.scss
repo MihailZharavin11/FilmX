@@ -9,3 +9,30 @@
   align-items: center;
   height: calc(100vh - 70px);
 }
+
+.film_row {
+  margin-top: 30px;
+}
+
+.pagination_row {
+  margin: 20px 0px;
+}
+
+@media (max-width: 575.98px) {
+}
+
+// // Small devices (landscape phones, less than 768px)
+// @media (max-width: 767.98px) { ... }
+
+// Medium devices (tablets, less than 992px)
+@media (max-width: 991.98px) {
+  .film_row {
+    justify-content: center;
+  }
+  .pagination_row {
+    justify-content: center;
+  }
+}
+
+// // Large devices (desktops, less than 1200px)
+// @media (max-width: 1199.98px) { ... }

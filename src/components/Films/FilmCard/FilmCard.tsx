@@ -5,7 +5,7 @@ import { StarTwoTone } from "@ant-design/icons";
 import "../../../styles/raiting.scss";
 import { setClassForRaiting } from "../../../lib/raitingFunc";
 
-type FilmItemProps = {
+type FilmCardProps = {
   title: string;
   id: number;
   rating: string | number;
@@ -27,7 +27,7 @@ const RaitingComponents: React.FC<RaitingComponentsProps> = ({ raiting }) => {
   );
 };
 
-const FilmItem: React.FC<FilmItemProps> = ({
+const FilmCard: React.FC<FilmCardProps> = ({
   id,
   title,
   rating,
@@ -38,7 +38,12 @@ const FilmItem: React.FC<FilmItemProps> = ({
       <Card
         hoverable
         bordered
-        style={{ maxWidth: "185px", height: 360, overflow: "hidden" }}
+        style={{
+          maxWidth: "185px",
+          minWidth: "185px",
+          height: 360,
+          overflow: "hidden",
+        }}
         cover={
           <Link to={`/films/${id}`}>
             <img
@@ -61,4 +66,4 @@ const FilmItem: React.FC<FilmItemProps> = ({
   );
 };
 
-export default FilmItem;
+export default FilmCard;

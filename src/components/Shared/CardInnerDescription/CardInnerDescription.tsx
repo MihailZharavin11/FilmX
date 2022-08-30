@@ -16,10 +16,14 @@ const CardInnerDescription: React.FC<FilmDescriptionProps> = ({
     <div className={styles.description__aboutFilm}>
       <h3 className={styles.description__aboutFimTitle}>{title}</h3>
       <div className={styles.description__aboutFilmTable}>
-        {contentArray.map((element) => {
+        {contentArray.map((element, index) => {
           if (element.title && element.value) {
             return (
-              <CardInnerTableItem title={element.title} value={element.value} />
+              <CardInnerTableItem
+                key={element.title + index}
+                title={element.title}
+                value={element.value}
+              />
             );
           }
           return null;

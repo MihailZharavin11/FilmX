@@ -4,7 +4,7 @@ import {
   getMovieByGenre,
   getTopFilms,
 } from "../../../redux/slices/filmsTopSlice";
-import FilmItem from "../FilmCard/FilmCard";
+import FilmCard from "../FilmCard/FilmCard";
 import styles from "./filmLayout.module.scss";
 import type { PaginationProps } from "antd";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
@@ -30,8 +30,15 @@ const FilmLayout: React.FC = () => {
   const renderFilmItem = () => {
     if (categories || (!genre && !categories)) {
       return topFilms.map((element) => (
-        <Col key={element.filmId} className={styles.column} span={6}>
-          <FilmItem
+        <Col
+          key={element.filmId}
+          className={styles.column}
+          lg={{ span: 6, offset: 1 }}
+          md={{ span: 8, offset: 1 }}
+          sm={{ span: 12, offset: 1 }}
+          xs={{ span: 24, offset: 1 }}
+        >
+          <FilmCard
             key={element.filmId}
             id={element.filmId}
             title={element.nameEn ? element.nameEn : element.nameRu}
@@ -43,8 +50,14 @@ const FilmLayout: React.FC = () => {
     }
     if (genre) {
       return filmsByGenre.map((element) => (
-        <Col className={styles.column} span={6}>
-          <FilmItem
+        <Col
+          className={styles.column}
+          lg={{ span: 6, offset: 0 }}
+          md={{ span: 6, offset: 0 }}
+          sm={{ span: 12, offset: 1 }}
+          xs={{ span: 24, offset: 1 }}
+        >
+          <FilmCard
             key={element.kinopoiskId}
             id={element.kinopoiskId}
             title={element.nameEn ? element.nameEn : element.nameOriginal}
@@ -65,21 +78,12 @@ const FilmLayout: React.FC = () => {
   }
 
   return (
-    <>
-      <Row
-        style={{
-          marginTop: "30px",
-        }}
-        gutter={[0, 30]}
-      >
+    <div>
+      <Row className={styles.film_row} gutter={[0, 30]}>
         {renderFilmItem()}
       </Row>
-      <Row
-        style={{
-          margin: "20px 0px",
-        }}
-      >
-        <Col push={1} span={10}>
+      <Row className={styles.pagination_row}>
+        <Col>
           <Pagination
             simple
             defaultPageSize={20}
@@ -89,7 +93,7 @@ const FilmLayout: React.FC = () => {
           />
         </Col>
       </Row>
-    </>
+    </div>
   );
 };
 
