@@ -20,7 +20,7 @@ const CardInnerHeader: React.FC<FilmHeaderProps> = ({
         {title}
         {titleOriginal}
       </h1>
-      <p className={styles.description__headerYear}>{subTitle} г.</p>
+      <p className={styles.description__headerYear}>{subTitle}</p>
       <p className={styles.description__headerSlogan}>{text}</p>
     </div>
   );

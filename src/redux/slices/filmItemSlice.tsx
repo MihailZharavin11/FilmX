@@ -1,5 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import api from "../../api";
+import { RootState } from "../store";
 
 type TCountries = {
   country: string;
@@ -47,6 +52,11 @@ export interface IFilmItemSlice {
   loadingStatus: LoadingStatus;
   error: null | string;
 }
+
+export type TDescriptionValue = {
+  title: string;
+  value: string | number | boolean;
+};
 
 const initialState: IFilmItemSlice = {
   selectFilm: null,
@@ -125,6 +135,40 @@ const filmItemSlice = createSlice({
       });
   },
 });
+
+export const descriptionFilmSelector = createSelector(
+  (state: RootState) => state.filmItem.selectFilm,
+  (selectFilm) => {
+    const descriptionValue: TDescriptionValue[] = [
+      {
+        title: "Страна",
+        value:
+          selectFilm?.countries.map((element) => element.country).join() || "",
+      },
+      {
+        title: "Длительность фильма",
+        value: selectFilm?.filmLength || "",
+      },
+      {
+        title: "3D",
+        value: selectFilm?.has3D ? "Доступен" : "Недоступен",
+      },
+      {
+        title: "IMax",
+        value: selectFilm?.hasImax ? "Доступен" : "Недоступен",
+      },
+      {
+        title: "Возраст",
+        value: selectFilm?.ratingAgeLimits || "",
+      },
+      {
+        title: "Описание",
+        value: selectFilm?.description || "",
+      },
+    ];
+    return descriptionValue;
+  }
+);
 
 const { reducer, actions } = filmItemSlice;
 

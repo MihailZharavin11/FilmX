@@ -10,6 +10,7 @@ import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
 import Auth from "./components/Authorization/Auth/Auth";
 import FormToRegistration from "./components/Authorization/Forms/FormToRegistration/FormToRegistration";
 import FormToLogIn from "./components/Authorization/Forms/FormToLogIn/FormToLogIn";
+import ActorContent from "./components/Actors/ActorContent/ActorContent";
 
 const App: React.FC = () => {
   return (
@@ -24,6 +25,7 @@ const App: React.FC = () => {
         <Route path="/films/TOP/:categories" element={<Films />} />
         <Route path="/films/GENRE/:genre" element={<Films />} />
         <Route path="/films/:id" element={<FilmContent />} />
+        <Route path="/actor/:id" element={<ActorContent />} />
         <Route
           path="/registration"
           element={
@@ -34,6 +36,7 @@ const App: React.FC = () => {
           path="/login"
           element={<Auth title="Log In" children={<FormToLogIn />} />}
         />
+
         <Route path="*" element={<EmptyContent />} />
       </Routes>
     </div>

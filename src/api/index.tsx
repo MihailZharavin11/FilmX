@@ -1,4 +1,5 @@
 import axios from "axios";
+import { TActor } from "../redux/slices/actorSlice";
 import { IActorsById, IFilmById } from "../redux/slices/filmItemSlice";
 import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
 
@@ -111,6 +112,32 @@ export const getActorsById = async (id: string) => {
   return foundActors.slice(0, 5);
 };
 
+export const getActorInfoById = async (id: string) => {
+  const actor: TActor = await axios
+    .get(`https://kinopoiskapiunofficial.tech/api/v1/staff/${id}`, {
+      headers: {
+        "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
+        "Content-Type": "application/json",
+      },
+    })
+    .then((response) => response.data);
+  const foundActor = {
+    personId: actor.personId,
+    nameRu: actor.nameRu,
+    nameEn: actor.nameEn,
+    posterUrl: actor.posterUrl,
+    growth: actor.growth,
+    birthday: new Date(actor.birthday).toLocaleDateString("ru-RU"),
+    death: actor.death,
+    age: actor.age,
+    films: actor.films.slice(0, 5),
+    filmsLength: actor.films.length,
+    profession: actor.profession,
+  };
+  debugger;
+  return foundActor;
+};
+
 const getFilmBySearchValue = async (searchValue: string) => {
   const searchFilmValue: TTopFilm[] = await instanceV2_1
     .get(`/search-by-keyword?keyword=${searchValue}&page=1`)
@@ -128,4 +155,5 @@ export default {
   getFilmById,
   getFilmBySearchValue,
   getActorsById,
+  getActorInfoById,
 };

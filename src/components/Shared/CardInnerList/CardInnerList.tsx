@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./cardInnerList.module.scss";
 
 type CardInnerListProps = {
   title: string;
@@ -6,7 +7,7 @@ type CardInnerListProps = {
 };
 const CardInnerList: React.FC<CardInnerListProps> = ({ title, children }) => {
   return (
-    <div className="description__nav">
+    <div className={styles.description__nav}>
       <h3>{title}</h3>
       {children}
     </div>
