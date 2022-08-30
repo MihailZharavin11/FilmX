@@ -1,6 +1,6 @@
 import React from "react";
 import { TDescriptionValue } from "../../../redux/slices/filmItemSlice";
-import CardInnerTable from "../CardInnerTable/CardInnerTable";
+import CardInnerTableItem from "../CardInnerTableItem/CardInnerTableItem";
 import styles from "./cardInnerDescription.module.scss";
 
 type FilmDescriptionProps = {
@@ -15,7 +15,16 @@ const CardInnerDescription: React.FC<FilmDescriptionProps> = ({
   return (
     <div className={styles.description__aboutFilm}>
       <h3 className={styles.description__aboutFimTitle}>{title}</h3>
-      <CardInnerTable contentArray={contentArray} />
+      <div className={styles.description__aboutFilmTable}>
+        {contentArray.map((element) => {
+          if (element.title && element.value) {
+            return (
+              <CardInnerTableItem title={element.title} value={element.value} />
+            );
+          }
+          return null;
+        })}
+      </div>
     </div>
   );
 };
