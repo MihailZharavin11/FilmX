@@ -1,4 +1,5 @@
 import { Layout } from "antd";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import FilmLayout from "../components/Films/FilmLayout/FilmLayout";
@@ -8,19 +9,6 @@ import { useAuth } from "../hooks/useAuth";
 const { Sider, Content } = Layout;
 
 const Films: React.FC = () => {
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate("/login");
-    }
-  }, [isAuth, navigate]);
-
-  if (!isAuth) {
-    return null;
-  }
-
   return (
     <Layout>
       <Layout>

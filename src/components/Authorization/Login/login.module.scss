@@ -1,4 +1,4 @@
-.registration {
+.wrapper {
   height: calc(100vh - 70px);
   width: 80%;
   margin: 0 auto;
@@ -8,6 +8,11 @@
   align-items: center;
 }
 
-.form {
-  width: 40%;
+.login_button {
+  width: 30%;
+  margin: 0 auto;
+  text-align: center;
+  button {
+    margin-bottom: 20px;
+  }
 }

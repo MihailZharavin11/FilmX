@@ -7,10 +7,10 @@ import FilmContent from "./components/Films/FilmContent/FilmContent";
 import Films from "./pages/Films";
 import Home from "./pages/Home";
 import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
-import Auth from "./components/Authorization/Auth/Auth";
-import FormToRegistration from "./components/Authorization/Forms/FormToRegistration/FormToRegistration";
-import FormToLogIn from "./components/Authorization/Forms/FormToLogIn/FormToLogIn";
 import ActorContent from "./components/Actors/ActorContent/ActorContent";
+import RequireAuth from "./hoc/RequireAuth";
+import { Login } from "./components/Authorization/Login/Login";
+import { Registration } from "./components/Authorization/Registration/Registration";
 
 const App: React.FC = () => {
   return (
@@ -21,21 +21,23 @@ const App: React.FC = () => {
       <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/films" element={<Films />} />
+        <Route
+          path="/films"
+          element={
+            <RequireAuth>
+              <Films />
+            </RequireAuth>
+          }
+        />
         <Route path="/films/TOP/:categories" element={<Films />} />
         <Route path="/films/GENRE/:genre" element={<Films />} />
         <Route path="/films/:id" element={<FilmContent />} />
         <Route path="/actor/:id" element={<ActorContent />} />
         <Route
           path="/registration"
-          element={
-            <Auth title="Registration" children={<FormToRegistration />} />
-          }
+          element={<Registration title="Registration" />}
         />
-        <Route
-          path="/login"
-          element={<Auth title="Log In" children={<FormToLogIn />} />}
-        />
+        <Route path="/login" element={<Login title="Log In" />} />
 
         <Route path="*" element={<EmptyContent />} />
       </Routes>

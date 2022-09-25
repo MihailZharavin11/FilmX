@@ -52,8 +52,8 @@ const FilmLayout: React.FC = () => {
       return filmsByGenre.map((element) => (
         <Col
           className={styles.column}
-          lg={{ span: 6, offset: 0 }}
-          md={{ span: 6, offset: 0 }}
+          lg={{ span: 6, offset: 1 }}
+          md={{ span: 8, offset: 1 }}
           sm={{ span: 12, offset: 1 }}
           xs={{ span: 24, offset: 1 }}
         >

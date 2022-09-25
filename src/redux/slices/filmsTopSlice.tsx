@@ -1,5 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import api from "../../api";
+import { RootState } from "../store";
 
 export interface IFilmsState {
   topFilms: TTopFilm[] | [];
@@ -158,6 +163,12 @@ const filmsSlice = createSlice({
       });
   },
 });
+
+const filmsSelector = createSelector(
+  (state: RootState) => state.films.topFilms,
+  (state: RootState) => state.films.filmsByGenre,
+  (topFilms, filmsByGenre) => {}
+);
 
 const { reducer, actions } = filmsSlice;
 

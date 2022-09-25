@@ -1,5 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import fireBaseAuth from "../../fireBaseAuth";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
+import fireBaseAuth from "../../fireBase/fireBaseAuth";
+import { RootState } from "../store";
 
 enum LoadingStatus {
   IDLE = "idle",
@@ -7,11 +12,21 @@ enum LoadingStatus {
   ERROR = "error",
 }
 
+type FavoriteMoviesItem = {
+  id: string;
+  nameEn: string;
+  ratingImdb: string;
+  posterUrl: string;
+  year: number;
+};
+
 interface IUserSlice {
   email: string | null;
   token: string | null;
   id: string | null;
   error: string | null;
+  favoriteMovies: FavoriteMoviesItem[] | [];
+  watchedMovies: FavoriteMoviesItem[] | [];
   loadingStatus: LoadingStatus;
 }
 
@@ -20,6 +35,8 @@ const initialState: IUserSlice = {
   token: null,
   id: null,
   error: null,
+  favoriteMovies: [],
+  watchedMovies: [],
   loadingStatus: LoadingStatus.IDLE,
 };
 
@@ -83,6 +100,22 @@ export const userLogIn = createAsyncThunk<
   }
 );
 
+export const userLogOut = createAsyncThunk<void, void, { rejectValue: string }>(
+  "user/userLogOut",
+  async (_, { dispatch, rejectWithValue }) => {
+    try {
+      const logOut = await fireBaseAuth.signOut();
+      logOut
+        ? dispatch(removeUser())
+        : rejectWithValue("Ошибка выхода, попробуйте еще раз...");
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
+
 const handlePendingStatus = (state: IUserSlice) => {
   state.loadingStatus = LoadingStatus.LOADING;
 };
@@ -111,6 +144,37 @@ const userSlice = createSlice({
       state.token = null;
       state.id = null;
     },
+    setFavoriteMovie: (state, action) => {
+      const newFavoriteMovie: FavoriteMoviesItem = {
+        id: action.payload.id,
+        nameEn: action.payload.nameEn,
+        ratingImdb: action.payload.raitingImdb,
+        posterUrl: action.payload.posterUrl,
+        year: action.payload.year,
+      };
+      const sameElement = state.favoriteMovies.some(
+        (element) => element.id === newFavoriteMovie.id
+      );
+      if (!sameElement) {
+        state.favoriteMovies = [...state.favoriteMovies, newFavoriteMovie];
+      } else {
+        state.favoriteMovies = state.favoriteMovies.filter(
+          (element) => element.id !== newFavoriteMovie.id
+        );
+      }
+    },
+    setWatchedMovie: (state, action) => {
+      const sameElement = state.watchedMovies.some(
+        (element) => element.id === action.payload.id
+      );
+      if (!sameElement) {
+        state.watchedMovies = [...state.watchedMovies, action.payload];
+      } else {
+        state.watchedMovies = state.watchedMovies.filter(
+          (element) => element.id !== action.payload.id
+        );
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -127,12 +191,34 @@ const userSlice = createSlice({
         if (action.payload) {
           handleRejectedStatus(state, action.payload);
         }
+      })
+      .addCase(userLogOut.pending, handlePendingStatus)
+      .addCase(userLogOut.fulfilled, handleFulfilledStatus)
+      .addCase(userLogOut.rejected, (state, action) => {
+        if (action.payload) {
+          handleRejectedStatus(state, action.payload);
+        }
       });
   },
 });
+
+export const iconStateSelector = (filmId: string) =>
+  createSelector(
+    (state: RootState) => state.user.favoriteMovies,
+    (state: RootState) => state.user.watchedMovies,
+    (favoriteMovie, watchedMovies) => {
+      if (!filmId) return [false, false];
+      const checkLikes = favoriteMovie.some((element) => element.id === filmId);
+      const checkWatched = watchedMovies.some(
+        (element) => element.id === filmId
+      );
+      return [checkLikes, checkWatched];
+    }
+  );
 
 const { reducer, actions } = userSlice;
 
 export default reducer;
 
-export const { setUser, removeUser } = actions;
+export const { setUser, removeUser, setFavoriteMovie, setWatchedMovie } =
+  actions;

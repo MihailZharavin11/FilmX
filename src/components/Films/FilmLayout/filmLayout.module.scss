@@ -16,6 +16,7 @@
 
 .pagination_row {
   margin: 20px 0px;
+  margin-left: 110px;
 }
 
 @media (max-width: 575.98px) {
@@ -31,6 +32,7 @@
   }
   .pagination_row {
     justify-content: center;
+    margin-left: 0px;
   }
 }
 

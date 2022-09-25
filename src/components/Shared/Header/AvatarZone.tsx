@@ -5,14 +5,14 @@ import styles from "./headerFixed.module.scss";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { useAppDispatch } from "../../../redux/store";
-import { removeUser } from "../../../redux/slices/userSlice";
+import { removeUser, userLogOut } from "../../../redux/slices/userSlice";
 
 const AvatarZone: React.FC = () => {
   const { isAuth } = useAuth();
   const dipatch = useAppDispatch();
 
   const logOut = () => {
-    dipatch(removeUser());
+    dipatch(userLogOut());
   };
 
   const dropMenu = (

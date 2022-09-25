@@ -2,7 +2,19 @@ import { Card } from "antd";
 import React from "react";
 import { setClassForRaiting } from "../../../lib/raitingFunc";
 import styles from "./cardInnerImage.module.scss";
-import { HeartTwoTone, EyeTwoTone, FireTwoTone } from "@ant-design/icons";
+import {
+  HeartTwoTone,
+  EyeTwoTone,
+  HeartOutlined,
+  EyeOutlined,
+} from "@ant-design/icons";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import {
+  iconStateSelector,
+  setFavoriteMovie,
+  setWatchedMovie,
+} from "../../../redux/slices/userSlice";
+import { useParams } from "react-router-dom";
 
 type FilmImageProps = {
   img: string | undefined;
@@ -17,6 +29,30 @@ const FilmImage: React.FC<FilmImageProps> = ({
   ratingKinopoisk,
   actions,
 }) => {
+  const selectFilm = useAppSelector((state) => state.filmItem.selectFilm);
+  const dispatch = useAppDispatch();
+  const { id } = useParams();
+  const [likedMovie, watchedMovie] = useAppSelector(
+    iconStateSelector(id ? id : "")
+  );
+
+  const onClickIcon = (nameIcon: string) => {
+    if (selectFilm) {
+      const movieToSend = {
+        id,
+        nameEn: selectFilm.nameEn ? selectFilm.nameEn : selectFilm.nameOriginal,
+        ratingImdb: selectFilm.ratingImdb,
+        posterUrl: selectFilm.posterUrl,
+        year: selectFilm.year,
+      };
+      if (nameIcon === "heart") {
+        dispatch(setFavoriteMovie(movieToSend));
+      }
+      if (nameIcon === "watched") {
+        dispatch(setWatchedMovie(movieToSend));
+      }
+    }
+  };
   return (
     <>
       <div className={styles.presentationFilm__image}>
@@ -27,9 +63,23 @@ const FilmImage: React.FC<FilmImageProps> = ({
           actions={
             actions
               ? [
-                  <HeartTwoTone twoToneColor="#eb2f96" key={"heart"} />,
-                  <EyeTwoTone key={"eye"} />,
-                  <FireTwoTone twoToneColor="#fc032c" key={"fire"} />,
+                  likedMovie ? (
+                    <HeartTwoTone
+                      onClick={() => onClickIcon("heart")}
+                      twoToneColor="#ff0daa"
+                      key={"heart"}
+                    />
+                  ) : (
+                    <HeartOutlined onClick={() => onClickIcon("heart")} />
+                  ),
+                  watchedMovie ? (
+                    <EyeTwoTone
+                      onClick={() => onClickIcon("watched")}
+                      key={"eye"}
+                    />
+                  ) : (
+                    <EyeOutlined onClick={() => onClickIcon("watched")} />
+                  ),
                 ]
               : []
           }
