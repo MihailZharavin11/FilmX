@@ -29,10 +29,38 @@ const App: React.FC = () => {
             </RequireAuth>
           }
         />
-        <Route path="/films/TOP/:categories" element={<Films />} />
-        <Route path="/films/GENRE/:genre" element={<Films />} />
-        <Route path="/films/:id" element={<FilmContent />} />
-        <Route path="/actor/:id" element={<ActorContent />} />
+        <Route
+          path="/films/TOP/:categories"
+          element={
+            <RequireAuth>
+              <Films />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/films/GENRE/:genre"
+          element={
+            <RequireAuth>
+              <Films />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/films/:id"
+          element={
+            <RequireAuth>
+              <FilmContent />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/actor/:id"
+          element={
+            <RequireAuth>
+              <ActorContent />
+            </RequireAuth>
+          }
+        />
         <Route
           path="/registration"
           element={<Registration title="Registration" />}

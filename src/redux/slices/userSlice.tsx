@@ -175,6 +175,9 @@ const userSlice = createSlice({
         );
       }
     },
+    clearError: (state) => {
+      state.error = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -220,5 +223,10 @@ const { reducer, actions } = userSlice;
 
 export default reducer;
 
-export const { setUser, removeUser, setFavoriteMovie, setWatchedMovie } =
-  actions;
+export const {
+  setUser,
+  removeUser,
+  setFavoriteMovie,
+  setWatchedMovie,
+  clearError,
+} = actions;
