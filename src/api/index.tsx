@@ -1,16 +1,11 @@
 import axios from "axios";
 import { TActor } from "../redux/slices/actorSlice";
-import { IActorsById, IFilmById } from "../redux/slices/filmItemSlice";
+import {
+  IActorsById,
+  IFilmById,
+  IMoviePictures,
+} from "../redux/slices/filmItemSlice";
 import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
-
-type TCategories = {
-  genres: TGenre[];
-};
-
-export type TGenre = {
-  id: number;
-  genre: string;
-};
 
 const instanceV2_2 = axios.create({
   baseURL: "https://kinopoiskapiunofficial.tech/api/v2.2/films",
@@ -27,6 +22,15 @@ const instanceV2_1 = axios.create({
     "Content-Type": "application/json",
   },
 });
+
+type TCategories = {
+  genres: TGenre[];
+};
+
+export type TGenre = {
+  id: number;
+  genre: string;
+};
 
 const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   let categories = categoriesArgs;
@@ -134,7 +138,6 @@ export const getActorInfoById = async (id: string) => {
     filmsLength: actor.films.length,
     profession: actor.profession,
   };
-  debugger;
   return foundActor;
 };
 
@@ -148,6 +151,11 @@ const getFilmBySearchValue = async (searchValue: string) => {
   return searchFilmValue;
 };
 
+const getMoviePictures = async (id: string) => {
+  const { data } = await instanceV2_2.get(`/${id}/images?type=STILL&page=1`);
+  return data.items as IMoviePictures;
+};
+
 export default {
   getTopFilms,
   getCategories,
@@ -156,4 +164,5 @@ export default {
   getFilmBySearchValue,
   getActorsById,
   getActorInfoById,
+  getMoviePictures,
 };

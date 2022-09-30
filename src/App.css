@@ -1,13 +1,22 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
-.header{
+.header {
   z-index: 1;
   width: 100%;
-  padding:0;
+  padding: 0;
 }
 
-.ant-menu ul{
+.ant-menu ul {
   max-height: 250px;
   overflow-y: 250px;
   overflow-x: hidden;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #cccccc !important;
+}
+
+.ant-image-preview-img {
+  left: 200px;
 }

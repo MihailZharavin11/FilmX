@@ -51,6 +51,12 @@ export interface IFilmItemSlice {
   actors: IActorsById[] | null;
   loadingStatus: LoadingStatus;
   error: null | string;
+  moviePictures: null | IMoviePictures[];
+}
+
+export interface IMoviePictures {
+  imageUrl: string;
+  previewUrl: string;
 }
 
 export type TDescriptionValue = {
@@ -63,6 +69,7 @@ const initialState: IFilmItemSlice = {
   actors: null,
   loadingStatus: LoadingStatus.IDLE,
   error: null,
+  moviePictures: null,
 };
 
 export const getFilmInfo = createAsyncThunk<
@@ -90,7 +97,30 @@ export const getActors = createAsyncThunk<
   try {
     const actors = await api.getActorsById(id);
     dispatch(addActors(actors));
-  } catch (err) {}
+  } catch (err) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      console.log("Error", err);
+    }
+  }
+});
+
+export const getMoviePictures = createAsyncThunk<
+  void,
+  string,
+  { rejectValue: string }
+>("filmItem/getMoviePictures", async (id, { dispatch, rejectWithValue }) => {
+  try {
+    const moviePictures = await api.getMoviePictures(id);
+    dispatch(addMoviePictures(moviePictures));
+  } catch (err) {
+    if (err instanceof Error) {
+      return rejectWithValue(err.message);
+    } else {
+      console.log("Error", err);
+    }
+  }
 });
 
 const handlePendingStatus = (state: IFilmItemSlice) => {
@@ -116,6 +146,9 @@ const filmItemSlice = createSlice({
     addActors: (state, action) => {
       state.actors = action.payload;
     },
+    addMoviePictures: (state, action) => {
+      state.moviePictures = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -129,6 +162,13 @@ const filmItemSlice = createSlice({
       .addCase(getActors.pending, handlePendingStatus)
       .addCase(getActors.fulfilled, handleFulfilledStatus)
       .addCase(getActors.rejected, (state, action) => {
+        if (action.payload) {
+          handleRejectedStatus(state, action.payload);
+        }
+      })
+      .addCase(getMoviePictures.pending, handlePendingStatus)
+      .addCase(getMoviePictures.fulfilled, handleFulfilledStatus)
+      .addCase(getMoviePictures.rejected, (state, action) => {
         if (action.payload) {
           handleRejectedStatus(state, action.payload);
         }
@@ -174,4 +214,4 @@ const { reducer, actions } = filmItemSlice;
 
 export default reducer;
 
-export const { addItemFilm, addActors } = actions;
+export const { addItemFilm, addActors, addMoviePictures } = actions;

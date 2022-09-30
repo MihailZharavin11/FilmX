@@ -1,11 +1,11 @@
 import { Avatar, Dropdown, Menu, Typography } from "antd";
 import React from "react";
-import { UserOutlined, SmallDashOutlined } from "@ant-design/icons";
+import { UserOutlined, EllipsisOutlined } from "@ant-design/icons";
 import styles from "./headerFixed.module.scss";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import { useAppDispatch } from "../../../redux/store";
-import { removeUser, userLogOut } from "../../../redux/slices/userSlice";
+import { userLogOut } from "../../../redux/slices/userSlice";
 
 const AvatarZone: React.FC = () => {
   const { isAuth } = useAuth();
@@ -42,7 +42,7 @@ const AvatarZone: React.FC = () => {
       />
       <Dropdown overlay={dropMenu}>
         <Typography.Link>
-          <SmallDashOutlined className={styles.dropMenu} />
+          <EllipsisOutlined className={styles.dropMenu} />
         </Typography.Link>
       </Dropdown>
     </div>

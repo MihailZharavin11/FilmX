@@ -5,6 +5,7 @@ import {
   descriptionFilmSelector,
   getActors,
   getFilmInfo,
+  getMoviePictures,
 } from "../../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import CardInner from "../../Shared/CardInner/CardInner";
@@ -12,6 +13,7 @@ import CardInnerDescription from "../../Shared/CardInnerDescription/CardInnerDes
 import CardInnerImage from "../../Shared/CardInnerImage/CardInnerImage";
 import CardInnerHeader from "../../Shared/CardInnerHeader/CardInnerHeader";
 import CardInnerList from "../../Shared/CardInnerList/CardInnerList";
+import CardInnerScreens from "../../Shared/CardInnerScreens/CardInnerScreens";
 
 const FilmContent: React.FC = () => {
   const { id } = useParams();
@@ -27,6 +29,7 @@ const FilmContent: React.FC = () => {
     if (!id) return;
     dispatch(getFilmInfo(id));
     dispatch(getActors(id));
+    dispatch(getMoviePictures(id));
   }, [dispatch, id]);
 
   if (loadingStatus === "loading") {
@@ -93,6 +96,7 @@ const FilmContent: React.FC = () => {
           }
         />
       }
+      movieImages={<CardInnerScreens />}
     />
   );
 };

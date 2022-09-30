@@ -50,6 +50,7 @@ describe("test filmItemSlice", () => {
     actors: null,
     loadingStatus: LoadingStatus.IDLE,
     error: null,
+    moviePictures: null,
   };
 
   test("testing thunk getFilmInfo with resolved", async () => {

@@ -3,16 +3,19 @@
 .wrapper {
   padding: 10px;
   margin-top: 6px;
+}
+
+.film {
   display: grid;
   grid-template: 1fr/1fr 3fr;
 }
 
-.presentationFilm {
+.film__image {
   display: flex;
   flex-direction: column;
 }
 
-.description {
+.film__description {
   display: grid;
   grid-template: minmax(100px, 150px) 3fr/1fr;
   padding: 0px 30px;
