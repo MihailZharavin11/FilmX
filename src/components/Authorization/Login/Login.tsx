@@ -22,28 +22,23 @@ export const Login: React.FC<LoginProps> = ({ title }) => {
   const { isAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const { error } = useAppSelector((state) => state.user);
   const stateLocation = location.state as StateLocationData;
   const pathName = stateLocation ? stateLocation.from.pathname : "/";
-
-  useEffect(() => {
-    if (error) {
-      message.error(error);
-      dispatch(clearError());
-    }
-  }, [error, dispatch]);
 
   const handleLogIn = async (email: string, password: string) => {
     const userToLogIn = {
       email,
       password,
     };
-    const { meta } = await dispatch(userLogIn(userToLogIn));
+    const { meta, payload } = await dispatch(userLogIn(userToLogIn));
     if (meta.requestStatus === "fulfilled") {
       message.success("You have successfully logged in");
       setTimeout(() => {
         navigate(pathName);
       }, 2000);
+    }
+    if (meta.requestStatus === "rejected" && payload) {
+      message.error(payload);
     }
   };
 

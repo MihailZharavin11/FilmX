@@ -15,26 +15,21 @@ export const Registration: React.FC<RegistrationType> = ({ title }) => {
   const dispatch = useAppDispatch();
   const { isAuth } = useAuth();
   const navigate = useNavigate();
-  const { error } = useAppSelector((state) => state.user);
-
-  useEffect(() => {
-    if (error) {
-      message.error(error);
-      dispatch(clearError());
-    }
-  }, [error, dispatch]);
 
   const handleRegistration = async (email: string, password: string) => {
     const objToLogIn = {
       email,
       password,
     };
-    const { meta } = await dispatch(createNewUser(objToLogIn));
+    const { meta, payload } = await dispatch(createNewUser(objToLogIn));
     if (meta.requestStatus === "fulfilled") {
       message.success("You have successfully registered");
       setTimeout(() => {
         navigate("/");
       }, 2000);
+    }
+    if (meta.requestStatus === "rejected" && payload) {
+      message.error(payload);
     }
   };
 
