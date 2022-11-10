@@ -1,10 +1,11 @@
-import { Button, Form } from "antd";
-import React from "react";
-import { Link } from "react-router-dom";
-import { createNewUser } from "../../../redux/slices/userSlice";
-import { useAppDispatch } from "../../../redux/store";
+import { Form, message } from "antd";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { clearError, createNewUser } from "../../../redux/slices/userSlice";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import FormToAuthentication from "../Form/Form";
 import styles from "../authorization.module.scss";
+import { useAuth } from "../../../hooks/useAuth";
 
 type RegistrationType = {
   title: string;
@@ -12,13 +13,29 @@ type RegistrationType = {
 
 export const Registration: React.FC<RegistrationType> = ({ title }) => {
   const dispatch = useAppDispatch();
+  const { isAuth } = useAuth();
+  const navigate = useNavigate();
+  const { error } = useAppSelector((state) => state.user);
 
-  const handleRegistration = (email: string, password: string) => {
+  useEffect(() => {
+    if (error) {
+      message.error(error);
+      dispatch(clearError());
+    }
+  }, [error, dispatch]);
+
+  const handleRegistration = async (email: string, password: string) => {
     const objToLogIn = {
       email,
       password,
     };
-    dispatch(createNewUser(objToLogIn));
+    const { meta } = await dispatch(createNewUser(objToLogIn));
+    if (meta.requestStatus === "fulfilled") {
+      message.success("You have successfully registered");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
   };
 
   return (

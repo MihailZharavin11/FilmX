@@ -1,5 +1,5 @@
 import { Header } from "antd/lib/layout/layout";
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import HeaderFixed from "./components/Shared/Header/HeaderFixed";
@@ -11,8 +11,24 @@ import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
 import { Login } from "./components/Authorization/Login/Login";
 import { Registration } from "./components/Authorization/Registration/Registration";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { useAppDispatch } from "./redux/store";
+import { setUser } from "./redux/slices/userSlice";
 
 const App: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const auth = getAuth();
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          setUser({ email: user.email, id: user.uid, token: user.refreshToken })
+        );
+      }
+    });
+  }, []);
+
   return (
     <div className="App">
       <Header className="header">

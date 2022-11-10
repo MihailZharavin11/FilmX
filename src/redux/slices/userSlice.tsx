@@ -48,19 +48,9 @@ export const createNewUser = createAsyncThunk<
   "user/createNewUser",
   async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
-      const user = await fireBaseAuth
-        .registration(email, password)
-        .then((response) => {
-          return response;
-        });
-      if (user) {
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
-          })
-        );
+      const userToRegister = await fireBaseAuth.registration(email, password);
+      if (userToRegister) {
+        dispatch(userLogIn({ email, password }));
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -78,17 +68,17 @@ export const userLogIn = createAsyncThunk<
   "user/userLogIn",
   async ({ email, password }, { dispatch, rejectWithValue }) => {
     try {
-      const user = await fireBaseAuth
+      const userToLogIn = await fireBaseAuth
         .logIn(email, password)
         .then((response) => {
           return response;
         });
-      if (user) {
+      if (userToLogIn) {
         dispatch(
           setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.refreshToken,
+            email: userToLogIn.email,
+            id: userToLogIn.uid,
+            token: userToLogIn.refreshToken,
           })
         );
       }
@@ -122,7 +112,7 @@ const handlePendingStatus = (state: IUserSlice) => {
 
 const handleFulfilledStatus = (state: IUserSlice) => {
   state.loadingStatus = LoadingStatus.IDLE;
-  state.error = "";
+  state.error = null;
 };
 
 const handleRejectedStatus = (state: IUserSlice, action: string) => {

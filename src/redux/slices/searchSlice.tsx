@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { act } from "@testing-library/react";
 import api from "../../api";
 import { TTopFilm } from "./filmsTopSlice";
 

@@ -11,6 +11,7 @@ const SearchField: React.FC = () => {
   const dispatch = useAppDispatch();
   const { filmBySearch } = useAppSelector((state) => state.search);
   const inputRef = useRef(null);
+  const [openDropDown, setOpenDropDown] = useState(false);
 
   const updateSearchValue = useCallback(
     debounce((str: string) => {
@@ -33,6 +34,8 @@ const SearchField: React.FC = () => {
         }}
         placeholder="Search..."
         showSearch
+        open={openDropDown}
+        onDropdownVisibleChange={(visible) => setOpenDropDown(visible)}
         showArrow={false}
         searchValue={valueSearch}
         onSearch={onChangeInput}
@@ -41,7 +44,10 @@ const SearchField: React.FC = () => {
             <>
               {filmBySearch.length > 0
                 ? filmBySearch.map((element) => (
-                    <Link to={`/films/${element.filmId}`}>
+                    <Link
+                      onClick={() => setOpenDropDown(false)}
+                      to={`/films/${element.filmId}`}
+                    >
                       <SearchRender
                         filmId={element.filmId}
                         posterUrl={element.posterUrl}

@@ -5,7 +5,7 @@ import {
   MailOutlined,
   LockOutlined,
 } from "@ant-design/icons";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Location, useLocation, useNavigate } from "react-router-dom";
 import styles from "../authorization.module.scss";
 import { Alert, Button, Form, Input, message } from "antd";
 import { useAuth } from "../../../hooks/useAuth";
@@ -21,37 +21,10 @@ interface FormData {
   password: string;
 }
 
-interface StateLocationData {
-  from: {
-    pathname: string;
-  };
-}
-
 const FormToAuthentication: React.FC<FormToAuthenticationProps> = ({
   handleSubmit,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const { error } = useAppSelector((state) => state.user);
-  const { isAuth } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const stateLocation = location.state as StateLocationData;
-  const pathName = stateLocation ? stateLocation.from.pathname : "/";
-  const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    if (isAuth) {
-      message.success("Success");
-      debugger;
-      setTimeout(() => {
-        navigate(pathName);
-      }, 2000);
-    }
-    if (error) {
-      message.error(error);
-      dispatch(clearError());
-    }
-  }, [isAuth, navigate, pathName, error, dispatch]);
 
   const handlePasswordShow = () => {
     setShowPassword(!showPassword);
