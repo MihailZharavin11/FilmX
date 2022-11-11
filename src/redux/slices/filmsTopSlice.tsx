@@ -1,14 +1,8 @@
-import {
-  createAsyncThunk,
-  createSelector,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
-import { RootState } from "../store";
 
 export interface IFilmsState {
-  topFilms: TTopFilm[] | [];
-  filmsByGenre: TGenreFilm[] | [];
+  films: TTopFilm[] | TGenreFilm[] | null;
   error: string;
   loadingStatus: LoadingStatus;
   totalPage: number;
@@ -57,8 +51,7 @@ export type TData = {
 };
 
 const initialState: IFilmsState = {
-  topFilms: [],
-  filmsByGenre: [],
+  films: null,
   error: "",
   loadingStatus: LoadingStatus.IDLE,
   totalPage: 0,
@@ -76,14 +69,11 @@ export const getTopFilms = createAsyncThunk<
         currentPage,
         categories
       );
-      dispatch(addTopFilms(films));
+      dispatch(addFilms(films));
       dispatch(addTotalPage(pagesCount));
     } catch (err) {
       if (err instanceof Error) {
-        dispatch(setError(err.message));
         return rejectWithValue(err.message);
-      } else {
-        console.log("Unexpected error", err);
       }
     }
   }
@@ -101,14 +91,11 @@ export const getMovieByGenre = createAsyncThunk<
         currentPage,
         genre
       );
-      dispatch(addFilmsByGenre(items));
+      dispatch(addFilms(items));
       dispatch(addTotalPage(totalPages));
     } catch (err) {
       if (err instanceof Error) {
-        dispatch(setError(err.message));
         return rejectWithValue(err.message);
-      } else {
-        console.log("Error", err);
       }
     }
   }
@@ -132,11 +119,8 @@ const filmsSlice = createSlice({
   name: "films",
   initialState,
   reducers: {
-    addTopFilms: (state, action) => {
-      state.topFilms = action.payload;
-    },
-    addFilmsByGenre: (state, action) => {
-      state.filmsByGenre = action.payload;
+    addFilms: (state, action) => {
+      state.films = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -164,14 +148,8 @@ const filmsSlice = createSlice({
   },
 });
 
-const filmsSelector = createSelector(
-  (state: RootState) => state.films.topFilms,
-  (state: RootState) => state.films.filmsByGenre,
-  (topFilms, filmsByGenre) => {}
-);
-
 const { reducer, actions } = filmsSlice;
 
 export default reducer;
 
-export const { addTopFilms, setError, addTotalPage, addFilmsByGenre } = actions;
+export const { addFilms, setError, addTotalPage } = actions;

@@ -1,11 +1,10 @@
 import { Form, message } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { clearError, createNewUser } from "../../../redux/slices/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { createNewUser } from "../../../redux/slices/userSlice";
+import { useAppDispatch } from "../../../redux/store";
 import FormToAuthentication from "../Form/Form";
 import styles from "../authorization.module.scss";
-import { useAuth } from "../../../hooks/useAuth";
 
 type RegistrationType = {
   title: string;
@@ -13,7 +12,6 @@ type RegistrationType = {
 
 export const Registration: React.FC<RegistrationType> = ({ title }) => {
   const dispatch = useAppDispatch();
-  const { isAuth } = useAuth();
   const navigate = useNavigate();
 
   const handleRegistration = async (email: string, password: string) => {

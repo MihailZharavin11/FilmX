@@ -1,11 +1,10 @@
 import { Form, message } from "antd";
-import React, { useEffect } from "react";
+import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { clearError, userLogIn } from "../../../redux/slices/userSlice";
-import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { userLogIn } from "../../../redux/slices/userSlice";
+import { useAppDispatch } from "../../../redux/store";
 import FormToAuthentication from "../Form/Form";
 import styles from "../authorization.module.scss";
-import { useAuth } from "../../../hooks/useAuth";
 
 type LoginProps = {
   title: string;
@@ -19,7 +18,6 @@ interface StateLocationData {
 
 export const Login: React.FC<LoginProps> = ({ title }) => {
   const dispatch = useAppDispatch();
-  const { isAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const stateLocation = location.state as StateLocationData;

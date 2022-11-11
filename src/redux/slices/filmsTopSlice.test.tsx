@@ -78,8 +78,7 @@ describe("test FilmsTopSlice", () => {
   });
 
   const initialState: IFilmsState = {
-    topFilms: [],
-    filmsByGenre: [],
+    films: [],
     error: "",
     loadingStatus: LoadingStatus.IDLE,
     totalPage: 0,

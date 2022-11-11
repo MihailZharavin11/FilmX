@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import {
   getMovieByGenre,
   getTopFilms,
+  TGenreFilm,
+  TTopFilm,
 } from "../../../redux/slices/filmsTopSlice";
 import FilmCard from "../FilmCard/FilmCard";
 import styles from "./filmLayout.module.scss";
@@ -13,7 +15,7 @@ import { useParams } from "react-router-dom";
 const FilmLayout: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { topFilms, totalPage, loadingStatus, filmsByGenre } = useAppSelector(
+  const { films, totalPage, loadingStatus } = useAppSelector(
     (state) => state.films
   );
   let { categories, genre } = useParams();
@@ -27,55 +29,61 @@ const FilmLayout: React.FC = () => {
     }
   }, [dispatch, categories, currentPage, genre]);
 
-  const renderFilmItem = () => {
-    if (categories || (!genre && !categories)) {
-      return topFilms.map((element) => (
-        <Col
-          key={element.filmId}
-          className={styles.column}
-          lg={{ span: 6, offset: 1 }}
-          md={{ span: 8, offset: 1 }}
-          sm={{ span: 12, offset: 1 }}
-          xs={{ span: 24, offset: 1 }}
-        >
-          <FilmCard
-            key={element.filmId}
-            id={element.filmId}
-            title={element.nameEn ? element.nameEn : element.nameRu}
-            rating={element.rating ? element.rating : element.year}
-            posterUrlPreview={element.posterUrlPreview}
-          />
-        </Col>
-      ));
-    }
-    if (genre) {
-      return filmsByGenre.map((element) => (
-        <Col
-          className={styles.column}
-          lg={{ span: 6, offset: 1 }}
-          md={{ span: 8, offset: 1 }}
-          sm={{ span: 12, offset: 1 }}
-          xs={{ span: 24, offset: 1 }}
-        >
-          <FilmCard
-            key={element.kinopoiskId}
-            id={element.kinopoiskId}
-            title={element.nameEn ? element.nameEn : element.nameOriginal}
-            rating={element.ratingKinopoisk}
-            posterUrlPreview={element.posterUrlPreview}
-          />
-        </Col>
-      ));
-    }
-  };
+  if (loadingStatus === "loading") {
+    return <Spin className={styles.loading} size="large" />;
+  }
 
   const onChange: PaginationProps["onChange"] = (page) => {
     setCurrentPage(page);
   };
 
-  if (loadingStatus === "loading") {
-    return <Spin className={styles.loading} size="large" />;
-  }
+  const isTopFilm = (film: TTopFilm[] | TGenreFilm[]): film is TTopFilm[] => {
+    return (film as TTopFilm[])[0].filmId !== undefined;
+  };
+
+  const renderFilmItem = () => {
+    if (films) {
+      if (isTopFilm(films)) {
+        return films.map((element) => (
+          <Col
+            key={element.filmId}
+            className={styles.column}
+            lg={{ span: 6, offset: 1 }}
+            md={{ span: 8, offset: 1 }}
+            sm={{ span: 12, offset: 1 }}
+            xs={{ span: 24, offset: 1 }}
+          >
+            <FilmCard
+              key={element.filmId}
+              id={element.filmId}
+              title={element.nameEn ? element.nameEn : element.nameRu}
+              rating={element.rating ? element.rating : element.year}
+              posterUrlPreview={element.posterUrlPreview}
+            />
+          </Col>
+        ));
+      } else {
+        return films.map((element) => (
+          <Col
+            key={element.kinopoiskId}
+            className={styles.column}
+            lg={{ span: 6, offset: 1 }}
+            md={{ span: 8, offset: 1 }}
+            sm={{ span: 12, offset: 1 }}
+            xs={{ span: 24, offset: 1 }}
+          >
+            <FilmCard
+              key={element.kinopoiskId}
+              id={element.kinopoiskId}
+              title={element.nameEn ? element.nameEn : element.nameOriginal}
+              rating={element.ratingKinopoisk}
+              posterUrlPreview={element.posterUrlPreview}
+            />
+          </Col>
+        ));
+      }
+    }
+  };
 
   return (
     <div>
