@@ -1,19 +1,20 @@
-
 .header {
-  padding: 10px;
-  background: transparent;
-  line-height: 50px;
+  padding: 5px 20px;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
   background: #f0f2f5;
+}
+
+.colAvatar {
+  display: flex;
+  justify-content: center;
 }
 
 .logo {
   font-size: 27px;
   margin: 0;
   padding: 0;
-}
-
-.menu {
-  background: transparent;
 }
 
 .dropMenu {
@@ -25,5 +26,5 @@
 .avatar {
   display: flex;
   align-items: center;
-  gap:25px
+  gap: 25px;
 }

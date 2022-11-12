@@ -1,7 +1,7 @@
 import { Layout } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import React from "react";
-import ContentHome from "../components/HomeContent/ContentHome";
+import ContentHome from "../../components/HomeContent/ContentHome";
 
 const Home: React.FC = () => {
   return (

@@ -9,6 +9,7 @@ import { Menu } from "antd";
 import { Link } from "react-router-dom";
 import api, { TGenre } from "../../../api/index";
 import { useAppSelector } from "../../../redux/store";
+import styles from "./filmNav.module.scss";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
@@ -29,7 +30,6 @@ const FilmNav: React.FC = () => {
   }, []);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    console.log("click ", e);
     setCurrent(e.key);
   };
 
@@ -99,9 +99,9 @@ const FilmNav: React.FC = () => {
 
   return (
     <Menu
+      className={styles.menu}
       disabled={loadingStatus === "loading" ? true : false}
       onClick={onClick}
-      style={{ width: 256, height: "100%", background: "#f0f2f5" }}
       selectedKeys={[current]}
       mode="inline"
       items={items}

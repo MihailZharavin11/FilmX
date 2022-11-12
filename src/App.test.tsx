@@ -3,8 +3,8 @@ import { render, screen } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
-import Home from "./pages/Home";
-import MenuFixed from "./components/Shared/Header/MenuFixed";
+import Home from "./pages/Home/Home";
+import MenuFixed from "./components/Shared/Header/Menu/MenuFixed";
 
 describe("Checking the Display of Components", () => {
   beforeAll(() => {

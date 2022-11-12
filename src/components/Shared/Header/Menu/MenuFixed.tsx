@@ -1,10 +1,12 @@
-import { Col, Menu } from "antd";
+import { Col, Dropdown, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import styles from "./headerFixed.module.scss";
+import AvatarZone from "../AvatarZone";
+import styles from "./menuFixed.module.scss";
 
 const MenuFixed: React.FC = () => {
   let location = useLocation();
+
   const checkPath = (path: string) => {
     if (path === "/" || path === "/home") {
       return "/home";
@@ -33,21 +35,13 @@ const MenuFixed: React.FC = () => {
 
   const items = [
     {
-      label: "Home",
-      key: "/home",
-    },
-    {
       label: "Films",
       key: "/films",
-    },
-    {
-      label: "Contacts",
-      key: "/contacts",
     },
   ];
 
   return (
-    <Col span={17}>
+    <div className={styles.menuWrapper}>
       <Menu
         className={styles.menu}
         mode="horizontal"
@@ -61,7 +55,8 @@ const MenuFixed: React.FC = () => {
           ),
         }))}
       />
-    </Col>
+      <AvatarZone />
+    </div>
   );
 };
 

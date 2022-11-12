@@ -1,7 +1,7 @@
-import { Col } from 'antd';
-import React from 'react';
-import { Link } from 'react-router-dom';
-import styles from './headerFixed.module.scss';
+import { Col } from "antd";
+import React from "react";
+import { Link } from "react-router-dom";
+import styles from "./headerFixed.module.scss";
 
 const Logo: React.FC = () => {
   return (

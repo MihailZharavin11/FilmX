@@ -12,11 +12,11 @@
 
 .film_row {
   margin-top: 30px;
+  justify-content: flex-start;
 }
 
 .pagination_row {
   margin: 20px 0px;
-  margin-left: 110px;
 }
 
 @media (max-width: 575.98px) {

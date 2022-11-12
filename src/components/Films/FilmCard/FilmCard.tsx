@@ -3,6 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { StarTwoTone } from "@ant-design/icons";
 import "../../../styles/raiting.scss";
+import styles from "./filmCard.module.scss";
 import { setClassForRaiting } from "../../../lib/raitingFunc";
 
 type FilmCardProps = {
@@ -34,23 +35,18 @@ const FilmCard: React.FC<FilmCardProps> = ({
   posterUrlPreview,
 }) => {
   return (
-    <div className="film__item">
+    <div className={styles.cardWrapper}>
       <Card
+        className={styles.card}
         hoverable
         bordered
-        style={{
-          maxWidth: "185px",
-          minWidth: "185px",
-          height: 360,
-          overflow: "hidden",
+        bodyStyle={{
+          width: "100%",
         }}
         cover={
           <Link to={`/films/${id}`}>
             <img
-              style={{
-                height: "270px",
-                width: "100%",
-              }}
+              className={styles.cardImage}
               alt="example"
               src={posterUrlPreview}
             />

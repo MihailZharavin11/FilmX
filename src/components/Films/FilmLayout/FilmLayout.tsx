@@ -48,8 +48,8 @@ const FilmLayout: React.FC = () => {
           <Col
             key={element.filmId}
             className={styles.column}
-            lg={{ span: 6, offset: 1 }}
-            md={{ span: 8, offset: 1 }}
+            lg={{ span: 4, offset: 1 }}
+            md={{ span: 8, offset: 0 }}
             sm={{ span: 12, offset: 1 }}
             xs={{ span: 24, offset: 1 }}
           >
@@ -67,7 +67,7 @@ const FilmLayout: React.FC = () => {
           <Col
             key={element.kinopoiskId}
             className={styles.column}
-            lg={{ span: 6, offset: 1 }}
+            lg={{ span: 6, offset: 0 }}
             md={{ span: 8, offset: 1 }}
             sm={{ span: 12, offset: 1 }}
             xs={{ span: 24, offset: 1 }}
@@ -75,7 +75,7 @@ const FilmLayout: React.FC = () => {
             <FilmCard
               key={element.kinopoiskId}
               id={element.kinopoiskId}
-              title={element.nameEn ? element.nameEn : element.nameOriginal}
+              title={element.nameEn ? element.nameEn : element.nameRu}
               rating={element.ratingKinopoisk}
               posterUrlPreview={element.posterUrlPreview}
             />
