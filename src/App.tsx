@@ -11,31 +11,31 @@ import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
 import { Login } from "./components/Authorization/Login/Login";
 import { Registration } from "./components/Authorization/Registration/Registration";
-import { useAuth } from "./hooks/useAuth";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useAppDispatch } from "./redux/store";
-import { setUser } from "./redux/slices/userSlice";
+import { fetchUser } from "./redux/slices/userSlice";
+import { Spin } from "antd";
 
 const App: React.FC = () => {
-  const { isAuth } = useAuth();
   const dispatch = useAppDispatch();
-  const auth = getAuth();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!isAuth) {
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          dispatch(
-            setUser({
-              email: user.email,
-              id: user.uid,
-              token: user.refreshToken,
-            })
-          );
-        }
-      });
-    }
-  }, [auth, dispatch, isAuth]);
+    dispatch(fetchUser({ setLoading }));
+  }, [dispatch]);
+
+  if (loading) {
+    return (
+      <Spin
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+        size="large"
+      />
+    );
+  }
 
   return (
     <div className="App">

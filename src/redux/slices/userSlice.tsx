@@ -3,6 +3,7 @@ import {
   createSelector,
   createSlice,
 } from "@reduxjs/toolkit";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import fireBaseAuth from "../../fireBase/fireBaseAuth";
 import { RootState } from "../store";
 
@@ -39,6 +40,32 @@ const initialState: IUserSlice = {
   watchedMovies: [],
   loadingStatus: LoadingStatus.IDLE,
 };
+
+export const fetchUser = createAsyncThunk<
+  void,
+  { setLoading: (args: boolean) => void },
+  { rejectValue: string }
+>("user/fetchUser", async ({ setLoading }, { dispatch, rejectWithValue }) => {
+  try {
+    const auth = getAuth();
+    await onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            token: user.refreshToken,
+          })
+        );
+      }
+      setLoading(false);
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
+    }
+  }
+});
 
 export const createNewUser = createAsyncThunk<
   void,

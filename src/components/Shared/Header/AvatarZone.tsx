@@ -1,15 +1,13 @@
-import { Avatar, Dropdown, Menu, Typography } from "antd";
+import { Dropdown } from "antd";
 import React from "react";
 import type { MenuProps } from "antd";
-import { UserOutlined, EllipsisOutlined } from "@ant-design/icons";
+import { UserOutlined } from "@ant-design/icons";
 import styles from "./headerFixed.module.scss";
 import { Link } from "react-router-dom";
-import { useAuth } from "../../../hooks/useAuth";
 import { useAppDispatch } from "../../../redux/store";
 import { userLogOut } from "../../../redux/slices/userSlice";
 
 const AvatarZone: React.FC = () => {
-  const { isAuth } = useAuth();
   const dipatch = useAppDispatch();
 
   const logOut = () => {
