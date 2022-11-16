@@ -1,10 +1,10 @@
-import { Col, Dropdown, Menu } from "antd";
+import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import AvatarZone from "../AvatarZone";
-import styles from "./menuFixed.module.scss";
+import AvatarZone from "../Avatar/Avatar";
+import styles from "./menuComponent.module.scss";
 
-const MenuFixed: React.FC = () => {
+const MenuComponent: React.FC = () => {
   let location = useLocation();
 
   const checkPath = (path: string) => {
@@ -60,4 +60,4 @@ const MenuFixed: React.FC = () => {
   );
 };
 
-export default MenuFixed;
+export default MenuComponent;

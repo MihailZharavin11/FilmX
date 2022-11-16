@@ -1,6 +1,6 @@
 import React from "react";
-import { setClassForRaiting } from "../../../../lib/raitingFunc";
-import styles from "./searchField.module.scss";
+import { setClassForRaiting } from "../../../../../lib/raitingFunc";
+import styles from "./searchCard.module.scss";
 
 type SearchRenderProps = {
   filmId: number;
@@ -11,7 +11,7 @@ type SearchRenderProps = {
   year: string;
 };
 
-const SearchRender: React.FC<SearchRenderProps> = ({
+const SearchCard: React.FC<SearchRenderProps> = ({
   filmId,
   posterUrl,
   nameEn,
@@ -40,4 +40,4 @@ const SearchRender: React.FC<SearchRenderProps> = ({
   );
 };
 
-export default SearchRender;
+export default SearchCard;

@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import MenuFixed from "./components/Shared/Header/Menu/MenuFixed";
+import MenuComponent from "./components/Shared/Header/Menu/MenuComponent";
 
 describe("Checking the Display of Components", () => {
   beforeAll(() => {
@@ -42,7 +42,7 @@ describe("Checking the Display of Components", () => {
       <React.StrictMode>
         <Provider store={store}>
           <BrowserRouter>
-            <MenuFixed />
+            <MenuComponent />
           </BrowserRouter>
         </Provider>
       </React.StrictMode>

@@ -4,7 +4,8 @@ import debounce from "lodash.debounce";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
 import { searchFilm } from "../../../../redux/slices/searchSlice";
 import { Link } from "react-router-dom";
-import SearchRender from "./SearchRender";
+import styles from "./searchField.module.scss";
+import SearchCard from "./SearchCard/SearchCard";
 
 const SearchField: React.FC = () => {
   const [valueSearch, setValueSearch] = useState<string>("");
@@ -26,12 +27,10 @@ const SearchField: React.FC = () => {
   };
 
   return (
-    <>
+    <div className={styles.menuWrapper}>
       <Select
         ref={inputRef}
-        style={{
-          width: "100%",
-        }}
+        className={styles.search}
         placeholder="Search..."
         showSearch
         open={openDropDown}
@@ -48,7 +47,7 @@ const SearchField: React.FC = () => {
                       onClick={() => setOpenDropDown(false)}
                       to={`/films/${element.filmId}`}
                     >
-                      <SearchRender
+                      <SearchCard
                         filmId={element.filmId}
                         posterUrl={element.posterUrl}
                         nameEn={element.nameEn}
@@ -63,7 +62,7 @@ const SearchField: React.FC = () => {
           );
         }}
       ></Select>
-    </>
+    </div>
   );
 };
 

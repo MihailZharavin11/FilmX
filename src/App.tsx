@@ -1,8 +1,6 @@
-import { Header } from "antd/lib/layout/layout";
 import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
-import HeaderFixed from "./components/Shared/Header/HeaderFixed";
 import FilmContent from "./components/Films/FilmContent/FilmContent";
 import Films from "./pages/Films/Films";
 import Home from "./pages/Home/Home";
@@ -14,6 +12,7 @@ import { Registration } from "./components/Authorization/Registration/Registrati
 import { useAppDispatch } from "./redux/store";
 import { fetchUser } from "./redux/slices/userSlice";
 import { Spin } from "antd";
+import HeaderComponent from "./components/Shared/Header/HeaderComponent";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -39,9 +38,7 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Header className="header">
-        <HeaderFixed />
-      </Header>
+      <HeaderComponent />
       <Routes>
         <Route index element={<Home />} />
         <Route path="/home" element={<Home />} />

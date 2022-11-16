@@ -2,13 +2,13 @@ import React from "react";
 import { Button } from "antd";
 import { Link, useLocation } from "react-router-dom";
 import styles from "./headerFixed.module.scss";
-import Logo from "./Logo";
-import MenuFixed from "./Menu/MenuFixed";
-import SearchField from "./SearchField";
+import Logo from "./Logo/Logo";
+import SearchField from "./SearchField/SearchField";
 import { Header } from "antd/lib/layout/layout";
 import { useAuth } from "../../../hooks/useAuth";
+import MenuComponent from "./Menu/MenuComponent";
 
-const HeaderFixed: React.FC = () => {
+const HeaderComponent: React.FC = () => {
   let { pathname } = useLocation();
   const { isAuth } = useAuth();
 
@@ -17,7 +17,7 @@ const HeaderFixed: React.FC = () => {
       <Logo />
       {pathname.includes("/films") && <SearchField />}
       {isAuth ? (
-        <MenuFixed />
+        <MenuComponent />
       ) : (
         <Link to="/login">
           <Button type="ghost">LogIn</Button>
@@ -27,4 +27,4 @@ const HeaderFixed: React.FC = () => {
   );
 };
 
-export default HeaderFixed;
+export default HeaderComponent;
