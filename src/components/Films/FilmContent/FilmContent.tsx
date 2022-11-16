@@ -87,6 +87,7 @@ const FilmContent: React.FC = () => {
                 <Link to={`/actor/${item.staffId}`}>
                   <List.Item key={item.staffId}>
                     <List.Item.Meta
+                      className={styles.actorItem}
                       avatar={<Avatar size={"large"} src={item.posterUrl} />}
                       title={item.nameRu}
                       description={item.professionText}

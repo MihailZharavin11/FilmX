@@ -17,6 +17,15 @@
 }
 
 .actorList {
+  .actorItem {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    &:hover {
+      border-radius: 20px;
+      background-color: #ededed;
+    }
+  }
   .actorTitle {
     font-size: 25px;
   }
