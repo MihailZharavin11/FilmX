@@ -3,7 +3,11 @@
 .presentationFilm__image {
   display: flex;
   justify-content: center;
-  @media (max-width: 768px) {
+  min-width: 270px;
+  @media (max-width: 576px) {
+    min-width: 260px;
+  }
+  @media (max-width: 480px) {
     width: 100%;
   }
 }
@@ -13,7 +17,7 @@
   .presentationFilm__raitingNumber {
     font-size: 24px;
   }
-  @media (max-width: 768px) {
+  @media (max-width: 480px) {
     display: flex;
     justify-content: center;
   }
@@ -25,7 +29,7 @@
 
 .titleMobile {
   padding: 0px 30px;
-  @media (min-width: 768px) {
+  @media (min-width: 480px) {
     display: none;
   }
 }
