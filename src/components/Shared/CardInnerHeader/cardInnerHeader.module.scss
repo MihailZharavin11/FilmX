@@ -1,13 +1,22 @@
 .description__header {
+  @media (max-width: 768px) {
+  }
   .description__headerTitle {
     margin: 0;
+    font-size: 28px;
+    @media (max-width: 768px) {
+      font-size: 35px;
+    }
   }
   .description__headerYear {
     font-size: 18px;
     margin-bottom: 2px;
+    @media (max-width: 768px) {
+      font-size: 25px;
+    }
   }
   .description__headerSlogan {
-    font-size: 12px;
+    font-size: 16px;
     color: grey;
   }
 }

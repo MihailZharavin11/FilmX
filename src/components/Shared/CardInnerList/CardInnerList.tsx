@@ -7,8 +7,8 @@ type CardInnerListProps = {
 };
 const CardInnerList: React.FC<CardInnerListProps> = ({ title, children }) => {
   return (
-    <div className={styles.description__nav}>
-      <h3>{title}</h3>
+    <div className={styles.description}>
+      <h3 className={styles.descriptionTitle}>{title}</h3>
       {children}
     </div>
   );

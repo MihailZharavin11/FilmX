@@ -1,8 +1,14 @@
 .description__aboutFilmTableItem {
   padding: 10px;
   color: grey;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 }
 
 .description__aboutFilmTableDescription {
   padding: 10px;
+  @media (max-width: 768px) {
+    font-size: 16px;
+  }
 }

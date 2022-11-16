@@ -15,6 +15,7 @@ import {
   setWatchedMovie,
 } from "../../../redux/slices/userSlice";
 import { useParams } from "react-router-dom";
+import CardInnerHeader from "../CardInnerHeader/CardInnerHeader";
 
 type FilmImageProps = {
   img: string | undefined;
@@ -55,9 +56,18 @@ const FilmImage: React.FC<FilmImageProps> = ({
   };
   return (
     <>
+      <div className={styles.titleMobile}>
+        <CardInnerHeader
+          title={selectFilm?.nameEn ? selectFilm.nameEn : ""}
+          titleOriginal={selectFilm?.nameOriginal}
+          subTitle={selectFilm?.year + " год"}
+          text={selectFilm?.slogan}
+        />
+      </div>
+
       <div className={styles.presentationFilm__image}>
         <Card
-          style={{ width: "80%" }}
+          className={styles.card}
           cover={<img alt="PosterImg" src={img} />}
           bodyStyle={{ display: "none" }}
           actions={

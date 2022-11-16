@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "antd";
 import { Link, useLocation } from "react-router-dom";
-import styles from "./headerFixed.module.scss";
+import styles from "./headerComponent.module.scss";
 import Logo from "./Logo/Logo";
 import SearchField from "./SearchField/SearchField";
 import { Header } from "antd/lib/layout/layout";

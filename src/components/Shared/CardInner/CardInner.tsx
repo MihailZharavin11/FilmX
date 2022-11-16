@@ -19,16 +19,17 @@ const CardInner: React.FC<CardInnerProps> = ({
   return (
     <div className={styles.wrapper}>
       <div className={styles.film}>
-        <div className={styles.film__image}>{image}</div>
-        <div className={styles.film__description}>
-          {header}
-          <div className={styles.description__content}>
+        <div className={styles.filmImage}>{image}</div>
+        <div className={styles.filmDescription}>
+          <div className={styles.filmHeader}>{header}</div>
+
+          <div className={styles.descriptionContent}>
             {description}
             {list}
           </div>
         </div>
       </div>
-      {movieImages}
+      <div className="filmPictures">{movieImages}</div>
     </div>
   );
 };

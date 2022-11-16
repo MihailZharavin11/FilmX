@@ -1,7 +1,14 @@
 .description__aboutFilm {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
   .description__aboutFimTitle {
     font-size: 24px;
     margin-left: 5px;
+    @media (max-width: 768px) {
+      margin-left: 0px;
+      font-size: 28px;
+    }
   }
   .description__aboutFilmTable {
     display: grid;

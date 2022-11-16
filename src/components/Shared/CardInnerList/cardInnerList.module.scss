@@ -1,6 +1,15 @@
-.description__nav {
-  h3 {
-    font-size: 24px;
-    font-weight: 500;
+.description {
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+.descriptionTitle {
+  font-size: 24px;
+  font-weight: 500;
+  @media (max-width: 768px) {
+    font-size: 28px;
   }
 }

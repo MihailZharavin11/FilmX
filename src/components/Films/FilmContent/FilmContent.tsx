@@ -14,6 +14,7 @@ import CardInnerImage from "../../Shared/CardInnerImage/CardInnerImage";
 import CardInnerHeader from "../../Shared/CardInnerHeader/CardInnerHeader";
 import CardInnerList from "../../Shared/CardInnerList/CardInnerList";
 import CardInnerScreens from "../../Shared/CardInnerScreens/CardInnerScreens";
+import styles from "./filmContent.module.scss";
 
 const FilmContent: React.FC = () => {
   const { id } = useParams();
@@ -64,7 +65,7 @@ const FilmContent: React.FC = () => {
           titleOriginal={
             selectFilm?.nameOriginal ? ` (${selectFilm.nameOriginal})` : ""
           }
-          subTitle={selectFilm?.year.toString() + " год"}
+          subTitle={selectFilm?.year + " год"}
           text={selectFilm?.slogan}
         />
       }
@@ -79,13 +80,14 @@ const FilmContent: React.FC = () => {
           title="Главные актеры"
           children={
             <List
-              itemLayout="horizontal"
+              className={styles.actorList}
+              itemLayout="vertical"
               dataSource={actors ? actors : []}
               renderItem={(item) => (
                 <Link to={`/actor/${item.staffId}`}>
                   <List.Item key={item.staffId}>
                     <List.Item.Meta
-                      avatar={<Avatar src={item.posterUrl} />}
+                      avatar={<Avatar size={"large"} src={item.posterUrl} />}
                       title={item.nameRu}
                       description={item.professionText}
                     />
