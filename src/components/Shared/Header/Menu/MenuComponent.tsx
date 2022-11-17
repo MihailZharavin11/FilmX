@@ -29,32 +29,8 @@ const MenuComponent: React.FC = () => {
     }
   }, [location, currentLocation]);
 
-  const handleClickMenu = (e: any) => {
-    setCurrentLocation(e.key);
-  };
-
-  const items = [
-    {
-      label: "Films",
-      key: "/films",
-    },
-  ];
-
   return (
     <div className={styles.menuWrapper}>
-      <Menu
-        className={styles.menu}
-        mode="horizontal"
-        defaultSelectedKeys={["1"]}
-        onClick={handleClickMenu}
-        selectedKeys={[currentLocation]}
-        items={items.map((element, index) => ({
-          key: element.key,
-          label: (
-            <Link to={element.label.toLocaleLowerCase()}>{element.label}</Link>
-          ),
-        }))}
-      />
       <AvatarZone />
     </div>
   );

@@ -44,6 +44,7 @@ const SearchField: React.FC = () => {
               {filmBySearch.length > 0
                 ? filmBySearch.map((element) => (
                     <Link
+                      key={element.filmId}
                       onClick={() => setOpenDropDown(false)}
                       to={`/films/${element.filmId}`}
                     >
