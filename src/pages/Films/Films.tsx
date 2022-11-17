@@ -9,7 +9,7 @@ const Films: React.FC = () => {
   return (
     <Layout>
       <Layout>
-        <Sider breakpoint="md" collapsedWidth="100">
+        <Sider breakpoint="md" collapsedWidth="80">
           <FilmNav />
         </Sider>
         <Content>

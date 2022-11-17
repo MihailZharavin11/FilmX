@@ -35,6 +35,7 @@ const FilmLayout: React.FC = () => {
 
   const onChange: PaginationProps["onChange"] = (page) => {
     setCurrentPage(page);
+    window.scroll(0, 0);
   };
 
   const isTopFilm = (film: TTopFilm[] | TGenreFilm[]): film is TTopFilm[] => {
@@ -51,7 +52,7 @@ const FilmLayout: React.FC = () => {
             lg={{ span: 4, offset: 1 }}
             md={{ span: 8, offset: 0 }}
             sm={{ span: 12, offset: 1 }}
-            xs={{ span: 24, offset: 1 }}
+            xs={{ span: 24, offset: 0 }}
           >
             <FilmCard
               key={element.filmId}

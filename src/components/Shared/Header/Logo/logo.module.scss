@@ -2,4 +2,7 @@
   display: flex;
   align-items: center;
   font-size: 27px;
+  @media (max-width: 480px) {
+    font-size: 24px;
+  }
 }
