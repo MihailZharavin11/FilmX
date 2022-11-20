@@ -1,6 +1,5 @@
-import { Menu } from "antd";
 import React, { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import AvatarZone from "../Avatar/Avatar";
 import styles from "./menuComponent.module.scss";
 

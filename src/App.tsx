@@ -13,6 +13,9 @@ import { useAppDispatch } from "./redux/store";
 import { fetchUser } from "./redux/slices/userSlice";
 import { Spin } from "antd";
 import HeaderComponent from "./components/Shared/Header/HeaderComponent";
+import { Search } from "./pages/Search/Search";
+import { FilmsByTop } from "./components/FilmsByTop/FilmsByTop";
+import { FilmsByGenre } from "./components/FilmsByGenre/FilmsByGenre";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -46,7 +49,9 @@ const App: React.FC = () => {
           path="/films"
           element={
             <RequireAuth>
-              <Films />
+              <Films>
+                <FilmsByTop />
+              </Films>
             </RequireAuth>
           }
         />
@@ -54,7 +59,9 @@ const App: React.FC = () => {
           path="/films/TOP/:categories"
           element={
             <RequireAuth>
-              <Films />
+              <Films>
+                <FilmsByTop />
+              </Films>
             </RequireAuth>
           }
         />
@@ -62,7 +69,9 @@ const App: React.FC = () => {
           path="/films/GENRE/:genre"
           element={
             <RequireAuth>
-              <Films />
+              <Films>
+                <FilmsByGenre />
+              </Films>
             </RequireAuth>
           }
         />
@@ -82,6 +91,7 @@ const App: React.FC = () => {
             </RequireAuth>
           }
         />
+        <Route path="/search" element={<Search />} />
         <Route
           path="/registration"
           element={<Registration title="Registration" />}

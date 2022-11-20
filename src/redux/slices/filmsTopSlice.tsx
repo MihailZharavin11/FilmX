@@ -2,7 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../api";
 
 export interface IFilmsState {
-  films: TTopFilm[] | TGenreFilm[] | null;
+  filmsByTop: TTopFilm[] | null;
+  filmsByGenre: TGenreFilm[] | null;
   error: string;
   loadingStatus: LoadingStatus;
   totalPage: number;
@@ -51,7 +52,8 @@ export type TData = {
 };
 
 const initialState: IFilmsState = {
-  films: null,
+  filmsByTop: null,
+  filmsByGenre: null,
   error: "",
   loadingStatus: LoadingStatus.IDLE,
   totalPage: 0,
@@ -69,7 +71,7 @@ export const getTopFilms = createAsyncThunk<
         currentPage,
         categories
       );
-      dispatch(addFilms(films));
+      dispatch(addTopFilms(films));
       dispatch(addTotalPage(pagesCount));
     } catch (err) {
       if (err instanceof Error) {
@@ -91,7 +93,7 @@ export const getMovieByGenre = createAsyncThunk<
         currentPage,
         genre
       );
-      dispatch(addFilms(items));
+      dispatch(addGenreFilms(items));
       dispatch(addTotalPage(totalPages));
     } catch (err) {
       if (err instanceof Error) {
@@ -119,8 +121,11 @@ const filmsSlice = createSlice({
   name: "films",
   initialState,
   reducers: {
-    addFilms: (state, action) => {
-      state.films = action.payload;
+    addTopFilms: (state, action) => {
+      state.filmsByTop = action.payload;
+    },
+    addGenreFilms: (state, action) => {
+      state.filmsByGenre = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -152,4 +157,4 @@ const { reducer, actions } = filmsSlice;
 
 export default reducer;
 
-export const { addFilms, setError, addTotalPage } = actions;
+export const { addTopFilms, addGenreFilms, setError, addTotalPage } = actions;

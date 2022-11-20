@@ -25,6 +25,12 @@ const instanceV2_1 = axios.create({
 
 type TCategories = {
   genres: TGenre[];
+  countries: TCountry[];
+};
+
+export type TCountry = {
+  id: number;
+  country: string;
 };
 
 export type TGenre = {
@@ -49,10 +55,10 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   return data;
 };
 
-const getCategories = async () => {
+const getCategoriesAndCountries = async () => {
   const data = await instanceV2_2.get("/filters").then((response) => {
-    const { genres }: TCategories = response.data;
-    return { genres };
+    const { genres, countries }: TCategories = response.data;
+    return { genres, countries };
   });
 
   return data;
@@ -141,7 +147,7 @@ export const getActorInfoById = async (id: string) => {
   return foundActor;
 };
 
-const getFilmBySearchValue = async (searchValue: string) => {
+const getFilmByKeyWords = async (searchValue: string) => {
   const searchFilmValue: TTopFilm[] = await instanceV2_1
     .get(`/search-by-keyword?keyword=${searchValue}&page=1`)
     .then((response) => {
@@ -158,10 +164,10 @@ const getMoviePictures = async (id: string) => {
 
 export default {
   getTopFilms,
-  getCategories,
+  getCategoriesAndCountries,
   getListFilmsByGenre,
   getFilmById,
-  getFilmBySearchValue,
+  getFilmByKeyWords,
   getActorsById,
   getActorInfoById,
   getMoviePictures,

@@ -1,21 +1,26 @@
 import { Layout } from "antd";
 import React from "react";
-import FilmLayout from "../../components/Films/FilmLayout/FilmLayout";
 import FilmNav from "../../components/Films/FilmNav/FilmNav";
+import styles from "./films.module.scss";
+import { Row } from "antd";
 
 const { Sider, Content } = Layout;
 
-const Films: React.FC = () => {
+type FilmsProps = {
+  children: JSX.Element;
+};
+
+const Films: React.FC<FilmsProps> = ({ children }) => {
   return (
     <Layout>
-      <Layout>
-        <Sider breakpoint="md" collapsedWidth="80">
-          <FilmNav />
-        </Sider>
-        <Content>
-          <FilmLayout />
-        </Content>
-      </Layout>
+      <Sider breakpoint="md" collapsedWidth="80">
+        <FilmNav />
+      </Sider>
+      <Content>
+        <Row className={styles.film_row} gutter={[0, 30]}>
+          {children}
+        </Row>
+      </Content>
     </Layout>
   );
 };

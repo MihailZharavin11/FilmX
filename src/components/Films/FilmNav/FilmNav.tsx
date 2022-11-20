@@ -24,7 +24,7 @@ const FilmNav: React.FC = () => {
   const [genre, setGenre] = useState<TGenre[] | null>();
 
   useEffect(() => {
-    api.getCategories().then((response) => {
+    api.getCategoriesAndCountries().then((response) => {
       setGenre(response.genres);
     });
   }, []);
@@ -89,12 +89,7 @@ const FilmNav: React.FC = () => {
           : null;
       })
     ),
-    getItem("Most Popular", "sub4", <SettingOutlined />, [
-      getItem("Option 9", "9"),
-      getItem("Option 10", "10"),
-      getItem("Option 11", "11"),
-      getItem("Option 12", "12"),
-    ]),
+    getItem(<Link to={`/search`}>Search</Link>, "sub3", <SettingOutlined />),
   ];
 
   return (

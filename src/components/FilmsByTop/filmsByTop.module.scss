@@ -1,0 +1,24 @@
+.column {
+  display: flex;
+  justify-content: center;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 100px);
+}
+
+.film_row {
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.pagination_row {
+  margin: 30px 180px;
+  @media (max-width: 991.98px) {
+    justify-content: center;
+    margin: 30px 0px;
+  }
+}

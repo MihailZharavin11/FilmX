@@ -3,7 +3,7 @@ import api from "../../api";
 import { TTopFilm } from "./filmsTopSlice";
 
 interface ISearchState {
-  filmBySearch: TTopFilm[] | [];
+  quickSearchMovie: TTopFilm[] | [];
   error: string;
   loadingStatus: LoadingStatus;
 }
@@ -15,7 +15,7 @@ enum LoadingStatus {
 }
 
 const initialState: ISearchState = {
-  filmBySearch: [],
+  quickSearchMovie: [],
   error: "",
   loadingStatus: LoadingStatus.IDLE,
 };
@@ -38,8 +38,8 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    addFilmBySearch: (state, action) => {
-      state.filmBySearch = action.payload;
+    addQuickSearchMovie: (state, action) => {
+      state.quickSearchMovie = action.payload;
     },
     setError: (state, action) => {
       state.error = action.payload;
@@ -64,8 +64,8 @@ export const searchFilm = createAsyncThunk<
   { rejectValue: string }
 >("films/searchFilm", async (searchValue, { dispatch, rejectWithValue }) => {
   try {
-    const foundMovies = await api.getFilmBySearchValue(searchValue);
-    dispatch(addFilmBySearch(foundMovies));
+    const foundMovies = await api.getFilmByKeyWords(searchValue);
+    dispatch(addQuickSearchMovie(foundMovies));
   } catch (err) {
     if (err instanceof Error) {
       dispatch(setError(err.message));
@@ -80,4 +80,4 @@ const { reducer, actions } = searchSlice;
 
 export default reducer;
 
-export const { addFilmBySearch, setError } = actions;
+export const { addQuickSearchMovie, setError } = actions;

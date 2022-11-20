@@ -10,7 +10,7 @@ import SearchCard from "./SearchCard/SearchCard";
 const SearchField: React.FC = () => {
   const [valueSearch, setValueSearch] = useState<string>("");
   const dispatch = useAppDispatch();
-  const { filmBySearch } = useAppSelector((state) => state.search);
+  const { quickSearchMovie } = useAppSelector((state) => state.search);
   const inputRef = useRef(null);
   const [openDropDown, setOpenDropDown] = useState(false);
 
@@ -41,8 +41,8 @@ const SearchField: React.FC = () => {
         dropdownRender={() => {
           return (
             <>
-              {filmBySearch.length > 0
-                ? filmBySearch.map((element) => (
+              {quickSearchMovie.length > 0
+                ? quickSearchMovie.map((element) => (
                     <Link
                       key={element.filmId}
                       onClick={() => setOpenDropDown(false)}
