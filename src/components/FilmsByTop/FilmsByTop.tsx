@@ -37,7 +37,7 @@ export const FilmsByTop = () => {
             lg={{ span: 4, offset: 1 }}
             md={{ span: 8, offset: 0 }}
             sm={{ span: 12, offset: 1 }}
-            xs={{ span: 24, offset: 1 }}
+            xs={{ span: 24, offset: 0 }}
           >
             <FilmCard
               key={element.filmId}
