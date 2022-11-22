@@ -38,6 +38,18 @@ export type TGenre = {
   genre: string;
 };
 
+export type TSearchFilms = {
+  countries?: number;
+  genres?: number;
+  order?: string;
+  type?: string;
+  raitingFrom: number;
+  raitingTo: number;
+  yearFrom: number;
+  yearTo: number;
+  keyword?: string;
+};
+
 const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   let categories = categoriesArgs;
 
@@ -155,6 +167,22 @@ const getFilmByKeyWords = async (searchValue: string) => {
       return films;
     });
   return searchFilmValue;
+};
+
+const getFilmsBySearch = async ({
+  countries,
+  genres,
+  order,
+  type,
+  raitingFrom,
+  raitingTo,
+  yearFrom,
+  yearTo,
+  keyword,
+}: TSearchFilms) => {
+  const searchFilms = await instanceV2_2.get(
+    `https://kinopoiskapiunofficial.tech/api/v2.2/films?countries=${countries}&genres=${genres}&order=${order}&type=${type}&ratingFrom=${raitingFrom}&ratingTo=${raitingTo}&yearFrom=${yearFrom}&yearTo=${yearTo}&keyword=${keyword}&page=1`
+  );
 };
 
 const getMoviePictures = async (id: string) => {

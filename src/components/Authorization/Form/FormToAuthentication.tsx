@@ -10,6 +10,7 @@ import { Button, Form, Input } from "antd";
 
 type FormToAuthenticationProps = {
   handleSubmit: (email: string, password: string) => void;
+  titleButton: string;
 };
 
 interface FormData {
@@ -19,6 +20,7 @@ interface FormData {
 
 const FormToAuthentication: React.FC<FormToAuthenticationProps> = ({
   handleSubmit,
+  titleButton,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -75,7 +77,7 @@ const FormToAuthentication: React.FC<FormToAuthenticationProps> = ({
         htmlType="submit"
         className={`${"login-form-button"} ${styles.form__button}`}
       >
-        Submit
+        {titleButton}
       </Button>
     </Form>
   );

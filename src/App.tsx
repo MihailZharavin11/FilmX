@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation, useNavigate } from "react-router-dom";
 import "./App.css";
 import FilmContent from "./components/Films/FilmContent/FilmContent";
 import Films from "./pages/Films/Films";
@@ -7,19 +7,62 @@ import Home from "./pages/Home/Home";
 import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
 import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
-import { Login } from "./components/Authorization/Login/Login";
-import { Registration } from "./components/Authorization/Registration/Registration";
 import { useAppDispatch } from "./redux/store";
-import { fetchUser } from "./redux/slices/userSlice";
-import { Spin } from "antd";
+import { createNewUser, fetchUser, userLogIn } from "./redux/slices/userSlice";
+import { message, Spin } from "antd";
 import HeaderComponent from "./components/Shared/Header/HeaderComponent";
 import { Search } from "./pages/Search/Search";
 import { FilmsByTop } from "./components/FilmsByTop/FilmsByTop";
 import { FilmsByGenre } from "./components/FilmsByGenre/FilmsByGenre";
+import { Authorization } from "./components/Authorization/Authorization/Authorization";
+
+interface StateLocationData {
+  from: {
+    pathname: string;
+  };
+}
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const stateLocation = location.state as StateLocationData;
+  const pathName = stateLocation ? stateLocation.from.pathname : "/";
+
+  const handleRegistration = async (email: string, password: string) => {
+    const objToLogIn = {
+      email,
+      password,
+    };
+    const { meta, payload } = await dispatch(createNewUser(objToLogIn));
+    if (meta.requestStatus === "fulfilled") {
+      message.success("You have successfully registered");
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+    if (meta.requestStatus === "rejected" && payload) {
+      message.error(payload);
+    }
+  };
+
+  const handleLogIn = async (email: string, password: string) => {
+    const userToLogIn = {
+      email,
+      password,
+    };
+    const { meta, payload } = await dispatch(userLogIn(userToLogIn));
+    if (meta.requestStatus === "fulfilled") {
+      message.success("You have successfully logged in");
+      setTimeout(() => {
+        navigate(pathName);
+      }, 2000);
+    }
+    if (meta.requestStatus === "rejected" && payload) {
+      message.error(payload);
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchUser({ setLoading }));
@@ -91,12 +134,34 @@ const App: React.FC = () => {
             </RequireAuth>
           }
         />
-        <Route path="/search" element={<Search />} />
+        <Route
+          path="/search"
+          element={
+            <Films>
+              <Search />
+            </Films>
+          }
+        />
         <Route
           path="/registration"
-          element={<Registration title="Registration" />}
+          element={
+            <Authorization
+              title="Registration"
+              redirectName="Login"
+              handleAuthorization={handleRegistration}
+            />
+          }
         />
-        <Route path="/login" element={<Login title="Log In" />} />
+        <Route
+          path="/login"
+          element={
+            <Authorization
+              title="Login"
+              redirectName="Registration"
+              handleAuthorization={handleLogIn}
+            />
+          }
+        />
 
         <Route path="*" element={<EmptyContent />} />
       </Routes>
