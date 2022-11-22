@@ -3,8 +3,8 @@ import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { userLogIn } from "../../../redux/slices/userSlice";
 import { useAppDispatch } from "../../../redux/store";
-import FormToAuthentication from "../Form/Form";
-import styles from "../authorization.module.scss";
+import FormToAuthentication from "../Form/FormToAuthentication";
+import styles from "./login.module.scss";
 
 type LoginProps = {
   title: string;

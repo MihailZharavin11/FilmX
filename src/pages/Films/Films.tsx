@@ -13,7 +13,7 @@ type FilmsProps = {
 const Films: React.FC<FilmsProps> = ({ children }) => {
   return (
     <Layout>
-      <Sider breakpoint="md" collapsedWidth="80">
+      <Sider breakpoint="md" collapsedWidth="35">
         <FilmNav />
       </Sider>
       <Content>

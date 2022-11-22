@@ -3,8 +3,8 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { createNewUser } from "../../../redux/slices/userSlice";
 import { useAppDispatch } from "../../../redux/store";
-import FormToAuthentication from "../Form/Form";
-import styles from "../authorization.module.scss";
+import FormToAuthentication from "../Form/FormToAuthentication";
+import styles from "./registration.module.scss";
 
 type RegistrationType = {
   title: string;
