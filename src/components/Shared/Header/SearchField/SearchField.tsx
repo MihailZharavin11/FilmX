@@ -41,7 +41,7 @@ const SearchField: React.FC = () => {
         dropdownRender={() => {
           return (
             <>
-              {quickSearchMovie.length > 0
+              {quickSearchMovie
                 ? quickSearchMovie.map((element) => (
                     <Link
                       key={element.filmId}

@@ -38,16 +38,21 @@ export type TGenre = {
   genre: string;
 };
 
-export type TSearchFilms = {
-  countries?: number;
-  genres?: number;
-  order?: string;
-  type?: string;
-  raitingFrom: number;
-  raitingTo: number;
+export type TParamsToSearchFilm = {
+  countries: number | string;
+  genres: number | string;
+  order: string;
+  type: string;
+  raiting: Array<Number>;
   yearFrom: number;
   yearTo: number;
-  keyword?: string;
+  keyword: string;
+};
+
+export type TDataFoundFilm = {
+  items: TGenreFilm[];
+  total: number;
+  totalPages: number;
 };
 
 const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
@@ -169,20 +174,24 @@ const getFilmByKeyWords = async (searchValue: string) => {
   return searchFilmValue;
 };
 
-const getFilmsBySearch = async ({
-  countries,
-  genres,
-  order,
-  type,
-  raitingFrom,
-  raitingTo,
-  yearFrom,
-  yearTo,
-  keyword,
-}: TSearchFilms) => {
+const getFilmsBySearch = async (
+  {
+    countries,
+    genres,
+    order,
+    type,
+    raiting,
+    yearFrom,
+    yearTo,
+    keyword,
+  }: TParamsToSearchFilm,
+  page: number
+) => {
   const searchFilms = await instanceV2_2.get(
-    `https://kinopoiskapiunofficial.tech/api/v2.2/films?countries=${countries}&genres=${genres}&order=${order}&type=${type}&ratingFrom=${raitingFrom}&ratingTo=${raitingTo}&yearFrom=${yearFrom}&yearTo=${yearTo}&keyword=${keyword}&page=1`
+    `https://kinopoiskapiunofficial.tech/api/v2.2/films?countries=${countries}&genres=${genres}&order=${order}&type=${type}&ratingFrom=${raiting[0]}&ratingTo=${raiting[1]}&yearFrom=${yearFrom}&yearTo=${yearTo}&keyword=${keyword}&page=${page}`
   );
+  const data: TDataFoundFilm = searchFilms.data;
+  return data;
 };
 
 const getMoviePictures = async (id: string) => {
@@ -199,4 +208,5 @@ export default {
   getActorsById,
   getActorInfoById,
   getMoviePictures,
+  getFilmsBySearch,
 };

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from "../../api";
+import api, { TCountry } from "../../api";
 
 export interface IFilmsState {
   filmsByTop: TTopFilm[] | null;
@@ -30,9 +30,17 @@ export type TTopFilm = {
   year: string;
 };
 
+export type TCountriesBySearch = {
+  country: string;
+};
+
+export type TGenresBySearch = {
+  genre: string;
+};
+
 export type TGenreFilm = {
-  countries: Array<Object>;
-  genres: Array<Object>;
+  countries: TCountriesBySearch[];
+  genres: TGenresBySearch[];
   imdbId: string;
   kinopoiskId: number;
   nameEn: string;

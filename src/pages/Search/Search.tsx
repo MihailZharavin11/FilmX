@@ -1,91 +1,93 @@
-import { Button, Form, Input, InputNumber, Select, Slider } from "antd";
+import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import api, { TCountry, TGenre } from "../../api";
+import { TParamsToSearchFilm } from "../../api";
+import FilmCard from "../../components/Films/FilmCard/FilmCard";
+import { SearchForm } from "../../components/searchForm/SearchForm";
+import { deepSearchFilm } from "../../redux/slices/searchSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
 import styles from "./search.module.scss";
 
+export type TDeepSearchFilm = {
+  searchField: string;
+  country: string;
+  genre: string;
+  sort: string;
+  type: string;
+  raiting: Array<Number>;
+  year: string;
+};
+
 export const Search = () => {
-  const [genres, setGenres] = useState<TGenre[] | null>();
-  const [countries, setCountries] = useState<TCountry[] | null>();
+  const dispatch = useAppDispatch();
+  const { deepSearch, total, loadingStatus } = useAppSelector(
+    (state) => state.search
+  );
+  const [currentPage, setCurrentPage] = useState(1);
+  const [paramsToSearch, setParamsToSearch] = useState<TParamsToSearchFilm>({
+    keyword: "",
+    countries: "",
+    genres: "",
+    order: "",
+    type: "",
+    raiting: [0, 10],
+    yearFrom: 1000,
+    yearTo: new Date().getFullYear(),
+  });
 
-  useEffect(() => {
-    api.getCategoriesAndCountries().then((response) => {
-      setGenres([{ id: 0, genre: "" }, ...response.genres]);
-      setCountries([{ id: 0, country: "" }, ...response.countries]);
-    });
-  }, []);
+  const onSubmitForm = (valueFromForm: TParamsToSearchFilm) => {
+    setParamsToSearch(valueFromForm);
+    dispatch(
+      deepSearchFilm({ paramsToSearch: valueFromForm, page: currentPage })
+    );
+  };
 
-  const submitSearchButton = (e: any) => {
-    console.log("asd");
-    debugger;
+  const onChange: PaginationProps["onChange"] = (page) => {
+    setCurrentPage(page);
+    dispatch(deepSearchFilm({ paramsToSearch, page }));
+    window.scroll(0, 0);
   };
 
   return (
     <div className={styles.searchContent}>
-      <Form
-        onFinish={(e) => {
-          console.log(e);
-        }}
-        layout="vertical"
-        className={styles.searchForms}
-      >
-        <div className={styles.searchItem}>
-          <Form.Item name={"searchField"} label="Ключевое слово">
-            <Input />
-          </Form.Item>
-          <Form.Item name={"country"} label="Страна">
-            <Select>
-              {countries?.map((element) => (
-                <Select.Option key={element.id} value={element.country}>
-                  {element.country}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name={"genre"} label="Жанр">
-            <Select>
-              {genres?.map((element) => (
-                <Select.Option key={element.id} value={element.genre}>
-                  {element.genre}
-                </Select.Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item name={"sort"} label="Сортировка">
-            <Select>
-              <Select.Option value="">{""}</Select.Option>
-              <Select.Option value="RAITING">Рейтинг</Select.Option>
-              <Select.Option value="NUM_VOTE">По популярности</Select.Option>
-              <Select.Option value="YEAR">Год</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name={"type"} label="Тип фильма">
-            <Select>
-              <Select.Option value="">{""}</Select.Option>
-              <Select.Option value="FILM">Фильм</Select.Option>
-              <Select.Option value="TV_SHOW">TV шоу</Select.Option>
-              <Select.Option value="TV_SERIES">TV сериал</Select.Option>
-              <Select.Option value="MINI_SERIES">Мини сериал</Select.Option>
-              <Select.Option value="ALL">Все</Select.Option>
-            </Select>
-          </Form.Item>
-          <Form.Item name={"raiting"} label="Рейтинг">
-            <Slider min={0} max={10} step={0.1} range />
-          </Form.Item>
-          <Form.Item name={"year"} label="Год">
-            <InputNumber min={1000} max={2022} step={1} />
-          </Form.Item>
-        </div>
-        <Form.Item>
-          <Button
-            onSubmit={submitSearchButton}
-            htmlType="submit"
-            size="large"
-            type="primary"
-          >
-            Search
-          </Button>
-        </Form.Item>
-      </Form>
+      <SearchForm onSubmitForm={onSubmitForm} />
+      {loadingStatus === "loading" ? (
+        <Spin className={styles.loading} size="large" />
+      ) : (
+        <Row className={styles.film_row} gutter={[0, 30]}>
+          {deepSearch?.map((element) => (
+            <Col
+              className={styles.column}
+              key={element.kinopoiskId}
+              lg={{ span: 4, offset: 1 }}
+              md={{ span: 8, offset: 0 }}
+              sm={{ span: 12, offset: 1 }}
+              xs={{ span: 24, offset: 1 }}
+            >
+              <FilmCard
+                key={element.kinopoiskId}
+                id={element.kinopoiskId}
+                title={element.nameEn ? element.nameEn : element.nameRu}
+                rating={element.ratingKinopoisk}
+                posterUrlPreview={element.posterUrlPreview}
+              />
+            </Col>
+          ))}
+        </Row>
+      )}
+
+      {total && (
+        <Row className={styles.pagination_row}>
+          <Col>
+            <Pagination
+              simple
+              defaultPageSize={20}
+              current={currentPage}
+              onChange={onChange}
+              total={total}
+            />
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

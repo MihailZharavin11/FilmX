@@ -1,9 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import api from "../../api";
-import { TTopFilm } from "./filmsTopSlice";
+import api, { TParamsToSearchFilm } from "../../api";
+import { TGenreFilm, TTopFilm } from "./filmsTopSlice";
 
 interface ISearchState {
-  quickSearchMovie: TTopFilm[] | [];
+  quickSearchMovie: TTopFilm[] | null;
+  deepSearch: TGenreFilm[] | null;
+  total: number | null;
   error: string;
   loadingStatus: LoadingStatus;
 }
@@ -15,7 +17,9 @@ enum LoadingStatus {
 }
 
 const initialState: ISearchState = {
-  quickSearchMovie: [],
+  quickSearchMovie: null,
+  deepSearch: null,
+  total: null,
   error: "",
   loadingStatus: LoadingStatus.IDLE,
 };
@@ -44,12 +48,26 @@ const searchSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    addDeepSearchMovie: (state, action) => {
+      state.deepSearch = action.payload;
+    },
+    addTotal: (state, action) => {
+      state.total = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(searchFilm.pending, handlePendingStatus)
       .addCase(searchFilm.fulfilled, handleFulfilledStatus)
       .addCase(searchFilm.rejected, (state, action) => {
+        if (action.payload) {
+          state.loadingStatus = LoadingStatus.ERROR;
+          handleRejectedStatus(state, action.payload);
+        }
+      })
+      .addCase(deepSearchFilm.pending, handlePendingStatus)
+      .addCase(deepSearchFilm.fulfilled, handleFulfilledStatus)
+      .addCase(deepSearchFilm.rejected, (state, action) => {
         if (action.payload) {
           state.loadingStatus = LoadingStatus.ERROR;
           handleRejectedStatus(state, action.payload);
@@ -76,8 +94,32 @@ export const searchFilm = createAsyncThunk<
   }
 });
 
+export const deepSearchFilm = createAsyncThunk<
+  void,
+  { paramsToSearch: TParamsToSearchFilm; page: number },
+  { rejectValue: string }
+>(
+  "films/deepSearchFilm",
+  async ({ paramsToSearch, page }, { dispatch, rejectWithValue }) => {
+    try {
+      const foundMovies = await api.getFilmsBySearch(paramsToSearch, page);
+      const { items, total } = foundMovies;
+      dispatch(addDeepSearchMovie(items));
+      dispatch(addTotal(total));
+    } catch (err) {
+      if (err instanceof Error) {
+        dispatch(setError(err.message));
+        return rejectWithValue(err.message);
+      } else {
+        console.log("Error", err);
+      }
+    }
+  }
+);
+
 const { reducer, actions } = searchSlice;
 
 export default reducer;
 
-export const { addQuickSearchMovie, setError } = actions;
+export const { addQuickSearchMovie, setError, addDeepSearchMovie, addTotal } =
+  actions;

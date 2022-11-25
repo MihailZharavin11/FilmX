@@ -43,7 +43,7 @@ const films: TTopFilm = {
 const genreFilm: TGenreFilm = {
   countries: [
     {
-      county: "USA",
+      country: "USA",
     },
   ],
   genres: [

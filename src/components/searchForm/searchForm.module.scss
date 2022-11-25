@@ -1,0 +1,9 @@
+.searchForms {
+  width: 100%;
+}
+
+.searchItem {
+  display: grid;
+  grid-template: 1fr/1fr 1fr 1fr;
+  gap: 10px 30px;
+}
