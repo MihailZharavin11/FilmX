@@ -11,6 +11,15 @@
   }
 }
 
+.popUp {
+  border: 1px solid red;
+}
+
+.menuInner {
+  overflow-y: scroll;
+  max-height: 200px;
+}
+
 .search {
   width: 100%;
 }

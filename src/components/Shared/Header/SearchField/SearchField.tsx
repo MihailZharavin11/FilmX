@@ -2,28 +2,34 @@ import { Select } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { useAppDispatch, useAppSelector } from "../../../../redux/store";
-import { searchFilm } from "../../../../redux/slices/searchSlice";
+import {
+  clearQuickSearchMovie,
+  searchFilm,
+} from "../../../../redux/slices/searchSlice";
 import { Link } from "react-router-dom";
 import styles from "./searchField.module.scss";
 import SearchCard from "./SearchCard/SearchCard";
 
 const SearchField: React.FC = () => {
-  const [valueSearch, setValueSearch] = useState<string>("");
+  const [valueSearch, setValueSearch] = useState("");
   const dispatch = useAppDispatch();
   const { quickSearchMovie } = useAppSelector((state) => state.search);
   const inputRef = useRef(null);
-  const [openDropDown, setOpenDropDown] = useState(false);
 
   const updateSearchValue = useCallback(
-    debounce((str: string) => {
-      dispatch(searchFilm(str));
+    debounce((valueToSearch: string) => {
+      dispatch(searchFilm(valueToSearch));
     }, 1000),
     [inputRef]
   );
 
-  const onChangeInput = (str: string) => {
-    setValueSearch(str);
-    updateSearchValue(str);
+  const onChangeInput = (valueToSearch: string) => {
+    setValueSearch(valueToSearch);
+    updateSearchValue(valueToSearch);
+  };
+
+  const handleClickAwaySearch = () => {
+    dispatch(clearQuickSearchMovie());
   };
 
   return (
@@ -33,33 +39,36 @@ const SearchField: React.FC = () => {
         className={styles.search}
         placeholder="Search..."
         showSearch
-        open={openDropDown}
-        onDropdownVisibleChange={(visible) => setOpenDropDown(visible)}
+        open={quickSearchMovie ? true : false}
+        onDropdownVisibleChange={(visible) => {
+          if (!visible) {
+            handleClickAwaySearch();
+          }
+        }}
         showArrow={false}
         searchValue={valueSearch}
         onSearch={onChangeInput}
         dropdownRender={() => {
           return (
-            <>
-              {quickSearchMovie
-                ? quickSearchMovie.map((element) => (
-                    <Link
-                      key={element.filmId}
-                      onClick={() => setOpenDropDown(false)}
-                      to={`/films/${element.filmId}`}
-                    >
-                      <SearchCard
-                        filmId={element.filmId}
-                        posterUrl={element.posterUrl}
-                        nameEn={element.nameEn}
-                        rating={element.rating}
-                        nameRu={element.nameRu}
-                        year={element.year}
-                      />
-                    </Link>
-                  ))
-                : "Ничего не найдено..."}{" "}
-            </>
+            <div className={styles.menuInner}>
+              {quickSearchMovie &&
+                quickSearchMovie.map((element) => (
+                  <Link
+                    key={element.filmId}
+                    onClick={() => handleClickAwaySearch()}
+                    to={`/films/${element.filmId}`}
+                  >
+                    <SearchCard
+                      filmId={element.filmId}
+                      posterUrl={element.posterUrl}
+                      nameEn={element.nameEn}
+                      rating={element.rating}
+                      nameRu={element.nameRu}
+                      year={element.year}
+                    />
+                  </Link>
+                ))}
+            </div>
           );
         }}
       ></Select>

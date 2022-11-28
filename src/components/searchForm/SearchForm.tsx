@@ -5,9 +5,13 @@ import styles from "./searchForm.module.scss";
 
 type SearchFormProps = {
   onSubmitForm: (valueFromForm: TParamsToSearchFilm) => void;
+  disabled: boolean;
 };
 
-export const SearchForm: React.FC<SearchFormProps> = ({ onSubmitForm }) => {
+export const SearchForm: React.FC<SearchFormProps> = ({
+  onSubmitForm,
+  disabled,
+}) => {
   const [genres, setGenres] = useState<TGenre[] | null>();
   const [countries, setCountries] = useState<TCountry[] | null>();
 
@@ -31,6 +35,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({ onSubmitForm }) => {
 
   return (
     <Form
+      disabled={disabled}
       initialValues={initialValueForm}
       onFinish={(valueFromForm: TParamsToSearchFilm) => {
         onSubmitForm(valueFromForm);

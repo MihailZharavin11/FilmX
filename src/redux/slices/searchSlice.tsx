@@ -54,6 +54,9 @@ const searchSlice = createSlice({
     addTotal: (state, action) => {
       state.total = action.payload;
     },
+    clearQuickSearchMovie: (state) => {
+      state.quickSearchMovie = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,7 +86,11 @@ export const searchFilm = createAsyncThunk<
 >("films/searchFilm", async (searchValue, { dispatch, rejectWithValue }) => {
   try {
     const foundMovies = await api.getFilmByKeyWords(searchValue);
-    dispatch(addQuickSearchMovie(foundMovies));
+    if (foundMovies.length > 0) {
+      dispatch(addQuickSearchMovie(foundMovies));
+    } else {
+      dispatch(clearQuickSearchMovie());
+    }
   } catch (err) {
     if (err instanceof Error) {
       dispatch(setError(err.message));
@@ -121,5 +128,10 @@ const { reducer, actions } = searchSlice;
 
 export default reducer;
 
-export const { addQuickSearchMovie, setError, addDeepSearchMovie, addTotal } =
-  actions;
+export const {
+  addQuickSearchMovie,
+  setError,
+  addDeepSearchMovie,
+  addTotal,
+  clearQuickSearchMovie,
+} = actions;

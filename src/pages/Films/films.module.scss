@@ -1,4 +1,8 @@
-.film_row {
+.filmLayout {
+  min-height: calc(100vh - 100px);
+}
+
+.filmRow {
   margin-top: 20px;
   justify-content: center;
 }

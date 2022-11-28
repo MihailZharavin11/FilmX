@@ -1,4 +1,4 @@
-import { Col, Pagination, PaginationProps, Row } from "antd";
+import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getMovieByGenre } from "../../redux/slices/filmsTopSlice";
@@ -9,7 +9,9 @@ import styles from "./filmsByGenre.module.scss";
 export const FilmsByGenre = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
-  const { filmsByGenre, totalPage } = useAppSelector((state) => state.films);
+  const { filmsByGenre, totalPage, loadingStatus } = useAppSelector(
+    (state) => state.films
+  );
   const { genre } = useParams();
 
   useEffect(() => {
@@ -22,6 +24,12 @@ export const FilmsByGenre = () => {
     setCurrentPage(page);
     window.scroll(0, 0);
   };
+
+  if (loadingStatus) {
+    if (loadingStatus === "loading") {
+      return <Spin className={styles.loading} size="large" />;
+    }
+  }
 
   return (
     <div>

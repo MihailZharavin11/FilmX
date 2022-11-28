@@ -12,12 +12,12 @@ type FilmsProps = {
 
 const Films: React.FC<FilmsProps> = ({ children }) => {
   return (
-    <Layout>
+    <Layout className={styles.filmLayout}>
       <Sider breakpoint="md" collapsedWidth="35">
         <FilmNav />
       </Sider>
       <Content>
-        <Row className={styles.film_row} gutter={[0, 30]}>
+        <Row className={styles.filmRow} gutter={[0, 30]}>
           {children}
         </Row>
       </Content>

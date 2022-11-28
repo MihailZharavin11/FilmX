@@ -19,6 +19,7 @@ export type TDeepSearchFilm = {
 
 export const Search = () => {
   const dispatch = useAppDispatch();
+  const [disabled, setDisabled] = useState(false);
   const { deepSearch, total, loadingStatus } = useAppSelector(
     (state) => state.search
   );
@@ -34,11 +35,13 @@ export const Search = () => {
     yearTo: new Date().getFullYear(),
   });
 
-  const onSubmitForm = (valueFromForm: TParamsToSearchFilm) => {
+  const onSubmitForm = async (valueFromForm: TParamsToSearchFilm) => {
+    setDisabled(true);
     setParamsToSearch(valueFromForm);
-    dispatch(
+    await dispatch(
       deepSearchFilm({ paramsToSearch: valueFromForm, page: currentPage })
     );
+    setDisabled(false);
   };
 
   const onChange: PaginationProps["onChange"] = (page) => {
@@ -49,7 +52,7 @@ export const Search = () => {
 
   return (
     <div className={styles.searchContent}>
-      <SearchForm onSubmitForm={onSubmitForm} />
+      <SearchForm disabled={disabled} onSubmitForm={onSubmitForm} />
       {loadingStatus === "loading" ? (
         <Spin className={styles.loading} size="large" />
       ) : (
@@ -75,7 +78,7 @@ export const Search = () => {
         </Row>
       )}
 
-      {total && (
+      {total && !disabled && (
         <Row className={styles.pagination_row}>
           <Col>
             <Pagination
