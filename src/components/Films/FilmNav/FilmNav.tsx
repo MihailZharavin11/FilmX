@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
 import api, { TGenre } from "../../../api/index";
 import { useAppSelector } from "../../../redux/store";
 import styles from "./filmNav.module.scss";
@@ -19,9 +19,11 @@ type TItemCategories = {
 };
 
 const FilmNav: React.FC = () => {
-  const [current, setCurrent] = useState("0");
   const { loadingStatus } = useAppSelector((state) => state.films);
   const [genre, setGenre] = useState<TGenre[] | null>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  console.log("render");
 
   useEffect(() => {
     api.getCategoriesAndCountries().then((response) => {
@@ -30,7 +32,7 @@ const FilmNav: React.FC = () => {
   }, []);
 
   const onClick: MenuProps["onClick"] = (e) => {
-    setCurrent(e.key);
+    navigate(e.key);
   };
 
   function getItem(
@@ -67,37 +69,31 @@ const FilmNav: React.FC = () => {
   const items: MenuItem[] = [
     getItem(
       "TOP",
-      "sub1",
+      "/films/TOP/TOP_250_BEST_FILMS",
       <MailOutlined />,
       itemTopCategories.map((element, index) => {
-        return getItem(
-          <Link to={`/films/TOP/${element.path}`}>{element.name}</Link>,
-          index
-        );
+        return getItem(element.name, `/films/TOP/${element.path}`);
       })
     ),
     getItem(
       "Genre",
-      "sub2",
+      "/films/GENRE/0",
       <AppstoreOutlined />,
       genre?.map((element, index) => {
         return element.genre
-          ? getItem(
-              <Link to={`/films/GENRE/${index + 1}`}>{element.genre}</Link>,
-              index + element.genre
-            )
+          ? getItem(element.genre, `/films/genre/${index + 1}`)
           : null;
       })
     ),
-    getItem(<Link to={`/search`}>Search</Link>, "sub3", <SettingOutlined />),
+    getItem("Search", "/search", <SettingOutlined />),
   ];
 
   return (
     <Menu
       className={styles.menu}
+      defaultSelectedKeys={[location.pathname]}
       disabled={loadingStatus === "loading" ? true : false}
-      onClick={onClick}
-      selectedKeys={[current]}
+      onSelect={onClick}
       mode="inline"
       items={items}
     />
