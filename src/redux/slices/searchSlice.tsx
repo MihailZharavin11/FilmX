@@ -57,6 +57,10 @@ const searchSlice = createSlice({
     clearQuickSearchMovie: (state) => {
       state.quickSearchMovie = null;
     },
+    clearDeepSearchMovie: (state) => {
+      state.deepSearch = null;
+      state.total = null;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -134,4 +138,5 @@ export const {
   addDeepSearchMovie,
   addTotal,
   clearQuickSearchMovie,
+  clearDeepSearchMovie,
 } = actions;

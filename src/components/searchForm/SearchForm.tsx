@@ -5,38 +5,23 @@ import styles from "./searchForm.module.scss";
 
 type SearchFormProps = {
   onSubmitForm: (valueFromForm: TParamsToSearchFilm) => void;
+  genres: TGenre[] | null;
+  countries: TCountry[] | null;
   disabled: boolean;
+  initialValue: TParamsToSearchFilm;
 };
 
 export const SearchForm: React.FC<SearchFormProps> = ({
   onSubmitForm,
   disabled,
+  initialValue,
+  genres,
+  countries,
 }) => {
-  const [genres, setGenres] = useState<TGenre[] | null>();
-  const [countries, setCountries] = useState<TCountry[] | null>();
-
-  const initialValueForm: TParamsToSearchFilm = {
-    keyword: "",
-    countries: "",
-    genres: "",
-    order: "",
-    type: "",
-    raiting: [0, 10],
-    yearFrom: 1000,
-    yearTo: new Date().getFullYear(),
-  };
-
-  useEffect(() => {
-    api.getCategoriesAndCountries().then((response) => {
-      setGenres([{ id: 0, genre: "" }, ...response.genres]);
-      setCountries([{ id: 0, country: "" }, ...response.countries]);
-    });
-  }, []);
-
   return (
     <Form
       disabled={disabled}
-      initialValues={initialValueForm}
+      initialValues={initialValue}
       onFinish={(valueFromForm: TParamsToSearchFilm) => {
         onSubmitForm(valueFromForm);
       }}
@@ -84,7 +69,7 @@ export const SearchForm: React.FC<SearchFormProps> = ({
           </Select>
         </Form.Item>
         <Form.Item name={"raiting"} label="Рейтинг">
-          <Slider min={0} max={10} step={0.1} range />
+          <Slider min={0} max={10} step={1} range />
         </Form.Item>
         <Form.Item name={"yearFrom"} label="Минимальный год">
           <InputNumber min={1000} max={2022} step={1} />

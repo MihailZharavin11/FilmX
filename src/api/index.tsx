@@ -41,9 +41,9 @@ export type TGenre = {
 export type TParamsToSearchFilm = {
   countries: number | string;
   genres: number | string;
-  order: string;
-  type: string;
-  raiting: Array<Number>;
+  order: string | string;
+  type: string | string;
+  raiting: Array<Number> | Array<String>;
   yearFrom: number;
   yearTo: number;
   keyword: string;
@@ -188,7 +188,11 @@ const getFilmsBySearch = async (
   page: number
 ) => {
   const searchFilms = await instanceV2_2.get(
-    `https://kinopoiskapiunofficial.tech/api/v2.2/films?countries=${countries}&genres=${genres}&order=${order}&type=${type}&ratingFrom=${raiting[0]}&ratingTo=${raiting[1]}&yearFrom=${yearFrom}&yearTo=${yearTo}&keyword=${keyword}&page=${page}`
+    `https://kinopoiskapiunofficial.tech/api/v2.2/films?countries=${countries}&genres=${genres}&order=${order}&type=${type}&ratingFrom=${Number(
+      raiting[0]
+    )}&ratingTo=${Number(
+      raiting[1]
+    )}&yearFrom=${yearFrom}&yearTo=${yearTo}&keyword=${keyword}&page=${page}`
   );
   const data: TDataFoundFilm = searchFilms.data;
   return data;

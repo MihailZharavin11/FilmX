@@ -6,7 +6,7 @@ import {
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
-import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import api, { TGenre } from "../../../api/index";
 import { useAppSelector } from "../../../redux/store";
 import styles from "./filmNav.module.scss";
@@ -23,7 +23,6 @@ const FilmNav: React.FC = () => {
   const [genre, setGenre] = useState<TGenre[] | null>();
   const navigate = useNavigate();
   const location = useLocation();
-  console.log("render");
 
   useEffect(() => {
     api.getCategoriesAndCountries().then((response) => {
@@ -69,7 +68,7 @@ const FilmNav: React.FC = () => {
   const items: MenuItem[] = [
     getItem(
       "TOP",
-      "/films/TOP/TOP_250_BEST_FILMS",
+      "/films/TOP",
       <MailOutlined />,
       itemTopCategories.map((element, index) => {
         return getItem(element.name, `/films/TOP/${element.path}`);
@@ -77,7 +76,7 @@ const FilmNav: React.FC = () => {
     ),
     getItem(
       "Genre",
-      "/films/GENRE/0",
+      "Genre",
       <AppstoreOutlined />,
       genre?.map((element, index) => {
         return element.genre

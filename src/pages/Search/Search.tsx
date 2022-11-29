@@ -1,9 +1,13 @@
 import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
-import { TParamsToSearchFilm } from "../../api";
+import { useSearchParams } from "react-router-dom";
+import api, { TCountry, TGenre, TParamsToSearchFilm } from "../../api";
 import FilmCard from "../../components/Films/FilmCard/FilmCard";
 import { SearchForm } from "../../components/searchForm/SearchForm";
-import { deepSearchFilm } from "../../redux/slices/searchSlice";
+import {
+  clearDeepSearchMovie,
+  deepSearchFilm,
+} from "../../redux/slices/searchSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import styles from "./search.module.scss";
 
@@ -17,29 +21,83 @@ export type TDeepSearchFilm = {
   year: string;
 };
 
+type TParams = {
+  keyword?: string | string[];
+  countries?: string | string[];
+  genres?: string | string[];
+  order?: string | string[];
+  type?: string | string[];
+  raiting?: string | string[];
+  yearFrom?: string | string[];
+  yearTo?: string | string[];
+};
+
 export const Search = () => {
   const dispatch = useAppDispatch();
   const [disabled, setDisabled] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const { deepSearch, total, loadingStatus } = useAppSelector(
     (state) => state.search
   );
+  const [genres, setGenres] = useState<TGenre[]>();
+  const [countries, setCountries] = useState<TCountry[]>();
   const [currentPage, setCurrentPage] = useState(1);
   const [paramsToSearch, setParamsToSearch] = useState<TParamsToSearchFilm>({
-    keyword: "",
-    countries: "",
-    genres: "",
-    order: "",
-    type: "",
-    raiting: [0, 10],
-    yearFrom: 1000,
-    yearTo: new Date().getFullYear(),
+    keyword: searchParams.get("keyword") || "",
+    countries: searchParams.get("countries") || "",
+    genres: searchParams.get("genres") || "",
+    order: searchParams.get("order") || "",
+    type: searchParams.get("type") || "",
+    raiting: searchParams.get("raiting")?.split("-") || [0, 10],
+    yearFrom: Number(searchParams.get("yearFrom")) || 1000,
+    yearTo: Number(searchParams.get("yearTo")) || new Date().getFullYear(),
   });
 
+  useEffect(() => {
+    api.getCategoriesAndCountries().then((response) => {
+      setGenres([{ id: 0, genre: "" }, ...response.genres]);
+      setCountries([{ id: 0, country: "" }, ...response.countries]);
+    });
+    if (searchParams.toString()) {
+      dispatch(deepSearchFilm({ paramsToSearch, page: currentPage }));
+    }
+    return () => {
+      dispatch(clearDeepSearchMovie());
+    };
+  }, []);
+
+  const paramsForURL = (valueFromForm: TParamsToSearchFilm) => {
+    const params: TParams = {};
+    if (valueFromForm.keyword) params.keyword = valueFromForm.keyword;
+    if (valueFromForm.countries)
+      params.countries = valueFromForm.countries.toString();
+    if (valueFromForm.genres) params.genres = valueFromForm.genres.toString();
+
+    if (valueFromForm.order) params.order = valueFromForm.order.toString();
+    if (valueFromForm.type) params.type = valueFromForm.type.toString();
+    params.raiting = `${valueFromForm.raiting[0]}-${valueFromForm.raiting[1]}`;
+    params.yearFrom = valueFromForm.yearFrom.toString();
+    params.yearTo = valueFromForm.yearTo.toString();
+    return params;
+  };
+
   const onSubmitForm = async (valueFromForm: TParamsToSearchFilm) => {
+    const objToSearch = {
+      ...valueFromForm,
+      countries:
+        countries?.find(
+          (element) => element.country === valueFromForm.countries
+        )?.id || "",
+      genres:
+        genres?.find((element) => element.genre === valueFromForm.genres)?.id ||
+        "",
+    };
+    const params = paramsForURL(valueFromForm);
     setDisabled(true);
     setParamsToSearch(valueFromForm);
+    setSearchParams(params);
     await dispatch(
-      deepSearchFilm({ paramsToSearch: valueFromForm, page: currentPage })
+      deepSearchFilm({ paramsToSearch: objToSearch, page: currentPage })
     );
     setDisabled(false);
   };
@@ -52,7 +110,13 @@ export const Search = () => {
 
   return (
     <div className={styles.searchContent}>
-      <SearchForm disabled={disabled} onSubmitForm={onSubmitForm} />
+      <SearchForm
+        initialValue={paramsToSearch}
+        genres={genres ? genres : null}
+        countries={countries ? countries : null}
+        disabled={disabled}
+        onSubmitForm={onSubmitForm}
+      />
       {loadingStatus === "loading" ? (
         <Spin className={styles.loading} size="large" />
       ) : (
