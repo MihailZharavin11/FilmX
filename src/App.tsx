@@ -29,8 +29,10 @@ const App: React.FC = () => {
   const location = useLocation();
   const stateLocation = location.state as StateLocationData;
   const pathName = stateLocation ? stateLocation.from.pathname : "/";
+  const [disabledButton, setDisabledButton] = useState(false);
 
   const handleRegistration = async (email: string, password: string) => {
+    setDisabledButton(true);
     const objToLogIn = {
       email,
       password,
@@ -40,14 +42,17 @@ const App: React.FC = () => {
       message.success("You have successfully registered");
       setTimeout(() => {
         navigate("/");
+        setDisabledButton(false);
       }, 2000);
     }
     if (meta.requestStatus === "rejected" && payload) {
       message.error(payload);
+      setDisabledButton(false);
     }
   };
 
   const handleLogIn = async (email: string, password: string) => {
+    setDisabledButton(true);
     const userToLogIn = {
       email,
       password,
@@ -57,10 +62,12 @@ const App: React.FC = () => {
       message.success("You have successfully logged in");
       setTimeout(() => {
         navigate(pathName);
+        setDisabledButton(false);
       }, 2000);
     }
     if (meta.requestStatus === "rejected" && payload) {
       message.error(payload);
+      setDisabledButton(false);
     }
   };
 
@@ -146,6 +153,7 @@ const App: React.FC = () => {
           path="/registration"
           element={
             <Authorization
+              disabledButton={disabledButton}
               title="Registration"
               redirectName="Login"
               handleAuthorization={handleRegistration}
@@ -156,6 +164,7 @@ const App: React.FC = () => {
           path="/login"
           element={
             <Authorization
+              disabledButton={disabledButton}
               title="Login"
               redirectName="Registration"
               handleAuthorization={handleLogIn}

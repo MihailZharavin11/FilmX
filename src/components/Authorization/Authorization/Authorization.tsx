@@ -8,12 +8,14 @@ type AuthorizationProps = {
   handleAuthorization: (email: string, password: string) => void;
   title: string;
   redirectName: string;
+  disabledButton: boolean;
 };
 
 export const Authorization: React.FC<AuthorizationProps> = ({
   handleAuthorization,
   title,
   redirectName,
+  disabledButton,
 }) => {
   return (
     <div className={styles.wrapper}>
@@ -21,6 +23,7 @@ export const Authorization: React.FC<AuthorizationProps> = ({
         <h1 className="registration__title-text">{title}</h1>
       </div>
       <FormToAuthentication
+        disabledButton={disabledButton}
         handleSubmit={handleAuthorization}
         titleButton={title}
       />
