@@ -4,8 +4,8 @@ import type { MenuProps } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import styles from "./avatar.module.scss";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../../../redux/store";
-import { userLogOut } from "../../../../redux/slices/userSlice";
+import { useAppDispatch } from "../../../redux/store";
+import { userLogOut } from "../../../redux/slices/userSlice";
 
 const Avatar: React.FC = () => {
   const dipatch = useAppDispatch();

@@ -14,7 +14,7 @@ type FormToAuthenticationProps = {
   disabledButton: boolean;
 };
 
-interface FormData {
+interface IFormData {
   email: string;
   password: string;
 }
@@ -35,7 +35,7 @@ const FormToAuthentication: React.FC<FormToAuthenticationProps> = ({
       name="normal_login"
       className={styles.form}
       initialValues={{ remember: true }}
-      onFinish={(e: FormData) => {
+      onFinish={(e: IFormData) => {
         handleSubmit(e.email, e.password);
       }}
     >

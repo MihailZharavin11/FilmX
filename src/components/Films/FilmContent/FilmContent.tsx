@@ -8,12 +8,12 @@ import {
   getMoviePictures,
 } from "../../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import CardInner from "../../Shared/CardInner/CardInner";
-import CardInnerDescription from "../../Shared/CardInnerDescription/CardInnerDescription";
-import CardInnerImage from "../../Shared/CardInnerImage/CardInnerImage";
-import CardInnerHeader from "../../Shared/CardInnerHeader/CardInnerHeader";
-import CardInnerList from "../../Shared/CardInnerList/CardInnerList";
-import CardInnerScreens from "../../Shared/CardInnerScreens/CardInnerScreens";
+import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
+import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
+import CardInnerImage from "../../CardInner/CardInnerImage/CardInnerImage";
+import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
+import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
+import CardInnerScreens from "../../CardInner/CardInnerScreens/CardInnerScreens";
 import styles from "./filmContent.module.scss";
 
 const FilmContent: React.FC = () => {
@@ -48,7 +48,7 @@ const FilmContent: React.FC = () => {
   }
 
   return (
-    <CardInner
+    <CardInnerLayout
       image={
         <CardInnerImage
           img={selectFilm?.posterUrl}

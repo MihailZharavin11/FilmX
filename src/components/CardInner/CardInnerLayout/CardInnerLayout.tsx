@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./cardInner.module.scss";
+import styles from "./cardInnerLayout.module.scss";
 
 type CardInnerProps = {
   image: JSX.Element;
@@ -9,7 +9,7 @@ type CardInnerProps = {
   movieImages?: JSX.Element;
 };
 
-const CardInner: React.FC<CardInnerProps> = ({
+export const CardInnerLayout: React.FC<CardInnerProps> = ({
   image,
   header,
   description,
@@ -33,5 +33,3 @@ const CardInner: React.FC<CardInnerProps> = ({
     </div>
   );
 };
-
-export default CardInner;

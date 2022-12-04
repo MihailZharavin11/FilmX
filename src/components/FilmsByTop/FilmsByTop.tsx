@@ -44,7 +44,7 @@ export const FilmsByTop = () => {
               id={element.filmId}
               posterUrlPreview={element.posterUrlPreview}
               rating={element.rating}
-              title={element.nameEn}
+              title={element.nameRu ? element.nameRu : element.nameEn}
             />
           </Col>
         ))}

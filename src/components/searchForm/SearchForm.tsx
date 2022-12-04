@@ -1,6 +1,6 @@
 import { Button, Form, Input, InputNumber, Select, Slider } from "antd";
-import React, { useEffect, useState } from "react";
-import api, { TCountry, TGenre, TParamsToSearchFilm } from "../../api";
+import React from "react";
+import { TCountry, TGenre, TParamsToSearchFilm } from "../../api";
 import styles from "./searchForm.module.scss";
 
 type SearchFormProps = {

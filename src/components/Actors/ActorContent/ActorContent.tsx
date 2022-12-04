@@ -6,11 +6,11 @@ import {
   getActorById,
 } from "../../../redux/slices/actorSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import CardInner from "../../Shared/CardInner/CardInner";
-import CardInnerDescription from "../../Shared/CardInnerDescription/CardInnerDescription";
-import CardInnerHeader from "../../Shared/CardInnerHeader/CardInnerHeader";
-import CardInnerImage from "../../Shared/CardInnerImage/CardInnerImage";
-import CardInnerList from "../../Shared/CardInnerList/CardInnerList";
+import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
+import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
+import CardInnerImage from "../../CardInner/CardInnerImage/CardInnerImage";
+import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
+import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
 
 const ActorContent = () => {
   const { id } = useParams();
@@ -44,7 +44,7 @@ const ActorContent = () => {
 
   return (
     <div>
-      <CardInner
+      <CardInnerLayout
         image={<CardInnerImage img={selectActors?.posterUrl} actions={false} />}
         header={
           <CardInnerHeader

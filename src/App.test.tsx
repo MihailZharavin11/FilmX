@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import { BrowserRouter } from "react-router-dom";
 import Home from "./pages/Home/Home";
-import MenuComponent from "./components/Shared/Header/Menu/MenuComponent";
+import MenuComponent from "./components/Header/Menu/MenuComponent";
 
 describe("Checking the Display of Components", () => {
   beforeAll(() => {

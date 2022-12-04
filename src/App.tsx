@@ -4,13 +4,13 @@ import "./App.css";
 import FilmContent from "./components/Films/FilmContent/FilmContent";
 import Films from "./pages/Films/Films";
 import Home from "./pages/Home/Home";
-import EmptyContent from "./components/Shared/EmptyContent/EmptyContent";
+import EmptyContent from "./components/EmptyContent/EmptyContent";
 import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
 import { useAppDispatch } from "./redux/store";
 import { createNewUser, fetchUser, userLogIn } from "./redux/slices/userSlice";
 import { message, Spin } from "antd";
-import HeaderComponent from "./components/Shared/Header/HeaderComponent";
+import HeaderComponent from "./components/Header/HeaderComponent";
 import { Search } from "./pages/Search/Search";
 import { FilmsByTop } from "./components/FilmsByTop/FilmsByTop";
 import { FilmsByGenre } from "./components/FilmsByGenre/FilmsByGenre";
@@ -33,11 +33,11 @@ const App: React.FC = () => {
 
   const handleRegistration = async (email: string, password: string) => {
     setDisabledButton(true);
-    const objToLogIn = {
+    const userToRegistration = {
       email,
       password,
     };
-    const { meta, payload } = await dispatch(createNewUser(objToLogIn));
+    const { meta, payload } = await dispatch(createNewUser(userToRegistration));
     if (meta.requestStatus === "fulfilled") {
       message.success("You have successfully registered");
       setTimeout(() => {

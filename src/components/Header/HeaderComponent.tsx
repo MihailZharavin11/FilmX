@@ -5,7 +5,7 @@ import styles from "./headerComponent.module.scss";
 import Logo from "./Logo/Logo";
 import SearchField from "./SearchField/SearchField";
 import { Header } from "antd/lib/layout/layout";
-import { useAuth } from "../../../hooks/useAuth";
+import { useAuth } from "../../hooks/useAuth";
 import MenuComponent from "./Menu/MenuComponent";
 
 const HeaderComponent: React.FC = () => {

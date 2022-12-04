@@ -7,22 +7,6 @@ import {
 } from "../redux/slices/filmItemSlice";
 import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
 
-const instanceV2_2 = axios.create({
-  baseURL: "https://kinopoiskapiunofficial.tech/api/v2.2/films",
-  headers: {
-    "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
-    "Content-Type": "application/json",
-  },
-});
-
-const instanceV2_1 = axios.create({
-  baseURL: "https://kinopoiskapiunofficial.tech/api/v2.1/films",
-  headers: {
-    "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
-    "Content-Type": "application/json",
-  },
-});
-
 type TCategories = {
   genres: TGenre[];
   countries: TCountry[];
@@ -55,6 +39,22 @@ export type TDataFoundFilm = {
   totalPages: number;
 };
 
+const instanceV2_2 = axios.create({
+  baseURL: "https://kinopoiskapiunofficial.tech/api/v2.2/films",
+  headers: {
+    "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
+    "Content-Type": "application/json",
+  },
+});
+
+const instanceV2_1 = axios.create({
+  baseURL: "https://kinopoiskapiunofficial.tech/api/v2.1/films",
+  headers: {
+    "X-API-KEY": "da939efc-f1df-48db-92a8-f687212274b5",
+    "Content-Type": "application/json",
+  },
+});
+
 const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
   let categories = categoriesArgs;
 
@@ -68,6 +68,7 @@ const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
+  debugger;
 
   return data;
 };

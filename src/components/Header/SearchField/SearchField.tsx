@@ -1,11 +1,11 @@
 import { Select } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
-import { useAppDispatch, useAppSelector } from "../../../../redux/store";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import {
   clearQuickSearchMovie,
   searchFilm,
-} from "../../../../redux/slices/searchSlice";
+} from "../../../redux/slices/searchSlice";
 import { Link } from "react-router-dom";
 import styles from "./searchField.module.scss";
 import SearchCard from "./SearchCard/SearchCard";

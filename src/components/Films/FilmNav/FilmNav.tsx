@@ -13,7 +13,7 @@ import styles from "./filmNav.module.scss";
 
 type MenuItem = Required<MenuProps>["items"][number];
 
-type TItemCategories = {
+type TItemTopCategories = {
   name: string;
   path: string;
 };
@@ -50,7 +50,7 @@ const FilmNav: React.FC = () => {
     } as MenuItem;
   }
 
-  const itemTopCategories: TItemCategories[] = [
+  const itemTopCategories: TItemTopCategories[] = [
     {
       name: "Top250 Films",
       path: "TOP_250_BEST_FILMS",
