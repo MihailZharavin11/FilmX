@@ -26,9 +26,6 @@ const FilmCard: React.FC<FilmCardProps> = ({
         className={styles.card}
         hoverable
         bordered
-        bodyStyle={{
-          width: "100%",
-        }}
         cover={
           <Link to={`/films/${id}`}>
             <img

@@ -1,13 +1,14 @@
+@use "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/raiting.scss";
 
 .presentationFilm__image {
   display: flex;
   justify-content: center;
   min-width: 270px;
-  @media (max-width: 576px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
     min-width: 260px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     width: 100%;
   }
 }
@@ -17,7 +18,7 @@
   .presentationFilm__raitingNumber {
     font-size: 24px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     display: flex;
     justify-content: center;
   }
@@ -29,7 +30,7 @@
 
 .titleMobile {
   padding: 0px 30px;
-  @media (min-width: 480px) {
+  @media (min-width: variablesForMedia.$layout-breakpoint-esm) {
     display: none;
   }
 }

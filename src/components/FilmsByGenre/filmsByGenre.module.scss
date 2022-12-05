@@ -1,3 +1,5 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .column {
   display: flex;
   justify-content: center;
@@ -17,7 +19,7 @@
 
 .pagination_row {
   margin: 30px 180px;
-  @media (max-width: 991.98px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
     justify-content: center;
     margin: 30px 0px;
   }

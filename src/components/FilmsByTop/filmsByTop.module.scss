@@ -1,6 +1,12 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .column {
   display: flex;
   justify-content: center;
+}
+
+.filmTopWrapper {
+  width: 100%;
 }
 
 .loading {
@@ -12,13 +18,30 @@
 
 .film_row {
   margin-top: 20px;
+  display: flex;
   justify-content: center;
+  @media (max-width: variablesForMedia.$layout-breakpoint-xl) {
+    justify-content: space-around;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    justify-content: flex-start;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+    justify-content: center;
+  }
 }
 
 .pagination_row {
-  margin: 30px 180px;
-  @media (max-width: 960px) {
-    justify-content: center;
+  display: flex;
+  margin: 30px 30px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    justify-content: flex-start;
     margin: 30px 0px;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    justify-content: center;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+    justify-content: center;
   }
 }

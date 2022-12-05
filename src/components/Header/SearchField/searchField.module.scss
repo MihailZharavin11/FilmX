@@ -1,3 +1,4 @@
+@use "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/raiting.scss";
 
 .menuWrapper {
@@ -5,7 +6,7 @@
   align-items: center;
   justify-content: center;
   width: 30%;
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     width: 65%;
     text-align: center;
   }

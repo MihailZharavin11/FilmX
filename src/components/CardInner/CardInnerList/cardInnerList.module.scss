@@ -1,8 +1,9 @@
+@use "../../../styles/variables/variablesForMedia.scss";
 .description {
   display: flex;
   flex-direction: column;
   gap: 30px;
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -13,11 +14,11 @@
 .descriptionTitle {
   font-size: 24px;
   font-weight: 500;
-  @media (max-width: 768px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
     font-size: 20px;
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     font-size: 28px;
   }
 }

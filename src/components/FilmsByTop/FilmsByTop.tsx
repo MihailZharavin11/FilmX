@@ -28,15 +28,15 @@ export const FilmsByTop = () => {
   };
 
   return (
-    <div>
+    <div className={styles.filmTopWrapper}>
       <Row className={styles.film_row} gutter={[0, 30]}>
         {filmsByTop?.map((element) => (
           <Col
             className={styles.column}
             key={element.filmId}
-            lg={{ span: 4, offset: 1 }}
+            lg={{ span: 6, offset: 0 }}
             md={{ span: 8, offset: 0 }}
-            sm={{ span: 12, offset: 1 }}
+            sm={{ span: 12, offset: 0 }}
             xs={{ span: 24, offset: 0 }}
           >
             <FilmCard

@@ -55,20 +55,16 @@ const instanceV2_1 = axios.create({
   },
 });
 
-const getTopFilms = async (currentPage: number, categoriesArgs?: string) => {
-  let categories = categoriesArgs;
-
-  if (!categories) {
-    categories = "TOP_250_BEST_FILMS";
-  }
-
+const getTopFilms = async (
+  currentPage: number,
+  categoriesArgs: string = "TOP_250_BEST_FILMS"
+) => {
   const data = await instanceV2_2
-    .get(`/top?type=${categories}&page=${currentPage}`)
+    .get(`/top?type=${categoriesArgs}&page=${currentPage}`)
     .then((response) => {
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
-  debugger;
 
   return data;
 };

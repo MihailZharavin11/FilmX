@@ -1,3 +1,5 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .header {
   padding: 5px 20px;
   height: 100px;
@@ -5,7 +7,7 @@
   display: flex;
   justify-content: space-between;
   background: #f0f2f5;
-  @media (max-width: 480px) {
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     padding: 5px 5px;
   }
 }
