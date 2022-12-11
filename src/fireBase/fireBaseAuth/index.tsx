@@ -10,11 +10,6 @@ const logIn = async (email: string, password: string) => {
   const auth = getAuth();
   const { user } = await setPersistence(auth, browserSessionPersistence).then(
     () => {
-      // Existing and future Auth states are now persisted in the current
-      // session only. Closing the window would clear any existing state even
-      // if a user forgets to sign out.
-      // ...
-      // New sign-in will be persisted with session persistence.
       return signInWithEmailAndPassword(auth, email, password);
     }
   );

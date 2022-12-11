@@ -16,17 +16,12 @@ import {
   setFavoriteMovie,
   setWatchedMovie,
 } from "../../../redux/slices/userSlice";
-import { useParams } from "react-router-dom";
 import CardInnerHeader from "../CardInnerHeader/CardInnerHeader";
-import {
-  getDatabase,
-  set,
-  ref,
-  push,
-  onValue,
-  remove,
-} from "firebase/database";
 import { getAuth } from "firebase/auth";
+import {
+  addMovieToDB,
+  removeMovieFromDB,
+} from "../../../fireBase/fireBaseDB/fireBaseDB";
 
 type FilmImageProps = {
   img: string | undefined;
@@ -43,78 +38,24 @@ const FilmImage: React.FC<FilmImageProps> = ({
 }) => {
   const selectFilm = useAppSelector((state) => state.filmItem.selectFilm);
   const dispatch = useAppDispatch();
-  const { id } = useParams();
   const [likedMovie, watchedMovie] = useAppSelector(
-    iconStateSelector(id ? id : "")
+    iconStateSelector(selectFilm?.kinopoiskId ? selectFilm.kinopoiskId : null)
   );
   const auth = getAuth();
   const user = auth.currentUser;
   const userid = user?.uid;
-  const db = getDatabase();
 
-  const onClickIcon = (nameIcon: string) => {
+  const onClickIcon = (nameIcon: "heart" | "watched") => {
     if (selectFilm) {
       if (nameIcon === "heart") {
         dispatch(setFavoriteMovie(selectFilm));
-        addFavoriteMovieToDB();
+        addMovieToDB(`users/${userid}/favoriteMovies`, selectFilm.kinopoiskId);
       }
       if (nameIcon === "watched") {
         dispatch(setWatchedMovie(selectFilm));
-        addWatchedMovieToDB();
+        addMovieToDB(`users/${userid}/watchedMovie`, selectFilm.kinopoiskId);
       }
     }
-  };
-
-  const addFavoriteMovieToDB = () => {
-    const keyForRef = push(ref(db, `users/${userid}/favoriteMovies`));
-    set(keyForRef, {
-      id,
-    });
-  };
-
-  const addWatchedMovieToDB = () => {
-    const keyForRef = push(ref(db, `users/${userid}/watchedMovie`));
-    set(keyForRef, {
-      id,
-    });
-  };
-
-  const removeFromFavorites = () => {
-    const refFavoriteMov = ref(db, `users/${userid}/favMovies`);
-    onValue(
-      refFavoriteMov,
-      (snapshot) => {
-        snapshot.forEach((element) => {
-          const favFilmVal = element.val();
-          if (favFilmVal.id === id) {
-            remove(element.ref);
-          }
-        });
-      },
-      {
-        onlyOnce: true,
-      }
-    );
-    dispatch(deleteFavoriteMovie(id));
-  };
-
-  const removeFromWatched = () => {
-    const refWatchedMovie = ref(db, `users/${userid}/watchedMovie`);
-    onValue(
-      refWatchedMovie,
-      (snapshot) => {
-        snapshot.forEach((element) => {
-          const wathcedMovie = element.val();
-          if (wathcedMovie.id === id) {
-            remove(element.ref);
-          }
-        });
-      },
-      {
-        onlyOnce: true,
-      }
-    );
-    dispatch(deleteWatchedMovie(id));
   };
 
   return (
@@ -138,7 +79,15 @@ const FilmImage: React.FC<FilmImageProps> = ({
               ? [
                   likedMovie ? (
                     <HeartTwoTone
-                      onClick={() => removeFromFavorites()}
+                      onClick={() => {
+                        if (selectFilm) {
+                          removeMovieFromDB(
+                            `users/${userid}/favoriteMovies`,
+                            selectFilm.kinopoiskId
+                          );
+                          dispatch(deleteFavoriteMovie(selectFilm.kinopoiskId));
+                        }
+                      }}
                       twoToneColor="#ff0daa"
                       key={"heart"}
                     />
@@ -147,7 +96,15 @@ const FilmImage: React.FC<FilmImageProps> = ({
                   ),
                   watchedMovie ? (
                     <EyeTwoTone
-                      onClick={() => removeFromWatched()}
+                      onClick={() => {
+                        if (selectFilm) {
+                          removeMovieFromDB(
+                            `users/${userid}/watchedMovie`,
+                            selectFilm.kinopoiskId
+                          );
+                          dispatch(deleteWatchedMovie(selectFilm.kinopoiskId));
+                        }
+                      }}
                       key={"eye"}
                     />
                   ) : (

@@ -250,7 +250,7 @@ const userSlice = createSlice({
   },
 });
 
-export const iconStateSelector = (filmId: string) =>
+export const iconStateSelector = (filmId: number | null) =>
   createSelector(
     (state: RootState) => state.user.favoriteMovies,
     (state: RootState) => state.user.watchedMovies,
