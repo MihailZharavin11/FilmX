@@ -11,6 +11,7 @@ type TCountries = {
 };
 
 export interface IFilmById {
+  kinopoiskId: number;
   countries: TCountries[];
   description: string;
   filmLength: number;

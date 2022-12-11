@@ -1,7 +1,12 @@
+@use "../../../styles/variables/variablesForMedia.scss";
+
 .cardWrapper {
+  width: 185px;
   min-width: 170px;
-  max-width: 185px;
   height: 380px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    width: 180px;
+  }
 }
 
 .card {

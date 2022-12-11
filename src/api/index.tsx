@@ -97,29 +97,10 @@ const getListFilmsByGenre = async (currentPage: number, genreArgs?: string) => {
 };
 
 const getFilmById = async (id: string) => {
-  const film = await instanceV2_2.get(`/${id}`).then((response) => {
+  const film: IFilmById = await instanceV2_2.get(`/${id}`).then((response) => {
     return response.data;
   });
-  const FilmById: IFilmById = {
-    countries: film.countries,
-    description: film.description,
-    filmLength: film.filmLength,
-    genres: film.genres,
-    has3D: film.has3D,
-    hasImax: film.hasImax,
-    nameEn: film.nameEn,
-    nameOriginal: film.nameOriginal,
-    nameRu: film.nameRu,
-    posterUrl: film.posterUrl,
-    posterUrlPreview: film.posterUrlPreview,
-    ratingAgeLimits: parseInt(film.ratingAgeLimits.match(/\d+/)),
-    ratingImdb: film.ratingImdb,
-    ratingKinopoisk: film.ratingKinopoisk,
-    slogan: film.slogan,
-    type: film.type,
-    year: film.year,
-  };
-  return FilmById;
+  return film;
 };
 
 export const getActorsById = async (id: string) => {

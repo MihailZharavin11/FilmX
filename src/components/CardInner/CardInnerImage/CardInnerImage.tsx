@@ -10,12 +10,23 @@ import {
 } from "@ant-design/icons";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import {
+  deleteFavoriteMovie,
+  deleteWatchedMovie,
   iconStateSelector,
   setFavoriteMovie,
   setWatchedMovie,
 } from "../../../redux/slices/userSlice";
 import { useParams } from "react-router-dom";
 import CardInnerHeader from "../CardInnerHeader/CardInnerHeader";
+import {
+  getDatabase,
+  set,
+  ref,
+  push,
+  onValue,
+  remove,
+} from "firebase/database";
+import { getAuth } from "firebase/auth";
 
 type FilmImageProps = {
   img: string | undefined;
@@ -36,24 +47,76 @@ const FilmImage: React.FC<FilmImageProps> = ({
   const [likedMovie, watchedMovie] = useAppSelector(
     iconStateSelector(id ? id : "")
   );
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const userid = user?.uid;
+  const db = getDatabase();
 
   const onClickIcon = (nameIcon: string) => {
     if (selectFilm) {
-      const movieToSend = {
-        id,
-        nameEn: selectFilm.nameEn ? selectFilm.nameEn : selectFilm.nameOriginal,
-        ratingImdb: selectFilm.ratingImdb,
-        posterUrl: selectFilm.posterUrl,
-        year: selectFilm.year,
-      };
       if (nameIcon === "heart") {
-        dispatch(setFavoriteMovie(movieToSend));
+        dispatch(setFavoriteMovie(selectFilm));
+        addFavoriteMovieToDB();
       }
       if (nameIcon === "watched") {
-        dispatch(setWatchedMovie(movieToSend));
+        dispatch(setWatchedMovie(selectFilm));
+        addWatchedMovieToDB();
       }
     }
   };
+
+  const addFavoriteMovieToDB = () => {
+    const keyForRef = push(ref(db, `users/${userid}/favoriteMovies`));
+    set(keyForRef, {
+      id,
+    });
+  };
+
+  const addWatchedMovieToDB = () => {
+    const keyForRef = push(ref(db, `users/${userid}/watchedMovie`));
+    set(keyForRef, {
+      id,
+    });
+  };
+
+  const removeFromFavorites = () => {
+    const refFavoriteMov = ref(db, `users/${userid}/favMovies`);
+    onValue(
+      refFavoriteMov,
+      (snapshot) => {
+        snapshot.forEach((element) => {
+          const favFilmVal = element.val();
+          if (favFilmVal.id === id) {
+            remove(element.ref);
+          }
+        });
+      },
+      {
+        onlyOnce: true,
+      }
+    );
+    dispatch(deleteFavoriteMovie(id));
+  };
+
+  const removeFromWatched = () => {
+    const refWatchedMovie = ref(db, `users/${userid}/watchedMovie`);
+    onValue(
+      refWatchedMovie,
+      (snapshot) => {
+        snapshot.forEach((element) => {
+          const wathcedMovie = element.val();
+          if (wathcedMovie.id === id) {
+            remove(element.ref);
+          }
+        });
+      },
+      {
+        onlyOnce: true,
+      }
+    );
+    dispatch(deleteWatchedMovie(id));
+  };
+
   return (
     <>
       <div className={styles.titleMobile}>
@@ -75,7 +138,7 @@ const FilmImage: React.FC<FilmImageProps> = ({
               ? [
                   likedMovie ? (
                     <HeartTwoTone
-                      onClick={() => onClickIcon("heart")}
+                      onClick={() => removeFromFavorites()}
                       twoToneColor="#ff0daa"
                       key={"heart"}
                     />
@@ -84,7 +147,7 @@ const FilmImage: React.FC<FilmImageProps> = ({
                   ),
                   watchedMovie ? (
                     <EyeTwoTone
-                      onClick={() => onClickIcon("watched")}
+                      onClick={() => removeFromWatched()}
                       key={"eye"}
                     />
                   ) : (

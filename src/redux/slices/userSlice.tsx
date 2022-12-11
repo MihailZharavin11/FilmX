@@ -2,10 +2,14 @@ import {
   createAsyncThunk,
   createSelector,
   createSlice,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getDatabase, ref, onValue } from "firebase/database";
+import api from "../../api";
 import fireBaseAuth from "../../fireBase/fireBaseAuth";
 import { RootState } from "../store";
+import { IFilmById } from "./filmItemSlice";
 
 enum LoadingStatus {
   IDLE = "idle",
@@ -26,8 +30,8 @@ interface IUserSlice {
   token: string | null;
   id: string | null;
   error: string | null;
-  favoriteMovies: FavoriteMoviesItem[] | [];
-  watchedMovies: FavoriteMoviesItem[] | [];
+  favoriteMovies: IFilmById[];
+  watchedMovies: IFilmById[];
   loadingStatus: LoadingStatus;
 }
 
@@ -48,7 +52,7 @@ export const fetchUser = createAsyncThunk<
 >("user/fetchUser", async ({ setLoading }, { dispatch, rejectWithValue }) => {
   try {
     const auth = getAuth();
-    await onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(
           setUser({
@@ -66,6 +70,45 @@ export const fetchUser = createAsyncThunk<
     }
   }
 });
+
+export const getDataFromDB = createAsyncThunk(
+  "user/getDataFromDB",
+  async (id: string, { dispatch, rejectWithValue }) => {
+    try {
+      const db = getDatabase();
+      const refFavoriteMovie = ref(db, `users/${id}/favoriteMovies`);
+      const refWatchedMovie = ref(db, `users/${id}/watchedMovie`);
+      onValue(
+        refFavoriteMovie,
+        (snapshot) => {
+          snapshot.forEach((element) => {
+            if (element.exists()) {
+              api.getFilmById(element.val().id).then((response) => {
+                dispatch(setFavoriteMovie(response));
+              });
+            }
+          });
+        },
+        {
+          onlyOnce: true,
+        }
+      );
+      onValue(refWatchedMovie, (snapshot) => {
+        snapshot.forEach((element) => {
+          if (element.exists()) {
+            api.getFilmById(element.val().id).then((response) => {
+              dispatch(setWatchedMovie(response));
+            });
+          }
+        });
+      });
+    } catch (err) {
+      if (err instanceof Error) {
+        return rejectWithValue(err.message);
+      }
+    }
+  }
+);
 
 export const createNewUser = createAsyncThunk<
   void,
@@ -162,35 +205,20 @@ const userSlice = createSlice({
       state.id = null;
     },
     setFavoriteMovie: (state, action) => {
-      const newFavoriteMovie: FavoriteMoviesItem = {
-        id: action.payload.id,
-        nameEn: action.payload.nameEn,
-        ratingImdb: action.payload.raitingImdb,
-        posterUrl: action.payload.posterUrl,
-        year: action.payload.year,
-      };
-      const sameElement = state.favoriteMovies.some(
-        (element) => element.id === newFavoriteMovie.id
+      state.favoriteMovies.push(action.payload);
+    },
+    deleteFavoriteMovie: (state, action) => {
+      state.favoriteMovies = state.favoriteMovies.filter(
+        (favoriteMovie) => favoriteMovie.kinopoiskId !== Number(action.payload)
       );
-      if (!sameElement) {
-        state.favoriteMovies = [...state.favoriteMovies, newFavoriteMovie];
-      } else {
-        state.favoriteMovies = state.favoriteMovies.filter(
-          (element) => element.id !== newFavoriteMovie.id
-        );
-      }
     },
     setWatchedMovie: (state, action) => {
-      const sameElement = state.watchedMovies.some(
-        (element) => element.id === action.payload.id
+      state.watchedMovies.push(action.payload);
+    },
+    deleteWatchedMovie: (state, action) => {
+      state.watchedMovies = state.watchedMovies.filter(
+        (watchedMovies) => watchedMovies.kinopoiskId !== Number(action.payload)
       );
-      if (!sameElement) {
-        state.watchedMovies = [...state.watchedMovies, action.payload];
-      } else {
-        state.watchedMovies = state.watchedMovies.filter(
-          (element) => element.id !== action.payload.id
-        );
-      }
     },
     clearError: (state) => {
       state.error = null;
@@ -228,9 +256,11 @@ export const iconStateSelector = (filmId: string) =>
     (state: RootState) => state.user.watchedMovies,
     (favoriteMovie, watchedMovies) => {
       if (!filmId) return [false, false];
-      const checkLikes = favoriteMovie.some((element) => element.id === filmId);
+      const checkLikes = favoriteMovie?.some(
+        (element) => element.kinopoiskId === Number(filmId)
+      );
       const checkWatched = watchedMovies.some(
-        (element) => element.id === filmId
+        (element) => element.kinopoiskId === Number(filmId)
       );
       return [checkLikes, checkWatched];
     }
@@ -246,4 +276,6 @@ export const {
   setFavoriteMovie,
   setWatchedMovie,
   clearError,
+  deleteFavoriteMovie,
+  deleteWatchedMovie,
 } = actions;

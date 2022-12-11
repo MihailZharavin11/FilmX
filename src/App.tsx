@@ -8,13 +8,19 @@ import EmptyContent from "./components/EmptyContent/EmptyContent";
 import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
 import { useAppDispatch } from "./redux/store";
-import { createNewUser, fetchUser, userLogIn } from "./redux/slices/userSlice";
+import {
+  createNewUser,
+  fetchUser,
+  getDataFromDB,
+  userLogIn,
+} from "./redux/slices/userSlice";
 import { message, Spin } from "antd";
 import HeaderComponent from "./components/Header/HeaderComponent";
 import { Search } from "./pages/Search/Search";
 import { FilmsByTop } from "./components/FilmsByTop/FilmsByTop";
 import { FilmsByGenre } from "./components/FilmsByGenre/FilmsByGenre";
 import { Authorization } from "./components/Authorization/Authorization/Authorization";
+import { getAuth } from "firebase/auth";
 
 interface StateLocationData {
   from: {
@@ -30,6 +36,7 @@ const App: React.FC = () => {
   const stateLocation = location.state as StateLocationData;
   const pathName = stateLocation ? stateLocation.from.pathname : "/";
   const [disabledButton, setDisabledButton] = useState(false);
+  const idUser = getAuth().currentUser?.uid;
 
   const handleRegistration = async (email: string, password: string) => {
     setDisabledButton(true);
@@ -73,7 +80,10 @@ const App: React.FC = () => {
 
   useEffect(() => {
     dispatch(fetchUser({ setLoading }));
-  }, [dispatch]);
+    if (idUser) {
+      dispatch(getDataFromDB(idUser));
+    }
+  }, [dispatch, idUser]);
 
   if (loading) {
     return (
