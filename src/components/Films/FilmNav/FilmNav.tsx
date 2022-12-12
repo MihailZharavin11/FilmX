@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {
   AppstoreOutlined,
-  MailOutlined,
-  SettingOutlined,
+  ArrowUpOutlined,
+  SearchOutlined,
 } from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
@@ -52,25 +52,25 @@ const FilmNav: React.FC = () => {
 
   const itemTopCategories: TItemTopCategories[] = [
     {
-      name: "Top250 Films",
+      name: "Топ250 фильмов",
       path: "TOP_250_BEST_FILMS",
     },
     {
-      name: "Top100 Popular Films",
+      name: "Топ100 популярных фильмов",
       path: "TOP_100_POPULAR_FILMS",
     },
     {
-      name: "Top Await Films",
+      name: "Топ ожидаемых",
       path: "TOP_AWAIT_FILMS",
     },
   ];
 
   const items: MenuItem[] = [
     getItem(
-      "TOP",
+      "Топ",
       "/films/TOP",
-      <MailOutlined />,
-      itemTopCategories.map((element, index) => {
+      <ArrowUpOutlined />,
+      itemTopCategories.map((element) => {
         return getItem(element.name, `/films/TOP/${element.path}`);
       })
     ),
@@ -84,7 +84,7 @@ const FilmNav: React.FC = () => {
           : null;
       })
     ),
-    getItem("Search", "/search", <SettingOutlined />),
+    getItem("Search", "/search", <SearchOutlined />),
   ];
 
   return (

@@ -45,7 +45,7 @@ export const Login = () => {
       <FormToAuthentication
         disabledButton={disabledButton}
         handleSubmit={handleLogIn}
-        titleButton={"Registration"}
+        titleButton={"Login"}
       />
 
       <Form.Item className={styles.login_button}>

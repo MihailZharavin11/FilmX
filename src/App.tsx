@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import FilmContent from "./components/Films/FilmContent/FilmContent";
@@ -17,17 +17,33 @@ import { Authorization } from "./components/Authorization/Authorization/Authoriz
 import { getAuth } from "firebase/auth";
 import { Registration } from "./components/Authorization/Registration/Registration";
 import { Login } from "./components/Authorization/Login/Login";
+import { Spin } from "antd";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
   const idUser = getAuth().currentUser?.uid;
 
   useEffect(() => {
-    dispatch(fetchUser());
+    dispatch(fetchUser({ setLoading }));
     if (idUser) {
       dispatch(getDataFromDB(idUser));
     }
   }, [dispatch, idUser]);
+
+  if (loading) {
+    return (
+      <Spin
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+        size="large"
+      />
+    );
+  }
 
   return (
     <div className="App">

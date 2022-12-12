@@ -45,29 +45,31 @@ const initialState: IUserSlice = {
   loadingStatus: LoadingStatus.IDLE,
 };
 
-export const fetchUser = createAsyncThunk<void, void, { rejectValue: string }>(
-  "user/fetchUser",
-  async (_, { dispatch, rejectWithValue }) => {
-    try {
-      const auth = getAuth();
-      onAuthStateChanged(auth, (user) => {
-        if (user) {
-          dispatch(
-            setUser({
-              email: user.email,
-              id: user.uid,
-              token: user.refreshToken,
-            })
-          );
-        }
-      });
-    } catch (error) {
-      if (error instanceof Error) {
-        return rejectWithValue(error.message);
+export const fetchUser = createAsyncThunk<
+  void,
+  { setLoading: (args: boolean) => void },
+  { rejectValue: string }
+>("user/fetchUser", async ({ setLoading }, { dispatch, rejectWithValue }) => {
+  try {
+    const auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        dispatch(
+          setUser({
+            email: user.email,
+            id: user.uid,
+            token: user.refreshToken,
+          })
+        );
       }
+      setLoading(false);
+    });
+  } catch (error) {
+    if (error instanceof Error) {
+      return rejectWithValue(error.message);
     }
   }
-);
+});
 
 export const getDataFromDB = createAsyncThunk(
   "user/getDataFromDB",

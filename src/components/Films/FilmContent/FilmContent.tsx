@@ -40,7 +40,7 @@ const FilmContent: React.FC = () => {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          height: "calc(100vh - 70px)",
+          height: "calc(100vh - 100px)",
         }}
         size="large"
       />
