@@ -75,7 +75,7 @@ const FilmNav: React.FC = () => {
       })
     ),
     getItem(
-      "Genre",
+      "Жанры",
       "Genre",
       <AppstoreOutlined />,
       genre?.map((element, index) => {
@@ -84,7 +84,7 @@ const FilmNav: React.FC = () => {
           : null;
       })
     ),
-    getItem("Search", "/search", <SearchOutlined />),
+    getItem("Поиск", "/search", <SearchOutlined />),
   ];
 
   return (

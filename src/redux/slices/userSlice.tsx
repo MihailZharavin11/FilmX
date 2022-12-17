@@ -17,21 +17,13 @@ enum LoadingStatus {
   ERROR = "error",
 }
 
-type FavoriteMoviesItem = {
-  id: string;
-  nameEn: string;
-  ratingImdb: string;
-  posterUrl: string;
-  year: number;
-};
-
 interface IUserSlice {
   email: string | null;
   token: string | null;
   id: string | null;
   error: string | null;
-  favoriteMovies: IFilmById[];
-  watchedMovies: IFilmById[];
+  favoriteFilms: IFilmById[];
+  watchedFilms: IFilmById[];
   loadingStatus: LoadingStatus;
 }
 
@@ -40,8 +32,8 @@ const initialState: IUserSlice = {
   token: null,
   id: null,
   error: null,
-  favoriteMovies: [],
-  watchedMovies: [],
+  favoriteFilms: [],
+  watchedFilms: [],
   loadingStatus: LoadingStatus.IDLE,
 };
 
@@ -56,7 +48,7 @@ export const fetchUser = createAsyncThunk<
       if (user) {
         dispatch(
           setUser({
-            email: user.email,
+            email: user.email || "",
             id: user.uid,
             token: user.refreshToken,
           })
@@ -84,7 +76,7 @@ export const getDataFromDB = createAsyncThunk(
           snapshot.forEach((element) => {
             if (element.exists()) {
               api.getFilmById(element.val().id).then((response) => {
-                dispatch(setFavoriteMovie(response));
+                dispatch(setFavoriteFilm(response));
               });
             }
           });
@@ -93,15 +85,21 @@ export const getDataFromDB = createAsyncThunk(
           onlyOnce: true,
         }
       );
-      onValue(refWatchedMovie, (snapshot) => {
-        snapshot.forEach((element) => {
-          if (element.exists()) {
-            api.getFilmById(element.val().id).then((response) => {
-              dispatch(setWatchedMovie(response));
-            });
-          }
-        });
-      });
+      onValue(
+        refWatchedMovie,
+        (snapshot) => {
+          snapshot.forEach((element) => {
+            if (element.exists()) {
+              api.getFilmById(element.val().id).then((response) => {
+                dispatch(setWatchedFilm(response));
+              });
+            }
+          });
+        },
+        {
+          onlyOnce: true,
+        }
+      );
     } catch (err) {
       if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -146,11 +144,12 @@ export const userLogIn = createAsyncThunk<
       if (userToLogIn) {
         dispatch(
           setUser({
-            email: userToLogIn.email,
+            email: userToLogIn.email || "",
             id: userToLogIn.uid,
             token: userToLogIn.refreshToken,
           })
         );
+        dispatch(getDataFromDB(userToLogIn.uid));
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -165,9 +164,13 @@ export const userLogOut = createAsyncThunk<void, void, { rejectValue: string }>(
   async (_, { dispatch, rejectWithValue }) => {
     try {
       const logOut = await fireBaseAuth.signOut();
-      logOut
-        ? dispatch(removeUser())
-        : rejectWithValue("Ошибка выхода, попробуйте еще раз...");
+      if (logOut) {
+        dispatch(removeUser());
+        dispatch(clearFavoriteFilms());
+        dispatch(clearWatchedFilms());
+      } else {
+        rejectWithValue("Ошибка выхода, попробуйте еще раз...");
+      }
     } catch (err) {
       if (err instanceof Error) {
         return rejectWithValue(err.message);
@@ -194,7 +197,10 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action) => {
+    setUser: (
+      state,
+      action: PayloadAction<{ email: string; token: string; id: string }>
+    ) => {
       state.email = action.payload.email;
       state.token = action.payload.token;
       state.id = action.payload.id;
@@ -204,24 +210,30 @@ const userSlice = createSlice({
       state.token = null;
       state.id = null;
     },
-    setFavoriteMovie: (state, action) => {
-      state.favoriteMovies.push(action.payload);
+    setFavoriteFilm: (state, action: PayloadAction<IFilmById>) => {
+      state.favoriteFilms.push(action.payload);
     },
-    deleteFavoriteMovie: (state, action) => {
-      state.favoriteMovies = state.favoriteMovies.filter(
-        (favoriteMovie) => favoriteMovie.kinopoiskId !== Number(action.payload)
+    deleteFavoriteFilm: (state, action: PayloadAction<number>) => {
+      state.favoriteFilms = state.favoriteFilms.filter(
+        (favoriteMovie) => favoriteMovie.kinopoiskId !== action.payload
       );
     },
-    setWatchedMovie: (state, action) => {
-      state.watchedMovies.push(action.payload);
+    setWatchedFilm: (state, action: PayloadAction<IFilmById>) => {
+      state.watchedFilms.push(action.payload);
     },
-    deleteWatchedMovie: (state, action) => {
-      state.watchedMovies = state.watchedMovies.filter(
+    deleteWatchedFilm: (state, action: PayloadAction<number>) => {
+      state.watchedFilms = state.watchedFilms.filter(
         (watchedMovies) => watchedMovies.kinopoiskId !== Number(action.payload)
       );
     },
     clearError: (state) => {
       state.error = null;
+    },
+    clearFavoriteFilms: (state) => {
+      state.favoriteFilms = [];
+    },
+    clearWatchedFilms: (state) => {
+      state.watchedFilms = [];
     },
   },
   extraReducers: (builder) => {
@@ -250,19 +262,19 @@ const userSlice = createSlice({
   },
 });
 
-export const iconStateSelector = (filmId: number | null) =>
+export const iconStateSelector = (filmId: number | undefined) =>
   createSelector(
-    (state: RootState) => state.user.favoriteMovies,
-    (state: RootState) => state.user.watchedMovies,
+    (state: RootState) => state.user.favoriteFilms,
+    (state: RootState) => state.user.watchedFilms,
     (favoriteMovie, watchedMovies) => {
-      if (!filmId) return [false, false];
+      if (!filmId) return { checkLikes: false, checkWatched: false };
       const checkLikes = favoriteMovie?.some(
         (element) => element.kinopoiskId === Number(filmId)
       );
       const checkWatched = watchedMovies.some(
         (element) => element.kinopoiskId === Number(filmId)
       );
-      return [checkLikes, checkWatched];
+      return { checkLikes, checkWatched };
     }
   );
 
@@ -273,9 +285,11 @@ export default reducer;
 export const {
   setUser,
   removeUser,
-  setFavoriteMovie,
-  setWatchedMovie,
+  setFavoriteFilm,
+  setWatchedFilm,
   clearError,
-  deleteFavoriteMovie,
-  deleteWatchedMovie,
+  deleteFavoriteFilm,
+  deleteWatchedFilm,
+  clearFavoriteFilms,
+  clearWatchedFilms,
 } = actions;

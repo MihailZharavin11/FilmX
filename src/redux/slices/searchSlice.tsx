@@ -1,10 +1,10 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api, { TParamsToSearchFilm } from "../../api";
 import { TGenreFilm, TTopFilm } from "./filmsTopSlice";
 
 interface ISearchState {
-  quickSearchMovie: TTopFilm[] | null;
-  deepSearch: TGenreFilm[] | null;
+  quickSearchMovie: TTopFilm[];
+  deepSearch: TGenreFilm[];
   total: number | null;
   error: string;
   loadingStatus: LoadingStatus;
@@ -17,8 +17,8 @@ enum LoadingStatus {
 }
 
 const initialState: ISearchState = {
-  quickSearchMovie: null,
-  deepSearch: null,
+  quickSearchMovie: [],
+  deepSearch: [],
   total: null,
   error: "",
   loadingStatus: LoadingStatus.IDLE,
@@ -42,23 +42,23 @@ const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    addQuickSearchMovie: (state, action) => {
+    addQuickSearchMovie: (state, action: PayloadAction<TTopFilm[]>) => {
       state.quickSearchMovie = action.payload;
     },
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    addDeepSearchMovie: (state, action) => {
+    addDeepSearchMovie: (state, action: PayloadAction<TGenreFilm[]>) => {
       state.deepSearch = action.payload;
     },
-    addTotal: (state, action) => {
+    addTotal: (state, action: PayloadAction<number>) => {
       state.total = action.payload;
     },
     clearQuickSearchMovie: (state) => {
-      state.quickSearchMovie = null;
+      state.quickSearchMovie = [];
     },
     clearDeepSearchMovie: (state) => {
-      state.deepSearch = null;
+      state.deepSearch = [];
       state.total = null;
     },
   },

@@ -10,7 +10,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
 import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
-import CardInnerImage from "../../CardInner/CardInnerImage/CardInnerImage";
+import { CardInnerImage } from "../../CardInner/CardInnerImage/CardInnerImage";
 import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
 import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
 import CardInnerScreens from "../../CardInner/CardInnerScreens/CardInnerScreens";

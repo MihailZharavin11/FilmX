@@ -8,7 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
 import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
-import CardInnerImage from "../../CardInner/CardInnerImage/CardInnerImage";
+import { CardInnerImage } from "../../CardInner/CardInnerImage/CardInnerImage";
 import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
 import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
 

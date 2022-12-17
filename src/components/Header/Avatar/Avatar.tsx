@@ -16,12 +16,20 @@ const Avatar: React.FC = () => {
 
   const items: MenuProps["items"] = [
     {
+      label: <Link to={"/favorite"}>Favorite Films</Link>,
+      key: "item-1",
+    },
+    {
+      label: <Link to={"/watched"}>Watched Films</Link>,
+      key: "item-2",
+    },
+    {
       label: (
         <Link onClick={logOut} to={"/"}>
           Log Out
         </Link>
       ),
-      key: " item-1",
+      key: " item-3",
     },
   ];
 

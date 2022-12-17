@@ -39,7 +39,7 @@ const SearchField: React.FC = () => {
         className={styles.search}
         placeholder="Search..."
         showSearch
-        open={quickSearchMovie ? true : false}
+        open={quickSearchMovie.length > 0 ? true : false}
         onDropdownVisibleChange={(visible) => {
           if (!visible) {
             handleClickAwaySearch();
@@ -51,7 +51,7 @@ const SearchField: React.FC = () => {
         dropdownRender={() => {
           return (
             <div className={styles.menuInner}>
-              {quickSearchMovie &&
+              {quickSearchMovie.length > 0 &&
                 quickSearchMovie.map((element) => (
                   <Link
                     key={element.filmId}

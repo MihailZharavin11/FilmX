@@ -65,7 +65,6 @@ const getTopFilms = async (
       const { films, pagesCount }: TData = response.data;
       return { films, pagesCount };
     });
-
   return data;
 };
 
@@ -178,7 +177,7 @@ const getFilmsBySearch = async (
 
 const getMoviePictures = async (id: string) => {
   const { data } = await instanceV2_2.get(`/${id}/images?type=STILL&page=1`);
-  return data.items as IMoviePictures;
+  return data.items as IMoviePictures[];
 };
 
 export default {

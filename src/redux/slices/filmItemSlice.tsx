@@ -2,11 +2,12 @@ import {
   createAsyncThunk,
   createSelector,
   createSlice,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import api from "../../api";
 import { RootState } from "../store";
 
-type TCountries = {
+export type TCountries = {
   country: string;
 };
 
@@ -49,10 +50,10 @@ export interface IActorsById {
 
 export interface IFilmItemSlice {
   selectFilm: IFilmById | null;
-  actors: IActorsById[] | null;
+  actors: IActorsById[];
   loadingStatus: LoadingStatus;
   error: null | string;
-  moviePictures: null | IMoviePictures[];
+  moviePictures: IMoviePictures[];
 }
 
 export interface IMoviePictures {
@@ -67,10 +68,10 @@ export type TDescriptionValue = {
 
 const initialState: IFilmItemSlice = {
   selectFilm: null,
-  actors: null,
+  actors: [],
   loadingStatus: LoadingStatus.IDLE,
   error: null,
-  moviePictures: null,
+  moviePictures: [],
 };
 
 export const getFilmInfo = createAsyncThunk<
@@ -141,13 +142,13 @@ const filmItemSlice = createSlice({
   name: "filmItem",
   initialState,
   reducers: {
-    addItemFilm: (state, action) => {
+    addItemFilm: (state, action: PayloadAction<IFilmById>) => {
       state.selectFilm = action.payload;
     },
-    addActors: (state, action) => {
+    addActors: (state, action: PayloadAction<IActorsById[]>) => {
       state.actors = action.payload;
     },
-    addMoviePictures: (state, action) => {
+    addMoviePictures: (state, action: PayloadAction<IMoviePictures[]>) => {
       state.moviePictures = action.payload;
     },
   },

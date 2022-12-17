@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import FilmContent from "./components/Films/FilmContent/FilmContent";
@@ -18,6 +18,8 @@ import { getAuth } from "firebase/auth";
 import { Registration } from "./components/Authorization/Registration/Registration";
 import { Login } from "./components/Authorization/Login/Login";
 import { Spin } from "antd";
+import { FavoriteFilms } from "./pages/FavoriteFilms/FavoriteFilms";
+import { WatchedFilms } from "./pages/WatchedFilm/WatchedFilms";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -27,6 +29,7 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(fetchUser({ setLoading }));
     if (idUser) {
+      debugger;
       dispatch(getDataFromDB(idUser));
     }
   }, [dispatch, idUser]);
@@ -119,6 +122,22 @@ const App: React.FC = () => {
             <Authorization title="Login">
               <Login />
             </Authorization>
+          }
+        />
+        <Route
+          path="/favorite"
+          element={
+            <RequireAuth>
+              <FavoriteFilms />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/watched"
+          element={
+            <RequireAuth>
+              <WatchedFilms />
+            </RequireAuth>
           }
         />
 

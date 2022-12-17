@@ -1,9 +1,9 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api, { TCountry } from "../../api";
 
 export interface IFilmsState {
-  filmsByTop: TTopFilm[] | null;
-  filmsByGenre: TGenreFilm[] | null;
+  filmsByTop: TTopFilm[];
+  filmsByGenre: TGenreFilm[];
   error: string;
   loadingStatus: LoadingStatus;
   totalPage: number;
@@ -60,8 +60,8 @@ export type TData = {
 };
 
 const initialState: IFilmsState = {
-  filmsByTop: null,
-  filmsByGenre: null,
+  filmsByTop: [],
+  filmsByGenre: [],
   error: "",
   loadingStatus: LoadingStatus.IDLE,
   totalPage: 0,
@@ -129,16 +129,16 @@ const filmsSlice = createSlice({
   name: "films",
   initialState,
   reducers: {
-    addTopFilms: (state, action) => {
+    addTopFilms: (state, action: PayloadAction<TTopFilm[]>) => {
       state.filmsByTop = action.payload;
     },
-    addGenreFilms: (state, action) => {
+    addGenreFilms: (state, action: PayloadAction<TGenreFilm[]>) => {
       state.filmsByGenre = action.payload;
     },
-    setError: (state, action) => {
+    setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    addTotalPage: (state, action) => {
+    addTotalPage: (state, action: PayloadAction<number>) => {
       state.totalPage = action.payload;
     },
   },
