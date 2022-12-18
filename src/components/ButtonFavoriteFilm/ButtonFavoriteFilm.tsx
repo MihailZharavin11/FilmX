@@ -12,6 +12,7 @@ import {
 } from "../../fireBase/fireBaseDB/fireBaseDB";
 import { getAuth } from "firebase/auth";
 import { IFilmById } from "../../redux/slices/filmItemSlice";
+import styles from "./buttonFavoriteFilm.module.scss";
 
 type ButtonFavoriteFilmProps = {
   film: IFilmById | null;
@@ -46,6 +47,7 @@ export const ButtonFavoriteFilm: React.FC<ButtonFavoriteFilmProps> = ({
     <>
       {checkLikes ? (
         <HeartTwoTone
+          className={styles.icon}
           onClick={(e) => {
             e.stopPropagation();
             deleteFilmFromFavorite();
@@ -55,6 +57,7 @@ export const ButtonFavoriteFilm: React.FC<ButtonFavoriteFilmProps> = ({
         />
       ) : (
         <HeartOutlined
+          className={styles.icon}
           onClick={(e) => {
             e.stopPropagation();
             addFilmToFavorite();

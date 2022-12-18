@@ -12,6 +12,7 @@ import {
 } from "../../fireBase/fireBaseDB/fireBaseDB";
 import { getAuth } from "firebase/auth";
 import { IFilmById } from "../../redux/slices/filmItemSlice";
+import styles from "./buttonViewFilm.module.scss";
 
 type ViewButtonProps = {
   film: IFilmById | null;
@@ -43,6 +44,7 @@ export const ButtonViewFilm: React.FC<ViewButtonProps> = ({ film, id }) => {
     <>
       {checkWatched ? (
         <EyeTwoTone
+          className={styles.icon}
           onClick={(e) => {
             e.stopPropagation();
             deleteMovieFromWatched();
@@ -51,6 +53,7 @@ export const ButtonViewFilm: React.FC<ViewButtonProps> = ({ film, id }) => {
         />
       ) : (
         <EyeOutlined
+          className={styles.icon}
           onClick={(e) => {
             e.stopPropagation();
             addMovieToWatched();
