@@ -51,23 +51,24 @@ const SearchField: React.FC = () => {
         dropdownRender={() => {
           return (
             <div className={styles.menuInner}>
-              {quickSearchMovie.length > 0 &&
-                quickSearchMovie.map((element) => (
-                  <Link
-                    key={element.filmId}
-                    onClick={() => handleClickAwaySearch()}
-                    to={`/films/${element.filmId}`}
-                  >
-                    <SearchCard
-                      filmId={element.filmId}
-                      posterUrl={element.posterUrl}
-                      nameEn={element.nameEn}
-                      rating={element.rating}
-                      nameRu={element.nameRu}
-                      year={element.year}
-                    />
-                  </Link>
-                ))}
+              {quickSearchMovie.length > 0
+                ? quickSearchMovie.map((element) => (
+                    <Link
+                      key={element.filmId}
+                      onClick={() => handleClickAwaySearch()}
+                      to={`/films/${element.filmId}`}
+                    >
+                      <SearchCard
+                        filmId={element.filmId}
+                        posterUrl={element.posterUrl}
+                        nameEn={element.nameEn}
+                        rating={element.rating}
+                        nameRu={element.nameRu}
+                        year={element.year}
+                      />
+                    </Link>
+                  ))
+                : null}
             </div>
           );
         }}

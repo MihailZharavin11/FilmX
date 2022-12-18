@@ -1,9 +1,9 @@
 import { Button, Tooltip } from "antd";
 import React from "react";
 import { setClassForRaiting } from "../../lib/raitingFunc";
-import { TCountries } from "../../redux/slices/filmItemSlice";
 import styles from "./selectedFilmCard.module.scss";
 import { useNavigate } from "react-router-dom";
+import { TCountry } from "../../api/APItypes";
 
 type TSelectedFilmCardProps = {
   id: number;
@@ -14,7 +14,7 @@ type TSelectedFilmCardProps = {
   nameOriginal: string;
   year: number;
   filmLength: number;
-  countries: TCountries[];
+  countries: TCountry[];
   raiting: number;
   deleteButtonHandler: (id: number) => void;
   children: JSX.Element;

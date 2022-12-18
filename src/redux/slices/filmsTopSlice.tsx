@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import api, { TCountry } from "../../api";
+import api from "../../api";
+import { TCountry, TGenre, TTopFilm } from "../../api/APItypes";
 
 export interface IFilmsState {
   filmsByTop: TTopFilm[];
@@ -15,32 +16,9 @@ enum LoadingStatus {
   ERROR = "error",
 }
 
-export type TTopFilm = {
-  countries: Array<Object>;
-  filmId: number;
-  filmLength: string;
-  genres: Array<Object>;
-  nameEn: string;
-  nameRu: string;
-  posterUrl: string;
-  posterUrlPreview: string;
-  rating: string;
-  ratingChange: null | string;
-  ratingVoteCount: number;
-  year: string;
-};
-
-export type TCountriesBySearch = {
-  country: string;
-};
-
-export type TGenresBySearch = {
-  genre: string;
-};
-
 export type TGenreFilm = {
-  countries: TCountriesBySearch[];
-  genres: TGenresBySearch[];
+  countries: TCountry[];
+  genres: TGenre[];
   imdbId: string;
   kinopoiskId: number;
   nameEn: string;
@@ -52,11 +30,6 @@ export type TGenreFilm = {
   ratingKinopoisk: number;
   type: string;
   year: number;
-};
-
-export type TData = {
-  films: TTopFilm[];
-  pagesCount: number;
 };
 
 const initialState: IFilmsState = {
@@ -75,7 +48,7 @@ export const getTopFilms = createAsyncThunk<
   "films/getFilms",
   async ({ categories, currentPage }, { dispatch, rejectWithValue }) => {
     try {
-      const { films, pagesCount }: TData = await api.getTopFilms(
+      const { films, pagesCount } = await api.getTopFilms(
         currentPage,
         categories
       );

@@ -4,11 +4,10 @@ import {
   getMovieByGenre,
   getTopFilms,
   IFilmsState,
-  TData,
   TGenreFilm,
-  TTopFilm,
 } from "./filmsTopSlice";
 import filmsReducer from "../slices/filmsTopSlice";
+import { IResponseTopFilms, TTopFilm } from "../../api/APItypes";
 
 jest.mock("../../api");
 const apiMock = api as jest.Mocked<typeof api>;
@@ -64,7 +63,7 @@ const genreFilm: TGenreFilm = {
   year: 2013,
 };
 
-const result: TData = {
+const result: IResponseTopFilms = {
   films: [films],
   pagesCount: 1,
 };

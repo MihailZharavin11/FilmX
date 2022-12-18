@@ -5,31 +5,54 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import api from "../../api";
+import { IMoviePictures, TCountry, TGenre } from "../../api/APItypes";
 import { RootState } from "../store";
-
-export type TCountries = {
-  country: string;
-};
 
 export interface IFilmById {
   kinopoiskId: number;
-  countries: TCountries[];
-  description: string;
-  filmLength: number;
-  genres: Array<Object>;
-  has3D: boolean;
-  hasImax: boolean;
+  imdbId: string;
+  nameRu: string;
   nameEn: string;
   nameOriginal: string;
-  nameRu: string;
   posterUrl: string;
   posterUrlPreview: string;
-  ratingAgeLimits: number;
-  ratingImdb: number;
+  coverUrl: string;
+  logoUrl: string;
+  reviewsCount: number;
+  ratingGoodReview: number;
+  ratingGoodReviewVoteCount: number;
   ratingKinopoisk: number;
-  slogan: string;
-  type: string;
+  ratingKinopoiskVoteCount: number;
+  ratingImdb: number;
+  ratingImdbVoteCount: number;
+  ratingFilmCritics: number;
+  ratingFilmCriticsVoteCount: number;
+  ratingAwait: number;
+  ratingAwaitCount: number;
+  ratingRfCritics: number;
+  ratingRfCriticsVoteCount: number;
+  webUrl: string;
   year: number;
+  filmLength: number;
+  slogan: string;
+  description: string;
+  shortDescription: string;
+  editorAnnotation: string;
+  isTicketsAvailable: boolean;
+  productionStatus: string;
+  type: string;
+  ratingMpaa: string;
+  ratingAgeLimits: string;
+  hasImax: boolean;
+  has3D: boolean;
+  lastSync: Date;
+  countries: TCountry[];
+  genres: TGenre[];
+  startYear: number;
+  endYear: number;
+  serial: boolean;
+  shortFilm: boolean;
+  completed: boolean;
 }
 
 export enum LoadingStatus {
@@ -54,11 +77,6 @@ export interface IFilmItemSlice {
   loadingStatus: LoadingStatus;
   error: null | string;
   moviePictures: IMoviePictures[];
-}
-
-export interface IMoviePictures {
-  imageUrl: string;
-  previewUrl: string;
 }
 
 export type TDescriptionValue = {

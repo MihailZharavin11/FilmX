@@ -36,7 +36,11 @@ const FilmCard: React.FC<FilmCardProps> = ({
           </Link>
         }
       >
-        <Meta title={title} description={<FilmRaiting raiting={rating} />} />
+        <Meta
+          className={styles.cardMeta}
+          title={title}
+          description={<FilmRaiting raiting={rating} />}
+        />
       </Card>
     </div>
   );

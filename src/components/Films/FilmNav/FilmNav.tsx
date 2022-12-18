@@ -7,7 +7,7 @@ import {
 import type { MenuProps } from "antd";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import api, { TGenre } from "../../../api/index";
+import api, { TFilmByGenre } from "../../../api/index";
 import { useAppSelector } from "../../../redux/store";
 import styles from "./filmNav.module.scss";
 
@@ -20,7 +20,7 @@ type TItemTopCategories = {
 
 const FilmNav: React.FC = () => {
   const { loadingStatus } = useAppSelector((state) => state.films);
-  const [genre, setGenre] = useState<TGenre[] | null>();
+  const [genre, setGenre] = useState<TFilmByGenre[] | null>();
   const navigate = useNavigate();
   const location = useLocation();
 

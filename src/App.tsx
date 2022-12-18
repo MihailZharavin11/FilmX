@@ -29,7 +29,6 @@ const App: React.FC = () => {
   useEffect(() => {
     dispatch(fetchUser({ setLoading }));
     if (idUser) {
-      debugger;
       dispatch(getDataFromDB(idUser));
     }
   }, [dispatch, idUser]);

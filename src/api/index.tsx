@@ -1,23 +1,25 @@
 import axios from "axios";
 import { TActor } from "../redux/slices/actorSlice";
+import { IActorsById, IFilmById } from "../redux/slices/filmItemSlice";
+import { TGenreFilm } from "../redux/slices/filmsTopSlice";
 import {
-  IActorsById,
-  IFilmById,
-  IMoviePictures,
-} from "../redux/slices/filmItemSlice";
-import { TData, TGenreFilm, TTopFilm } from "../redux/slices/filmsTopSlice";
+  FilmSearchResponse,
+  ImageResponse,
+  IResponseTopFilms,
+  TTopFilm,
+} from "./APItypes";
 
-type TCategories = {
-  genres: TGenre[];
-  countries: TCountry[];
+type TFilmsCategories = {
+  genres: TFilmByGenre[];
+  countries: TFilmByCountry[];
 };
 
-export type TCountry = {
+export type TFilmByCountry = {
   id: number;
   country: string;
 };
 
-export type TGenre = {
+export type TFilmByGenre = {
   id: number;
   genre: string;
 };
@@ -59,18 +61,16 @@ const getTopFilms = async (
   currentPage: number,
   categoriesArgs: string = "TOP_250_BEST_FILMS"
 ) => {
-  const data = await instanceV2_2
-    .get(`/top?type=${categoriesArgs}&page=${currentPage}`)
-    .then((response) => {
-      const { films, pagesCount }: TData = response.data;
-      return { films, pagesCount };
-    });
+  const { data } = await instanceV2_2.get<IResponseTopFilms>(
+    `/top?type=${categoriesArgs}&page=${currentPage}`
+  );
+
   return data;
 };
 
 const getCategoriesAndCountries = async () => {
   const data = await instanceV2_2.get("/filters").then((response) => {
-    const { genres, countries }: TCategories = response.data;
+    const { genres, countries }: TFilmsCategories = response.data;
     return { genres, countries };
   });
 
@@ -142,13 +142,10 @@ export const getActorInfoById = async (id: string) => {
 };
 
 const getFilmByKeyWords = async (searchValue: string) => {
-  const searchFilmValue: TTopFilm[] = await instanceV2_1
-    .get(`/search-by-keyword?keyword=${searchValue}&page=1`)
-    .then((response) => {
-      const { films } = response.data;
-      return films;
-    });
-  return searchFilmValue;
+  const { data } = await instanceV2_1.get<FilmSearchResponse>(
+    `/search-by-keyword?keyword=${searchValue}&page=1`
+  );
+  return data;
 };
 
 const getFilmsBySearch = async (
@@ -176,8 +173,10 @@ const getFilmsBySearch = async (
 };
 
 const getMoviePictures = async (id: string) => {
-  const { data } = await instanceV2_2.get(`/${id}/images?type=STILL&page=1`);
-  return data.items as IMoviePictures[];
+  const { data } = await instanceV2_2.get<ImageResponse>(
+    `/${id}/images?type=STILL&page=1`
+  );
+  return data.items;
 };
 
 export default {

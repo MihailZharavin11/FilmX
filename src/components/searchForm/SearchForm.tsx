@@ -1,12 +1,12 @@
 import { Button, Form, Input, InputNumber, Select, Slider } from "antd";
 import React from "react";
-import { TCountry, TGenre, TParamsToSearchFilm } from "../../api";
+import { TFilmByCountry, TFilmByGenre, TParamsToSearchFilm } from "../../api";
 import styles from "./searchForm.module.scss";
 
 type SearchFormProps = {
   onSubmitForm: (valueFromForm: TParamsToSearchFilm) => void;
-  genres: TGenre[] | null;
-  countries: TCountry[] | null;
+  genres: TFilmByGenre[] | null;
+  countries: TFilmByCountry[] | null;
   disabled: boolean;
   initialValue: TParamsToSearchFilm;
 };
