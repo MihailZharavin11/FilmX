@@ -7,7 +7,12 @@ import {
   TGenreFilm,
 } from "./filmsTopSlice";
 import filmsReducer from "../slices/filmsTopSlice";
-import { IResponseTopFilms, TTopFilm } from "../../api/APItypes";
+import {
+  TFilmSearchByFiltersResponse_items,
+  TFilmSearchResponse_films,
+  IResponseTopFilms,
+  TTopFilm,
+} from "../../api/APItypes";
 
 jest.mock("../../api");
 const apiMock = api as jest.Mocked<typeof api>;
@@ -39,7 +44,7 @@ const films: TTopFilm = {
     "https://kinopoiskapiunofficial.tech/images/posters/kp_small/435.jpg",
 };
 
-const genreFilm: TGenreFilm = {
+const genreFilm: TFilmSearchByFiltersResponse_items = {
   countries: [
     {
       country: "USA",
@@ -59,7 +64,7 @@ const genreFilm: TGenreFilm = {
   posterUrlPreview: "img",
   ratingImdb: 8.2,
   ratingKinopoisk: 8.8,
-  type: "serial",
+  type: "FILM",
   year: 2013,
 };
 

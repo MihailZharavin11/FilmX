@@ -1,11 +1,12 @@
 import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import api, {
-  TFilmByCountry,
-  TFilmByGenre,
+import api from "../../api";
+import {
+  TFiltersResponse_countries,
+  TFiltersResponse_genres,
   TParamsToSearchFilm,
-} from "../../api";
+} from "../../api/APItypes";
 import FilmCard from "../../components/Films/FilmCard/FilmCard";
 import { SearchForm } from "../../components/searchForm/SearchForm";
 import {
@@ -43,8 +44,8 @@ export const Search = () => {
   const { deepSearch, total, loadingStatus } = useAppSelector(
     (state) => state.search
   );
-  const [genres, setGenres] = useState<TFilmByGenre[]>();
-  const [countries, setCountries] = useState<TFilmByCountry[]>();
+  const [genres, setGenres] = useState<TFiltersResponse_genres[]>();
+  const [countries, setCountries] = useState<TFiltersResponse_countries[]>();
   const [currentPage, setCurrentPage] = useState(1);
   const [paramsToSearch, setParamsToSearch] = useState<TParamsToSearchFilm>({
     keyword: searchParams.get("keyword") || "",

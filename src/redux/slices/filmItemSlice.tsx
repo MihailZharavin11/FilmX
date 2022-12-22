@@ -5,7 +5,7 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import api from "../../api";
-import { IMoviePictures, TCountry, TGenre } from "../../api/APItypes";
+import { TMoviePictures, TCountry, TGenre } from "../../api/APItypes";
 import { RootState } from "../store";
 
 export interface IFilmById {
@@ -76,7 +76,7 @@ export interface IFilmItemSlice {
   actors: IActorsById[];
   loadingStatus: LoadingStatus;
   error: null | string;
-  moviePictures: IMoviePictures[];
+  moviePictures: TMoviePictures[];
 }
 
 export type TDescriptionValue = {
@@ -115,7 +115,7 @@ export const getActors = createAsyncThunk<
   { rejectValue: string }
 >("filmtItem/getActors", async (id, { dispatch, rejectWithValue }) => {
   try {
-    const actors = await api.getActorsById(id);
+    const actors = await api.getActorsByFilmId(id);
     dispatch(addActors(actors));
   } catch (err) {
     if (err instanceof Error) {
@@ -166,7 +166,7 @@ const filmItemSlice = createSlice({
     addActors: (state, action: PayloadAction<IActorsById[]>) => {
       state.actors = action.payload;
     },
-    addMoviePictures: (state, action: PayloadAction<IMoviePictures[]>) => {
+    addMoviePictures: (state, action: PayloadAction<TMoviePictures[]>) => {
       state.moviePictures = action.payload;
     },
   },

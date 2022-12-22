@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import api, { TParamsToSearchFilm } from "../../api";
-import { FilmSearchResponse_films, TTopFilm } from "../../api/APItypes";
+import api from "../../api";
+import {
+  TFilmSearchResponse_films,
+  TParamsToSearchFilm,
+} from "../../api/APItypes";
 import { TGenreFilm } from "./filmsTopSlice";
 
 interface ISearchState {
-  quickSearchMovie: FilmSearchResponse_films[];
+  quickSearchMovie: TFilmSearchResponse_films[];
   deepSearch: TGenreFilm[];
   total: number | null;
   error: string;
@@ -45,7 +48,7 @@ const searchSlice = createSlice({
   reducers: {
     addQuickSearchMovie: (
       state,
-      action: PayloadAction<FilmSearchResponse_films[]>
+      action: PayloadAction<TFilmSearchResponse_films[]>
     ) => {
       state.quickSearchMovie = action.payload;
     },
