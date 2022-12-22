@@ -1,7 +1,7 @@
 import { getAuth } from "firebase/auth";
 import { ButtonViewFilm } from "../../components/ButtonViewFilm/ButtonViewFilm";
 import { removeMovieFromDB } from "../../fireBase/fireBaseDB/fireBaseDB";
-import { deleteFavoriteFilm } from "../../redux/slices/userSlice";
+import { deleteFavoriteFilm } from "../../redux/slices/userSlice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { SelectedFilmCard } from "../../components/SelectedFilmCard/SelectedFilmCard";
 import styles from "./favoriteFilms.module.scss";

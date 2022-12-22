@@ -1,19 +1,19 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
-import type { TypedUseSelectorHook } from 'react-redux';
-import filmsSlice from './slices/filmsTopSlice';
-import filmItemSlice from './slices/filmItemSlice';
-import searchSlice from './slices/searchSlice';
-import userSlice from './slices/userSlice';
-import actorSlice from './slices/actorSlice'
+import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch, useSelector } from "react-redux";
+import type { TypedUseSelectorHook } from "react-redux";
+import filmsSlice from "./slices/filmsTopSlice/filmsTopSlice";
+import filmItemSlice from "./slices/filmItemSlice/filmItemSlice";
+import searchSlice from "./slices/searchSlice/searchSlice";
+import userSlice from "./slices/userSlice/userSlice";
+import actorSlice from "./slices/actorSlice/actorSlice";
 
 export const store = configureStore({
   reducer: {
     films: filmsSlice,
-    filmItem:filmItemSlice,
-    search:searchSlice,
+    filmItem: filmItemSlice,
+    search: searchSlice,
     user: userSlice,
-    actor: actorSlice
+    actor: actorSlice,
   },
 });
 

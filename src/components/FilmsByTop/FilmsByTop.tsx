@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getTopFilms } from "../../redux/slices/filmsTopSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import FilmCard from "../Films/FilmCard/FilmCard";
 import styles from "./filmsByTop.module.scss";
+import { getTopFilms } from "../../redux/slices/filmsTopSlice/filmsTopThunk";
 
 export const FilmsByTop = () => {
   const [currentPage, setCurrentPage] = useState(1);

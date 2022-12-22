@@ -8,7 +8,6 @@ import EmptyContent from "./components/EmptyContent/EmptyContent";
 import ActorContent from "./components/Actors/ActorContent/ActorContent";
 import RequireAuth from "./hoc/RequireAuth";
 import { useAppDispatch } from "./redux/store";
-import { fetchUser, getDataFromDB } from "./redux/slices/userSlice";
 import HeaderComponent from "./components/Header/HeaderComponent";
 import { Search } from "./pages/Search/Search";
 import { FilmsByTop } from "./components/FilmsByTop/FilmsByTop";
@@ -20,6 +19,7 @@ import { Login } from "./components/Authorization/Login/Login";
 import { Spin } from "antd";
 import { FavoriteFilms } from "./pages/FavoriteFilms/FavoriteFilms";
 import { WatchedFilms } from "./pages/WatchedFilm/WatchedFilms";
+import { fetchUser, getDataFromDB } from "./redux/slices/userSlice/userThunk";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();

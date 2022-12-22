@@ -1,5 +1,5 @@
 import React from "react";
-import { TDescriptionValue } from "../../../redux/slices/filmItemSlice";
+import { TDescriptionValue } from "../../../redux/slices/filmItemSlice/filmItemTypes";
 import CardInnerTableItem from "../CardInnerTableItem/CardInnerTableItem";
 import styles from "./cardInnerDescription.module.scss";
 

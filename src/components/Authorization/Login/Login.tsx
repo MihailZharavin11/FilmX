@@ -1,7 +1,7 @@
 import { Form, message } from "antd";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { userLogIn } from "../../../redux/slices/userSlice";
+import { userLogIn } from "../../../redux/slices/userSlice/userThunk";
 import { useAppDispatch } from "../../../redux/store";
 import FormToAuthentication from "../Form/FormToAuthentication";
 import styles from "./login.module.scss";

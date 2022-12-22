@@ -1,7 +1,7 @@
 import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMovieByGenre } from "../../redux/slices/filmsTopSlice";
+import { getMovieByGenre } from "../../redux/slices/filmsTopSlice/filmsTopThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import FilmCard from "../Films/FilmCard/FilmCard";
 import styles from "./filmsByGenre.module.scss";

@@ -1,9 +1,8 @@
 import React from "react";
 import {
   deleteWatchedFilm,
-  iconStateSelector,
   setWatchedFilm,
-} from "../../redux/slices/userSlice";
+} from "../../redux/slices/userSlice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { EyeTwoTone, EyeOutlined } from "@ant-design/icons";
 import {
@@ -13,6 +12,7 @@ import {
 import { getAuth } from "firebase/auth";
 import styles from "./buttonViewFilm.module.scss";
 import { IFilm } from "../../api/APItypes";
+import { iconStateSelector } from "../../redux/slices/userSlice/userSelectors";
 
 type ViewButtonProps = {
   film: IFilm | null;

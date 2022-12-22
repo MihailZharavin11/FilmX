@@ -1,24 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import api from "../../api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   TFilmSearchByFiltersResponse_items,
   TFilmSearchResponse_films,
-  TParamsToSearchFilm,
-} from "../../api/APItypes";
-
-interface ISearchState {
-  quickSearchMovie: TFilmSearchResponse_films[];
-  deepSearch: TFilmSearchByFiltersResponse_items[];
-  total: number | null;
-  error: string;
-  loadingStatus: LoadingStatus;
-}
-
-enum LoadingStatus {
-  IDLE = "idle",
-  LOADING = "loading",
-  ERROR = "error",
-}
+} from "../../../api/APItypes";
+import { LoadingStatus } from "../../reduxGeneralTypes";
+import { deepSearchFilm, searchFilm } from "./searchThunk";
+import { ISearchState } from "./searchTypes";
 
 const initialState: ISearchState = {
   quickSearchMovie: [],
@@ -92,51 +79,6 @@ const searchSlice = createSlice({
       });
   },
 });
-
-export const searchFilm = createAsyncThunk<
-  void,
-  string,
-  { rejectValue: string }
->("films/searchFilm", async (searchValue, { dispatch, rejectWithValue }) => {
-  try {
-    const { films } = await api.getFilmByKeyWords(searchValue);
-    if (films.length > 0) {
-      dispatch(addQuickSearchMovie(films));
-    } else {
-      dispatch(clearQuickSearchMovie());
-    }
-  } catch (err) {
-    if (err instanceof Error) {
-      dispatch(setError(err.message));
-      return rejectWithValue(err.message);
-    } else {
-      console.log("Error", err);
-    }
-  }
-});
-
-export const deepSearchFilm = createAsyncThunk<
-  void,
-  { paramsToSearch: TParamsToSearchFilm; page: number },
-  { rejectValue: string }
->(
-  "films/deepSearchFilm",
-  async ({ paramsToSearch, page }, { dispatch, rejectWithValue }) => {
-    try {
-      const foundMovies = await api.getFilmsBySearch(paramsToSearch, page);
-      const { items, total } = foundMovies;
-      dispatch(addDeepSearchMovie(items));
-      dispatch(addTotal(total));
-    } catch (err) {
-      if (err instanceof Error) {
-        dispatch(setError(err.message));
-        return rejectWithValue(err.message);
-      } else {
-        console.log("Error", err);
-      }
-    }
-  }
-);
 
 const { reducer, actions } = searchSlice;
 

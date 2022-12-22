@@ -1,9 +1,8 @@
 import React from "react";
 import {
   deleteFavoriteFilm,
-  iconStateSelector,
   setFavoriteFilm,
-} from "../../redux/slices/userSlice";
+} from "../../redux/slices/userSlice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { HeartTwoTone, HeartOutlined } from "@ant-design/icons";
 import {
@@ -13,6 +12,7 @@ import {
 import { getAuth } from "firebase/auth";
 import styles from "./buttonFavoriteFilm.module.scss";
 import { IFilm } from "../../api/APItypes";
+import { iconStateSelector } from "../../redux/slices/userSlice/userSelectors";
 
 type ButtonFavoriteFilmProps = {
   film: IFilm | null;

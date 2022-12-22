@@ -5,7 +5,7 @@ import { UserOutlined } from "@ant-design/icons";
 import styles from "./avatar.module.scss";
 import { Link } from "react-router-dom";
 import { useAppDispatch } from "../../../redux/store";
-import { userLogOut } from "../../../redux/slices/userSlice";
+import { userLogOut } from "../../../redux/slices/userSlice/userThunk";
 
 const Avatar: React.FC = () => {
   const dipatch = useAppDispatch();

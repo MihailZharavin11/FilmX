@@ -1,12 +1,6 @@
-import { Avatar, Empty, List, Spin } from "antd";
+import { Avatar, List, Spin } from "antd";
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  descriptionFilmSelector,
-  getActors,
-  getFilmInfo,
-  getMoviePictures,
-} from "../../../redux/slices/filmItemSlice";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
 import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
@@ -16,6 +10,8 @@ import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
 import CardInnerScreens from "../../CardInner/CardInnerScreens/CardInnerScreens";
 import styles from "./filmContent.module.scss";
 import EmptyContent from "../../EmptyContent/EmptyContent";
+import { descriptionFilmSelector } from "../../../redux/slices/filmItemSlice/filmItemSelectors";
+import { getFilmInfo } from "../../../redux/slices/filmItemSlice/filmItemThunk";
 
 const FilmContent: React.FC = () => {
   const { id } = useParams();

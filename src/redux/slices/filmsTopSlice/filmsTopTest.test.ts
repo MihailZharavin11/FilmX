@@ -1,12 +1,13 @@
-import api from "../../api";
-import { LoadingStatus } from "./filmItemSlice";
-import { getMovieByGenre, getTopFilms, IFilmsState } from "./filmsTopSlice";
-import filmsReducer from "../slices/filmsTopSlice";
+import api from "../../../api";
+import filmsReducer from "./filmsTopSlice";
 import {
   TFilmSearchByFiltersResponse_items,
   IResponseTopFilms,
   TTopFilm,
-} from "../../api/APItypes";
+} from "../../../api/APItypes";
+import { LoadingStatus } from "../../reduxGeneralTypes";
+import { getMovieByGenre, getTopFilms } from "./filmsTopThunk";
+import { IFilmsState } from "./filmsTopTypes";
 
 jest.mock("../../api");
 const apiMock = api as jest.Mocked<typeof api>;

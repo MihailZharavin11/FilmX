@@ -3,7 +3,7 @@ import React from "react";
 import { ButtonFavoriteFilm } from "../../components/ButtonFavoriteFilm/ButtonFavoriteFilm";
 import { SelectedFilmCard } from "../../components/SelectedFilmCard/SelectedFilmCard";
 import { removeMovieFromDB } from "../../fireBase/fireBaseDB/fireBaseDB";
-import { deleteWatchedFilm } from "../../redux/slices/userSlice";
+import { deleteWatchedFilm } from "../../redux/slices/userSlice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import styles from "./watchedFilms.module.scss";
 

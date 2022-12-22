@@ -1,10 +1,8 @@
 import { List, Spin } from "antd";
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
-import {
-  descriptionActorSelector,
-  getActorById,
-} from "../../../redux/slices/actorSlice";
+import { descriptionActorSelector } from "../../../redux/slices/actorSlice/actorSelector";
+import { getActorById } from "../../../redux/slices/actorSlice/actorThunk";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import CardInnerDescription from "../../CardInner/CardInnerDescription/CardInnerDescription";
 import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";

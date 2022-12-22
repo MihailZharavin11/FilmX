@@ -9,10 +9,8 @@ import {
 } from "../../api/APItypes";
 import FilmCard from "../../components/Films/FilmCard/FilmCard";
 import { SearchForm } from "../../components/searchForm/SearchForm";
-import {
-  clearDeepSearchMovie,
-  deepSearchFilm,
-} from "../../redux/slices/searchSlice";
+import { clearDeepSearchMovie } from "../../redux/slices/searchSlice/searchSlice";
+import { deepSearchFilm } from "../../redux/slices/searchSlice/searchThunk";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import styles from "./search.module.scss";
 

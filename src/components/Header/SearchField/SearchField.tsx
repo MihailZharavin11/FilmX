@@ -2,13 +2,11 @@ import { Select } from "antd";
 import React, { useCallback, useRef, useState } from "react";
 import debounce from "lodash.debounce";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import {
-  clearQuickSearchMovie,
-  searchFilm,
-} from "../../../redux/slices/searchSlice";
+import { clearQuickSearchMovie } from "../../../redux/slices/searchSlice/searchSlice";
 import { Link } from "react-router-dom";
 import styles from "./searchField.module.scss";
 import SearchCard from "./SearchCard/SearchCard";
+import { searchFilm } from "../../../redux/slices/searchSlice/searchThunk";
 
 const SearchField: React.FC = () => {
   const [valueSearch, setValueSearch] = useState("");

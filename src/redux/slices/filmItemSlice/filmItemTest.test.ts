@@ -1,7 +1,8 @@
-import api from "../../api";
-import { getFilmInfo, LoadingStatus } from "./filmItemSlice";
+import api from "../../../api";
 import filmItemReducer from "./filmItemSlice";
-import { IFilm } from "../../api/APItypes";
+import { IFilm } from "../../../api/APItypes";
+import { LoadingStatus } from "../../reduxGeneralTypes";
+import { getFilmInfo } from "./filmItemThunk";
 
 jest.mock("../../api");
 

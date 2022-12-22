@@ -1,23 +1,11 @@
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import api from "../../api";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   TFilmSearchByFiltersResponse_items,
   TTopFilm,
-} from "../../api/APItypes";
-
-export interface IFilmsState {
-  filmsByTop: TTopFilm[];
-  filmsByGenre: TFilmSearchByFiltersResponse_items[];
-  error: string;
-  loadingStatus: LoadingStatus;
-  totalPage: number;
-}
-
-enum LoadingStatus {
-  IDLE = "idle",
-  LOADING = "loading",
-  ERROR = "error",
-}
+} from "../../../api/APItypes";
+import { LoadingStatus } from "../../reduxGeneralTypes";
+import { getMovieByGenre, getTopFilms } from "./filmsTopThunk";
+import { IFilmsState } from "./filmsTopTypes";
 
 const initialState: IFilmsState = {
   filmsByTop: [],
@@ -26,50 +14,6 @@ const initialState: IFilmsState = {
   loadingStatus: LoadingStatus.IDLE,
   totalPage: 0,
 };
-
-export const getTopFilms = createAsyncThunk<
-  void,
-  { categories: string | undefined; currentPage: number },
-  { rejectValue: string }
->(
-  "films/getFilms",
-  async ({ categories, currentPage }, { dispatch, rejectWithValue }) => {
-    try {
-      const { films, pagesCount } = await api.getTopFilms(
-        currentPage,
-        categories
-      );
-      dispatch(addTopFilms(films));
-      dispatch(addTotalPage(pagesCount));
-    } catch (err) {
-      if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      }
-    }
-  }
-);
-
-export const getMovieByGenre = createAsyncThunk<
-  void,
-  { genre: string; currentPage: number },
-  { rejectValue: string }
->(
-  "films/getMovieByGenre",
-  async ({ genre, currentPage }, { dispatch, rejectWithValue }) => {
-    try {
-      const { items, totalPages } = await api.getListFilmsByGenre(
-        currentPage,
-        genre
-      );
-      dispatch(addGenreFilms(items));
-      dispatch(addTotalPage(totalPages));
-    } catch (err) {
-      if (err instanceof Error) {
-        return rejectWithValue(err.message);
-      }
-    }
-  }
-);
 
 const handlePendingStatus = (state: IFilmsState) => {
   state.loadingStatus = LoadingStatus.LOADING;
