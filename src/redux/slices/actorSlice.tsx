@@ -4,38 +4,15 @@ import {
   createSlice,
 } from "@reduxjs/toolkit";
 import api from "../../api";
+import { IPersonResponse } from "../../api/APItypes";
 import { RootState } from "../store";
 import { LoadingStatus } from "./filmItemSlice";
 
 export interface IActorItemSlice {
-  selectActors: null | TActor;
+  selectActors: null | IPersonResponse;
   loadingStatus: LoadingStatus;
   error: null | string;
 }
-
-type TFilmActor = {
-  filmId: number;
-  nameRu: string;
-  nameEn: string;
-  rating: string;
-  general: true;
-  description: string;
-  professionKey: string;
-};
-
-export type TActor = {
-  personId: number;
-  nameRu: string;
-  nameEn: string;
-  posterUrl: string;
-  growth: number;
-  birthday: string;
-  death: null | string;
-  age: number;
-  films: TFilmActor[];
-  filmsLength: number;
-  profession: string;
-};
 
 export const getActorById = createAsyncThunk<
   void,
@@ -119,7 +96,7 @@ export const descriptionActorSelector = createSelector(
       },
       {
         title: "Количество фильмов",
-        value: selectActors?.filmsLength || "",
+        value: selectActors?.films.length || "",
       },
     ];
     return descriptionValue;

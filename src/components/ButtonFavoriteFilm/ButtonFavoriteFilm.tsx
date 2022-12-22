@@ -11,11 +11,11 @@ import {
   removeMovieFromDB,
 } from "../../fireBase/fireBaseDB/fireBaseDB";
 import { getAuth } from "firebase/auth";
-import { IFilmById } from "../../redux/slices/filmItemSlice";
 import styles from "./buttonFavoriteFilm.module.scss";
+import { IFilm } from "../../api/APItypes";
 
 type ButtonFavoriteFilmProps = {
-  film: IFilmById | null;
+  film: IFilm | null;
   id: number | undefined;
 };
 

@@ -7,9 +7,9 @@ import {
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, ref, onValue } from "firebase/database";
 import api from "../../api";
+import { IFilm } from "../../api/APItypes";
 import fireBaseAuth from "../../fireBase/fireBaseAuth";
 import { RootState } from "../store";
-import { IFilmById } from "./filmItemSlice";
 
 enum LoadingStatus {
   IDLE = "idle",
@@ -22,8 +22,8 @@ interface IUserSlice {
   token: string | null;
   id: string | null;
   error: string | null;
-  favoriteFilms: IFilmById[];
-  watchedFilms: IFilmById[];
+  favoriteFilms: IFilm[];
+  watchedFilms: IFilm[];
   loadingStatus: LoadingStatus;
 }
 
@@ -210,7 +210,7 @@ const userSlice = createSlice({
       state.token = null;
       state.id = null;
     },
-    setFavoriteFilm: (state, action: PayloadAction<IFilmById>) => {
+    setFavoriteFilm: (state, action: PayloadAction<IFilm>) => {
       state.favoriteFilms.push(action.payload);
     },
     deleteFavoriteFilm: (state, action: PayloadAction<number>) => {
@@ -218,7 +218,7 @@ const userSlice = createSlice({
         (favoriteMovie) => favoriteMovie.kinopoiskId !== action.payload
       );
     },
-    setWatchedFilm: (state, action: PayloadAction<IFilmById>) => {
+    setWatchedFilm: (state, action: PayloadAction<IFilm>) => {
       state.watchedFilms.push(action.payload);
     },
     deleteWatchedFilm: (state, action: PayloadAction<number>) => {

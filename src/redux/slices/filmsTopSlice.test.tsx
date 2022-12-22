@@ -1,15 +1,9 @@
 import api from "../../api";
 import { LoadingStatus } from "./filmItemSlice";
-import {
-  getMovieByGenre,
-  getTopFilms,
-  IFilmsState,
-  TGenreFilm,
-} from "./filmsTopSlice";
+import { getMovieByGenre, getTopFilms, IFilmsState } from "./filmsTopSlice";
 import filmsReducer from "../slices/filmsTopSlice";
 import {
   TFilmSearchByFiltersResponse_items,
-  TFilmSearchResponse_films,
   IResponseTopFilms,
   TTopFilm,
 } from "../../api/APItypes";

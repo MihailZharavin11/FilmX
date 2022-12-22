@@ -77,7 +77,7 @@ const ActorContent = () => {
             children={
               <List
                 itemLayout="horizontal"
-                dataSource={selectActors?.films}
+                dataSource={selectActors?.films.slice(0, 5)}
                 renderItem={(item) => (
                   <Link to={`/films/${item.filmId}`}>
                     <List.Item key={item.filmId}>

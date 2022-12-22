@@ -5,55 +5,8 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import api from "../../api";
-import { TMoviePictures, TCountry, TGenre } from "../../api/APItypes";
+import { TMoviePictures, IFilm, IStaffResponse } from "../../api/APItypes";
 import { RootState } from "../store";
-
-export interface IFilmById {
-  kinopoiskId: number;
-  imdbId: string;
-  nameRu: string;
-  nameEn: string;
-  nameOriginal: string;
-  posterUrl: string;
-  posterUrlPreview: string;
-  coverUrl: string;
-  logoUrl: string;
-  reviewsCount: number;
-  ratingGoodReview: number;
-  ratingGoodReviewVoteCount: number;
-  ratingKinopoisk: number;
-  ratingKinopoiskVoteCount: number;
-  ratingImdb: number;
-  ratingImdbVoteCount: number;
-  ratingFilmCritics: number;
-  ratingFilmCriticsVoteCount: number;
-  ratingAwait: number;
-  ratingAwaitCount: number;
-  ratingRfCritics: number;
-  ratingRfCriticsVoteCount: number;
-  webUrl: string;
-  year: number;
-  filmLength: number;
-  slogan: string;
-  description: string;
-  shortDescription: string;
-  editorAnnotation: string;
-  isTicketsAvailable: boolean;
-  productionStatus: string;
-  type: string;
-  ratingMpaa: string;
-  ratingAgeLimits: string;
-  hasImax: boolean;
-  has3D: boolean;
-  lastSync: Date;
-  countries: TCountry[];
-  genres: TGenre[];
-  startYear: number;
-  endYear: number;
-  serial: boolean;
-  shortFilm: boolean;
-  completed: boolean;
-}
 
 export enum LoadingStatus {
   IDLE = "idle",
@@ -61,19 +14,9 @@ export enum LoadingStatus {
   ERROR = "error",
 }
 
-export interface IActorsById {
-  staffId: number;
-  nameRu: string;
-  nameEn: string;
-  description: null | string;
-  posterUrl: string;
-  professionText: string;
-  professionKey: string;
-}
-
 export interface IFilmItemSlice {
-  selectFilm: IFilmById | null;
-  actors: IActorsById[];
+  selectFilm: IFilm | null;
+  actors: IStaffResponse[];
   loadingStatus: LoadingStatus;
   error: null | string;
   moviePictures: TMoviePictures[];
@@ -160,10 +103,10 @@ const filmItemSlice = createSlice({
   name: "filmItem",
   initialState,
   reducers: {
-    addItemFilm: (state, action: PayloadAction<IFilmById>) => {
+    addItemFilm: (state, action: PayloadAction<IFilm>) => {
       state.selectFilm = action.payload;
     },
-    addActors: (state, action: PayloadAction<IActorsById[]>) => {
+    addActors: (state, action: PayloadAction<IStaffResponse[]>) => {
       state.actors = action.payload;
     },
     addMoviePictures: (state, action: PayloadAction<TMoviePictures[]>) => {

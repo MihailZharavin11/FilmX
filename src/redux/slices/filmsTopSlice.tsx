@@ -1,10 +1,13 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api from "../../api";
-import { TCountry, TGenre, TTopFilm } from "../../api/APItypes";
+import {
+  TFilmSearchByFiltersResponse_items,
+  TTopFilm,
+} from "../../api/APItypes";
 
 export interface IFilmsState {
   filmsByTop: TTopFilm[];
-  filmsByGenre: TGenreFilm[];
+  filmsByGenre: TFilmSearchByFiltersResponse_items[];
   error: string;
   loadingStatus: LoadingStatus;
   totalPage: number;
@@ -15,22 +18,6 @@ enum LoadingStatus {
   LOADING = "loading",
   ERROR = "error",
 }
-
-export type TGenreFilm = {
-  countries: TCountry[];
-  genres: TGenre[];
-  imdbId: string;
-  kinopoiskId: number;
-  nameEn: string;
-  nameOriginal: string;
-  nameRu: string;
-  posterUrl: string;
-  posterUrlPreview: string;
-  ratingImdb: number;
-  ratingKinopoisk: number;
-  type: string;
-  year: number;
-};
 
 const initialState: IFilmsState = {
   filmsByTop: [],
@@ -105,7 +92,10 @@ const filmsSlice = createSlice({
     addTopFilms: (state, action: PayloadAction<TTopFilm[]>) => {
       state.filmsByTop = action.payload;
     },
-    addGenreFilms: (state, action: PayloadAction<TGenreFilm[]>) => {
+    addGenreFilms: (
+      state,
+      action: PayloadAction<TFilmSearchByFiltersResponse_items[]>
+    ) => {
       state.filmsByGenre = action.payload;
     },
     setError: (state, action: PayloadAction<string>) => {

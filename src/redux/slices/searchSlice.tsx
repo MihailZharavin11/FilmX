@@ -1,14 +1,14 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import api from "../../api";
 import {
+  TFilmSearchByFiltersResponse_items,
   TFilmSearchResponse_films,
   TParamsToSearchFilm,
 } from "../../api/APItypes";
-import { TGenreFilm } from "./filmsTopSlice";
 
 interface ISearchState {
   quickSearchMovie: TFilmSearchResponse_films[];
-  deepSearch: TGenreFilm[];
+  deepSearch: TFilmSearchByFiltersResponse_items[];
   total: number | null;
   error: string;
   loadingStatus: LoadingStatus;
@@ -55,7 +55,10 @@ const searchSlice = createSlice({
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
-    addDeepSearchMovie: (state, action: PayloadAction<TGenreFilm[]>) => {
+    addDeepSearchMovie: (
+      state,
+      action: PayloadAction<TFilmSearchByFiltersResponse_items[]>
+    ) => {
       state.deepSearch = action.payload;
     },
     addTotal: (state, action: PayloadAction<number>) => {
