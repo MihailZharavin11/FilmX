@@ -77,6 +77,7 @@ export const getActorsByFilmId = async (id: string) => {
 
 export const getActorInfoById = async (id: string) => {
   const { data } = await instanceV1.get<IPersonResponse>(`staff/${id}`);
+  debugger;
   return data;
 };
 

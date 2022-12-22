@@ -140,7 +140,16 @@ const App: React.FC = () => {
           }
         />
 
-        <Route path="*" element={<EmptyContent />} />
+        <Route
+          path="*"
+          element={
+            <EmptyContent
+              description="Страница не найдена"
+              buttonTitle="Вернуться на главную"
+              buttonUrl="/"
+            />
+          }
+        />
       </Routes>
     </div>
   );

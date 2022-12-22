@@ -100,11 +100,11 @@ export const getFilmInfo = createAsyncThunk<
   try {
     const film = await api.getFilmById(id);
     dispatch(addItemFilm(film));
+    dispatch(getActors(id));
+    dispatch(getMoviePictures(id));
   } catch (err) {
     if (err instanceof Error) {
       return rejectWithValue(err.message);
-    } else {
-      console.log("Error", err);
     }
   }
 });

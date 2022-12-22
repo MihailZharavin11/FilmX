@@ -11,6 +11,7 @@ import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
 import { CardInnerImage } from "../../CardInner/CardInnerImage/CardInnerImage";
 import { CardInnerLayout } from "../../CardInner/CardInnerLayout/CardInnerLayout";
 import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
+import EmptyContent from "../../EmptyContent/EmptyContent";
 
 const ActorContent = () => {
   const { id } = useParams();
@@ -18,7 +19,6 @@ const ActorContent = () => {
   const { loadingStatus, selectActors } = useAppSelector(
     (state) => state.actor
   );
-
   const descriptionActorValue = useAppSelector((state) =>
     descriptionActorSelector(state)
   );
@@ -27,6 +27,15 @@ const ActorContent = () => {
     if (!id) return;
     dispatch(getActorById(id));
   }, [dispatch, id]);
+
+  if (loadingStatus === "error") {
+    return (
+      <EmptyContent
+        description="Актер не найден"
+        buttonTitle="Вернуться назад"
+      />
+    );
+  }
 
   if (loadingStatus === "loading") {
     return (

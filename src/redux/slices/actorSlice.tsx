@@ -47,6 +47,7 @@ export const getActorById = createAsyncThunk<
     dispatch(setActor(actor));
   } catch (err) {
     if (err instanceof Error) {
+      debugger;
       return rejectWithValue(err.message);
     }
   }
@@ -64,7 +65,7 @@ const handlePendingStatus = (state: IActorItemSlice) => {
 
 const handleFulfilledStatus = (state: IActorItemSlice) => {
   state.loadingStatus = LoadingStatus.IDLE;
-  state.error = "";
+  state.error = null;
 };
 
 const handleRejectedStatus = (state: IActorItemSlice, action: string) => {

@@ -1,4 +1,4 @@
-import { Avatar, List, Spin } from "antd";
+import { Avatar, Empty, List, Spin } from "antd";
 import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import {
@@ -15,6 +15,7 @@ import CardInnerHeader from "../../CardInner/CardInnerHeader/CardInnerHeader";
 import CardInnerList from "../../CardInner/CardInnerList/CardInnerList";
 import CardInnerScreens from "../../CardInner/CardInnerScreens/CardInnerScreens";
 import styles from "./filmContent.module.scss";
+import EmptyContent from "../../EmptyContent/EmptyContent";
 
 const FilmContent: React.FC = () => {
   const { id } = useParams();
@@ -25,13 +26,21 @@ const FilmContent: React.FC = () => {
   const descriptionValue = useAppSelector((state) =>
     descriptionFilmSelector(state)
   );
+  console.log(loadingStatus);
 
   useEffect(() => {
     if (!id) return;
     dispatch(getFilmInfo(id));
-    dispatch(getActors(id));
-    dispatch(getMoviePictures(id));
   }, [dispatch, id]);
+
+  if (loadingStatus === "error") {
+    return (
+      <EmptyContent
+        buttonTitle="Вернуться назад"
+        description="Фильм не найден"
+      />
+    );
+  }
 
   if (loadingStatus === "loading") {
     return (
