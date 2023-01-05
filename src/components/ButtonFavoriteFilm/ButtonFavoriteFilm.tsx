@@ -30,16 +30,16 @@ export const ButtonFavoriteFilm: React.FC<ButtonFavoriteFilmProps> = ({
   const userid = user?.uid;
 
   const addFilmToFavorite = () => {
-    if (film && id) {
+    if (film) {
       dispatch(setFavoriteFilm(film));
-      addMovieToDB(`users/${userid}/favoriteMovies`, id);
+      addMovieToDB(`users/${userid}/favoriteMovies`, film);
     }
   };
 
   const deleteFilmFromFavorite = () => {
-    if (id) {
-      removeMovieFromDB(`users/${userid}/favoriteMovies`, id);
-      dispatch(deleteFavoriteFilm(id));
+    if (film) {
+      removeMovieFromDB(`users/${userid}/favoriteMovies`, film.kinopoiskId);
+      dispatch(deleteFavoriteFilm(film.kinopoiskId));
     }
   };
 

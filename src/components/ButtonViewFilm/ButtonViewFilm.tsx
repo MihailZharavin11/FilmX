@@ -29,14 +29,14 @@ export const ButtonViewFilm: React.FC<ViewButtonProps> = ({ film, id }) => {
   const addMovieToWatched = () => {
     if (film && id) {
       dispatch(setWatchedFilm(film));
-      addMovieToDB(`users/${userid}/watchedMovie`, id);
+      addMovieToDB(`users/${userid}/watchedMovie`, film);
     }
   };
 
   const deleteMovieFromWatched = () => {
-    if (id) {
-      removeMovieFromDB(`users/${userid}/watchedMovie`, id);
-      dispatch(deleteWatchedFilm(id));
+    if (film) {
+      removeMovieFromDB(`users/${userid}/watchedMovie`, film.kinopoiskId);
+      dispatch(deleteWatchedFilm(film.kinopoiskId));
     }
   };
 

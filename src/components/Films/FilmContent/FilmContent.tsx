@@ -22,7 +22,6 @@ const FilmContent: React.FC = () => {
   const descriptionValue = useAppSelector((state) =>
     descriptionFilmSelector(state)
   );
-  console.log(loadingStatus);
 
   useEffect(() => {
     if (!id) return;

@@ -1,7 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, onValue, ref } from "firebase/database";
-import api from "../../../api";
 import fireBaseAuth from "../../../fireBase/fireBaseAuth";
 import {
   clearFavoriteFilms,
@@ -52,9 +51,7 @@ export const getDataFromDB = createAsyncThunk<
       (snapshot) => {
         snapshot.forEach((element) => {
           if (element.exists()) {
-            api.getFilmById(element.val().id).then((response) => {
-              dispatch(setFavoriteFilm(response));
-            });
+            dispatch(setFavoriteFilm(element.val()));
           }
         });
       },
@@ -67,9 +64,7 @@ export const getDataFromDB = createAsyncThunk<
       (snapshot) => {
         snapshot.forEach((element) => {
           if (element.exists()) {
-            api.getFilmById(element.val().id).then((response) => {
-              dispatch(setWatchedFilm(response));
-            });
+            dispatch(setWatchedFilm(element.val()));
           }
         });
       },

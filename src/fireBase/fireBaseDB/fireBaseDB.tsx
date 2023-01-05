@@ -7,24 +7,23 @@ import {
   remove,
   set,
 } from "firebase/database";
+import { IFilm } from "../../api/APItypes";
 
-export const addMovieToDB = (url: string, id: number) => {
+export const addMovieToDB = (url: string, film: IFilm) => {
   const db = getDatabase();
   const keyForRef = push(ref(db, url));
-  set(keyForRef, {
-    id,
-  });
+  set(keyForRef, film);
 };
 
-export const removeMovieFromDB = (url: string, id: number) => {
+export const removeMovieFromDB = (url: string, idFilmToDelete: number) => {
   const db = getDatabase();
   const refFavoriteMov = ref(db, url);
   onValue(
     refFavoriteMov,
     (snapshot) => {
       snapshot.forEach((element) => {
-        const favFilmVal = element.val();
-        if (favFilmVal.id === id) {
+        const favFilmVal: IFilm = element.val();
+        if (favFilmVal.kinopoiskId === idFilmToDelete) {
           remove(element.ref);
         }
       });

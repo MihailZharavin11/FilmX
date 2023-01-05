@@ -5,6 +5,7 @@ import { Col, Pagination, PaginationProps, Row, Spin } from "antd";
 import FilmCard from "../Films/FilmCard/FilmCard";
 import styles from "./filmsByTop.module.scss";
 import { getTopFilms } from "../../redux/slices/filmsTopSlice/filmsTopThunk";
+import { PaginationContainer } from "../Pagination/PaginationContainer";
 
 export const FilmsByTop = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,6 +24,7 @@ export const FilmsByTop = () => {
   }
 
   const onChange: PaginationProps["onChange"] = (page) => {
+    debugger;
     setCurrentPage(page);
     window.scroll(0, 0);
   };
@@ -49,10 +51,10 @@ export const FilmsByTop = () => {
           </Col>
         ))}
       </Row>
+
       <Row className={styles.pagination_row}>
         <Col>
           <Pagination
-            className={styles.pagination_row}
             simple
             defaultPageSize={20}
             current={currentPage}
