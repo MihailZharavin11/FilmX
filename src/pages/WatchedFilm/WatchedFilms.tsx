@@ -2,6 +2,7 @@ import { Pagination, PaginationProps } from "antd";
 import { getAuth } from "firebase/auth";
 import React, { useEffect, useState } from "react";
 import { ButtonFavoriteFilm } from "../../components/ButtonFavoriteFilm/ButtonFavoriteFilm";
+import EmptyContent from "../../components/EmptyContent/EmptyContent";
 import { SelectedFilmCard } from "../../components/SelectedFilmCard/SelectedFilmCard";
 import { removeMovieFromDB } from "../../fireBase/fireBaseDB/fireBaseDB";
 import { deleteWatchedFilm } from "../../redux/slices/userSlice/userSlice";
@@ -24,6 +25,16 @@ export const WatchedFilms = () => {
       setCurrentPage(totalPage);
     }
   }, [currentPage, totalPage]);
+
+  if (!watchedFilms.length) {
+    return (
+      <EmptyContent
+        description="У вас еще нет просмотренных фильмов"
+        buttonTitle="Перейти к фильмам"
+        buttonUrl="/films"
+      />
+    );
+  }
 
   const deleteMovieFromWatched = (filmID: number) => {
     removeMovieFromDB(`users/${userid}/watchedMovie`, filmID);

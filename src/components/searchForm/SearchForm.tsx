@@ -76,10 +76,10 @@ export const SearchForm: React.FC<SearchFormProps> = ({
           <Slider min={0} max={10} step={1} range />
         </Form.Item>
         <Form.Item name={"yearFrom"} label="Минимальный год">
-          <InputNumber min={1000} max={2022} step={1} />
+          <InputNumber min={1000} max={2023} step={1} />
         </Form.Item>
         <Form.Item name={"yearTo"} label="Максимальный год">
-          <InputNumber min={1000} max={2022} step={1} />
+          <InputNumber min={1000} max={2023} step={1} />
         </Form.Item>
       </div>
       <Form.Item>

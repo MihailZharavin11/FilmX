@@ -7,6 +7,7 @@ import { SelectedFilmCard } from "../../components/SelectedFilmCard/SelectedFilm
 import styles from "./favoriteFilms.module.scss";
 import { Pagination, PaginationProps } from "antd";
 import { useEffect, useState } from "react";
+import EmptyContent from "../../components/EmptyContent/EmptyContent";
 
 export const FavoriteFilms = () => {
   const dispatch = useAppDispatch();
@@ -24,6 +25,16 @@ export const FavoriteFilms = () => {
       setCurrentPage(totalPage);
     }
   }, [currentPage, totalPage]);
+
+  if (!favoriteFilms.length) {
+    return (
+      <EmptyContent
+        description="У вас еще нет просмотренных фильмов"
+        buttonTitle="Перейти к фильмам"
+        buttonUrl="/films"
+      />
+    );
+  }
 
   const deleteFilmFromDBFavorite = (filmID: number) => {
     removeMovieFromDB(`users/${userid}/favoriteMovies`, filmID);
