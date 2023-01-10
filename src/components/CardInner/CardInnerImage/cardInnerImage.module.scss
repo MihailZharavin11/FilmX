@@ -6,7 +6,7 @@
   justify-content: center;
   min-width: 270px;
   @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
-    min-width: 260px;
+    min-width: 220px;
   }
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     width: 100%;
@@ -17,7 +17,11 @@
   grid-template: 1fr/1fr 1fr;
   .presentationFilm__raitingNumber {
     font-size: 24px;
+    @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+      font-size: 20px;
+    }
   }
+
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     display: flex;
     justify-content: center;
@@ -29,8 +33,10 @@
 }
 
 .titleMobile {
+  display: none;
   padding: 0px 30px;
-  @media (min-width: variablesForMedia.$layout-breakpoint-esm) {
-    display: none;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    display: block;
+    text-align: center;
   }
 }

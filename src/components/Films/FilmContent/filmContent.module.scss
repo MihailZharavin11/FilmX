@@ -1,3 +1,4 @@
+@use "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/raiting.scss";
 
 .presentationFilm {
@@ -9,7 +10,6 @@
   display: grid;
   grid-template: minmax(100px, 150px) 3fr/1fr;
   padding: 0px 30px;
-
   .description__content {
     display: grid;
     grid-template: 1fr/3fr 1fr;
@@ -25,8 +25,17 @@
       border-radius: 20px;
       background-color: #ededed;
     }
+    @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+      height: 80px;
+    }
   }
+
   .actorTitle {
     font-size: 25px;
+  }
+
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    display: flex;
+    justify-content: center;
   }
 }

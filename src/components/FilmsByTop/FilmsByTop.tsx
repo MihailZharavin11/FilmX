@@ -24,7 +24,6 @@ export const FilmsByTop = () => {
   }
 
   const onChange: PaginationProps["onChange"] = (page) => {
-    debugger;
     setCurrentPage(page);
     window.scroll(0, 0);
   };

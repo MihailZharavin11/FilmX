@@ -4,15 +4,26 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    gap: 15px;
+    margin-bottom: 15px;
+  }
+
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    align-items: center;
+  }
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     padding: 10px;
   }
   .description__aboutFimTitle {
     font-size: 24px;
     margin-left: 5px;
+
     @media (max-width: variablesForMedia.$layout-breakpoint-md) {
       margin-top: 40px;
       font-size: 20px;
+      text-align: center;
     }
     @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
       margin-left: 0px;
@@ -20,8 +31,6 @@
     }
   }
   .description__aboutFilmTable {
-    display: grid;
-    grid-template: 1fr/1fr 3fr;
     @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
       display: flex;
       flex-direction: column;

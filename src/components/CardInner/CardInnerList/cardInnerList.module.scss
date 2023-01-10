@@ -3,6 +3,9 @@
   display: flex;
   flex-direction: column;
   gap: 30px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    gap: 15px;
+  }
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     padding: 10px;
     display: flex;
@@ -16,6 +19,7 @@
   font-weight: 500;
   @media (max-width: variablesForMedia.$layout-breakpoint-md) {
     font-size: 20px;
+    text-align: center;
   }
 
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {

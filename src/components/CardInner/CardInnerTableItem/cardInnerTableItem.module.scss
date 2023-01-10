@@ -1,8 +1,16 @@
 @use "../../../styles/variables/variablesForMedia.scss";
 
+.descriptionTable {
+  display: grid;
+  grid-template: 1fr / 150px 1fr;
+}
+
 .description__aboutFilmTableItem {
   padding: 10px;
   color: grey;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    text-align: end;
+  }
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     font-size: 16px;
   }
@@ -10,6 +18,13 @@
 
 .description__aboutFilmTableDescription {
   padding: 10px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    text-align: start;
+    margin-left: 30px;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    margin-left: 20px;
+  }
   @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
     font-size: 16px;
   }

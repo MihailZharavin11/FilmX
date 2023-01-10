@@ -85,7 +85,15 @@ const FilmContent: React.FC = () => {
           children={
             <List
               className={styles.actorList}
-              itemLayout="vertical"
+              grid={{
+                gutter: 16,
+                xs: 1,
+                sm: 2,
+                md: 5,
+                lg: 1,
+                xl: 1,
+                xxl: 1,
+              }}
               dataSource={actors ? actors : []}
               renderItem={(item) => (
                 <Link to={`/actor/${item.staffId}`}>

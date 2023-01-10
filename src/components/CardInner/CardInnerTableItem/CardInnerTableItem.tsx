@@ -11,12 +11,12 @@ const CardInnerTableItem: React.FC<CardInnerTableItemProps> = ({
   value,
 }) => {
   return (
-    <>
+    <div className={styles.descriptionTable}>
       <div className={styles.description__aboutFilmTableItem}>{title}</div>
       <div className={styles.description__aboutFilmTableDescription}>
         {value}
       </div>
-    </>
+    </div>
   );
 };
 

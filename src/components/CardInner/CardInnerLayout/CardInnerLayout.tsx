@@ -22,14 +22,11 @@ export const CardInnerLayout: React.FC<CardInnerProps> = ({
         <div className={styles.filmImage}>{image}</div>
         <div className={styles.filmDescription}>
           <div className={styles.filmHeader}>{header}</div>
-
-          <div className={styles.descriptionContent}>
-            {description}
-            {list}
-          </div>
+          <div className={styles.descriptionContent}>{description}</div>
         </div>
+        <div className={styles.filmActors}>{list}</div>
       </div>
-      <div className="filmPictures">{movieImages}</div>
+      <div className={styles.filmScreenShot}>{movieImages}</div>
     </div>
   );
 };
