@@ -24,15 +24,6 @@ export const CardInnerImage: React.FC<FilmImageProps> = ({
 
   return (
     <>
-      <div className={styles.titleMobile}>
-        <CardInnerHeader
-          title={selectFilm?.nameEn ? selectFilm.nameEn : ""}
-          titleOriginal={selectFilm?.nameOriginal}
-          subTitle={selectFilm?.year + " год"}
-          text={selectFilm?.slogan}
-        />
-      </div>
-
       <div className={styles.presentationFilm__image}>
         <Card
           className={styles.card}

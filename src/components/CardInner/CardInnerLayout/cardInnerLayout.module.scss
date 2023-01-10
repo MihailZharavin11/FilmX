@@ -60,7 +60,7 @@
 
   .filmHeader {
     @media (max-width: variablesForMedia.$layout-breakpoint-md) {
-      display: none;
+      text-align: center;
     }
   }
 
