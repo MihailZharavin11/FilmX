@@ -1,14 +1,23 @@
+@use "../../../../styles/variables/variablesForMedia.scss";
+
 .search {
+  position: relative;
   display: flex;
-  gap: 10px;
+  align-items: center;
   margin-bottom: 10px;
   cursor: pointer;
   &:hover {
     background-color: #f0f2f5;
   }
   .search__image {
-    width: 45px;
-    height: auto;
+    height: 100%;
+    width: 10%;
+    min-height: 80px;
+    min-width: 60px;
+    img {
+      height: 100%;
+      width: 100%;
+    }
   }
   .search__description {
     display: flex;

@@ -1,22 +1,4 @@
-.first__screen {
-  height: calc(100vh - 70px);
-  display: flex;
-  position: relative;
-}
-
-.second_screen {
-  height: 100vh;
-}
-
-.contentHome {
-  display: flex;
-  flex-direction: column;
-
-  h1 {
-    font-size: 64px;
-  }
-  .button {
-    color: #000;
-    border-color: #000;
-  }
+.homeWrapper {
+  padding: 20px;
+  background: #f0f2f5;
 }

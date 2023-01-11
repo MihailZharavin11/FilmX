@@ -1,0 +1,66 @@
+.aboutMe {
+  padding-top: 36px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-around;
+  gap: 20px;
+  padding-bottom: 144px;
+  border-bottom: 1px solid #adadad;
+}
+
+.boxDescription {
+  padding: 41px 40px;
+  max-width: 690px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  border: 2px solid #000000;
+  border-radius: 40px;
+  height: 548px;
+}
+
+.descriptionTitle {
+  font-weight: 500;
+  font-size: 56px;
+  line-height: 68px;
+
+  color: #000000;
+}
+
+.descriptionButton {
+  padding: 16px 28px 16px 32px;
+  border: 2px solid #000000;
+  border-radius: 59px;
+  margin-top: 172px;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrow {
+  margin-top: 3px;
+}
+
+.boxPhoto {
+  max-width: 690px;
+  height: 548px;
+  width: 690px;
+  position: relative;
+  overflow: hidden;
+  border-radius: 40px;
+  img {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

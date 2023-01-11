@@ -29,9 +29,8 @@ const SearchCard: React.FC<SearchRenderProps> = ({
         <p className={styles.search__descriptionText}>
           <span className={styles.search__descriptionTextRaiting}>
             <span className={styles[setClassForRaiting(Number(rating))]}>
-              {rating != null ? rating : "-"}
+              {rating !== "null" ? rating : ""}
             </span>
-            ,
           </span>
           {nameRu}, {year}
         </p>

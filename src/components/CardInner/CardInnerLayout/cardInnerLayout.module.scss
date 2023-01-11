@@ -12,7 +12,7 @@
 
 .film {
   display: grid;
-  // grid-template: 1fr / minmax(200px, 350px) auto minmax(100px, 200px);
+  grid-template: 1fr/ 1fr 2fr 1fr;
   grid-template-areas:
     "poster description actors"
     "screenshot screenshot screenshot";
@@ -34,7 +34,6 @@
 .filmImage {
   display: flex;
   flex-direction: column;
-
   grid-area: poster;
   @media (max-width: variablesForMedia.$layout-breakpoint-xl) {
     max-width: 300px;

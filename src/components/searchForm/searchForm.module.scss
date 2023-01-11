@@ -1,9 +1,19 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .searchForms {
   width: 100%;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    width: 80%;
+    margin: 0 auto;
+  }
 }
 
 .searchItem {
   display: grid;
   grid-template: 1fr/1fr 1fr 1fr;
   gap: 10px 30px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    display: flex;
+    flex-direction: column;
+  }
 }

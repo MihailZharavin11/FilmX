@@ -1,0 +1,23 @@
+.mySkillsWrapper {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 36px;
+  padding-bottom: 144px;
+  border-bottom: 1px solid #adadad;
+}
+
+.skillItem {
+  padding: 16px 32px;
+  border: 2px solid #000;
+  border-radius: 59px;
+  font-weight: 500;
+  font-size: 28px;
+  line-height: 34px;
+}
+
+.skillsBox {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 668px;
+}

@@ -1,3 +1,5 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .cardWrapper {
   display: flex;
   align-items: center;
@@ -9,6 +11,17 @@
   &:first-child {
     margin-top: 0px;
   }
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    width: 80%;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    width: 90%;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+    padding: 5px;
+  }
 }
 
 .cardNumber {
@@ -16,13 +29,31 @@
   flex-basis: 5%;
   justify-content: center;
   font-size: 12px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    margin-right: 5px;
+  }
 }
 
 .cardImmage {
   flex-basis: 10%;
+  min-width: 130px;
+
   img {
     height: 150px;
     width: 100%;
+    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+      flex-basis: 10%;
+    }
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    flex-basis: 15%;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    flex-basis: 10%;
+    min-width: 100px;
+  }
+  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    min-width: 70px;
   }
 }
 
@@ -33,14 +64,32 @@
     font-size: 30px;
     margin: 0px;
     padding: 0px;
+    @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+      font-size: 22px;
+    }
+    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+      font-size: 20px;
+    }
+    @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+      font-size: 18px;
+    }
   }
   .cardSubTitle {
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
+    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+      display: none;
+    }
   }
   .cardRaiting {
     font-size: 20px;
+    @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+      font-size: 18px;
+    }
+    @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+      font-size: 16px;
+    }
   }
 }
 
@@ -50,4 +99,7 @@
   justify-content: flex-end;
   gap: 20px;
   align-items: center;
+  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+    flex-direction: column;
+  }
 }
