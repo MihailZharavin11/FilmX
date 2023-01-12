@@ -1,27 +1,41 @@
+@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 .contactWrapper {
   display: flex;
   flex-direction: column;
   gap: 50px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    padding: 48px 0px;
+    gap: 16px;
+  }
 }
 
 .contactLink {
-  display: flex;
+  display: grid;
+  grid-template: minmax(160px, 453px) / repeat(3, minmax(343px, 452px));
   justify-content: space-between;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    grid-template: repeat(3, 160px) / minmax(343px, 452px);
+    justify-content: center;
+    gap: 20px;
+  }
 }
 
 .linkWrapper {
   padding: 40px;
-  width: 453px;
-  height: 453px;
   border: 2px solid #000;
   border-radius: 40px;
   font-weight: 500;
-  font-size: 56px;
+  @include adaptive-FS(28, 56);
   line-height: 96%;
   letter-spacing: -0.03em;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    padding: 20px;
+  }
 }
 
 .link {

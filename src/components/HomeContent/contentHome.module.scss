@@ -1,4 +1,9 @@
+@use "../../styles/variables/variablesForMedia.scss";
+
 .homeWrapper {
   padding: 20px;
   background: #f0f2f5;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    padding: 16px;
+  }
 }

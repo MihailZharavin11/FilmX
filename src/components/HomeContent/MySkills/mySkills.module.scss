@@ -1,9 +1,18 @@
+@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
+
 .mySkillsWrapper {
   display: flex;
   justify-content: space-between;
   padding-top: 36px;
   padding-bottom: 144px;
   border-bottom: 1px solid #adadad;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 48px 0px;
+  }
 }
 
 .skillItem {
@@ -11,8 +20,13 @@
   border: 2px solid #000;
   border-radius: 59px;
   font-weight: 500;
-  font-size: 28px;
+  @include adaptive-FS(16, 28);
   line-height: 34px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    padding: 8px 16px;
+    font-weight: 500;
+    line-height: 19px;
+  }
 }
 
 .skillsBox {

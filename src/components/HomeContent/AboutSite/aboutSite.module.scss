@@ -1,10 +1,21 @@
+@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 .aboutSite {
+  position: relative;
+  overflow: hidden;
   display: flex;
   padding-top: 86px;
   padding-bottom: 142px;
   justify-content: space-between;
   border-top: 1px solid #3d48bf;
   border-bottom: 1px solid #adadad;
+
+  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 48px 0px;
+  }
 
   .logo {
     font-weight: 700;
@@ -14,17 +25,32 @@
     .logoLetter {
       color: #3d48bf;
     }
+    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+      font-weight: 700;
+      font-size: 64px;
+      line-height: 77px;
+      letter-spacing: -0.04em;
+    }
   }
 
   .description {
     width: 40%;
+    @include adaptive-FS(16, 20);
     font-weight: 400;
-    font-size: 20px;
     line-height: 24px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 42px;
+
+    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+      width: 100%;
+      align-items: center;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      gap: 24px;
+    }
 
     .button {
       background: #252525;
@@ -34,12 +60,21 @@
       display: flex;
       gap: 16px;
       align-items: center;
+      font-weight: 700;
+      @include adaptive-FS(18, 20);
+      line-height: 24px;
       a {
         text-decoration: none;
         color: #fff;
       }
       .arrow {
         margin-left: 16px;
+      }
+      @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+        font-weight: 700;
+        line-height: 22px;
+        padding: 13px 14px 13px 20px;
+        gap: 8px;
       }
     }
   }

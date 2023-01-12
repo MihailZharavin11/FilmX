@@ -4,3 +4,13 @@ $layout-breakpoint-lg: 992px;
 $layout-breakpoint-md: 768px;
 $layout-breakpoint-sm: 576px;
 $layout-breakpoint-esm: 480px;
+
+$maxWidth: 1440;
+$minWidth: 320;
+
+@mixin adaptive-FS($minFS, $maxFS) {
+  font-size: calc(
+    #{$minFS}px + (#{$maxFS - $minFS}) * (100vw - #{$minWidth}px) /
+      (#{$maxWidth - $minWidth})
+  );
+}
