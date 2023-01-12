@@ -25,8 +25,8 @@ export const MySkills = () => {
     <div className={styles.mySkillsWrapper}>
       <HomeTitle title="skills" />
       <div className={styles.skillsBox}>
-        {skills.map((skill) => (
-          <SkillItem skillName={skill} />
+        {skills.map((skill, index) => (
+          <SkillItem key={skill + index} skillName={skill} />
         ))}
       </div>
     </div>
