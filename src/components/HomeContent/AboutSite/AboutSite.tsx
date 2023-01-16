@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./aboutSite.module.scss";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 export const AboutSite = () => {
+  const [isHovered, setHovered] = useState(false);
+
   return (
     <div className={styles.aboutSite}>
       <motion.div
@@ -32,11 +34,27 @@ export const AboutSite = () => {
           watched or liked movies, the data is stored in the Firebase Realtime
           DataBase.
         </div>
-        <Link className={styles.button} to={"/films"}>
+        <Link
+          onMouseEnter={() => {
+            setHovered((prev) => !prev);
+          }}
+          onMouseLeave={() => {
+            setHovered((prev) => !prev);
+          }}
+          className={styles.button}
+          to={"/films"}
+        >
           GET STARTED
-          <span className={styles.arrow}>
+          <motion.span
+            initial={false}
+            animate={{
+              x: isHovered ? 10 : 0,
+              transition: { duration: 0.5 },
+            }}
+            className={styles.arrow}
+          >
             <ArrowRightOutlined />
-          </span>
+          </motion.span>
         </Link>
       </motion.div>
     </div>

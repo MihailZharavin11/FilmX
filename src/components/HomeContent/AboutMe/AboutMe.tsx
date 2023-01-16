@@ -4,15 +4,48 @@ import { DownCircleFilled } from "@ant-design/icons";
 import styles from "./aboutMe.module.scss";
 import MyPhoto from "../../../img/Home/Me.png";
 import { Avatar } from "antd";
+import { motion } from "framer-motion";
 
 export const AboutMe: React.FC = () => {
+  const fadeIn = (
+    direction: string,
+    type: string,
+    delay: number,
+    duration: number
+  ) => ({
+    hidden: {
+      x: direction === "left" ? 100 : direction === "right" ? -100 : 0,
+      y: direction === "up" ? 100 : direction === "down" ? -100 : 0,
+      opacity: 0,
+    },
+    show: {
+      x: 0,
+      y: 0,
+      opacity: 1,
+      transition: {
+        type,
+        delay,
+        duration,
+        ease: "easeOut",
+      },
+    },
+  });
+
   return (
-    <div className={styles.aboutMeWrapper}>
+    <motion.div
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: false, amount: 0.16 }}
+      className={styles.aboutMeWrapper}
+    >
       <div className="title">
         <HomeTitle title="about me" />
       </div>
       <div className={styles.content}>
-        <div className={styles.boxDescription}>
+        <motion.div
+          variants={fadeIn("right", "tween", 0.5, 0.5)}
+          className={styles.boxDescription}
+        >
           <div className={styles.boxDescriptionTitle}>
             <Avatar
               className={styles.boxDescriptionPhoto}
@@ -29,9 +62,14 @@ export const AboutMe: React.FC = () => {
               <DownCircleFilled />
             </span>
           </button>
-        </div>
-        <img className={styles.descriptionPhoto} src={MyPhoto} alt="MyPhoto" />
+        </motion.div>
+        <motion.img
+          variants={fadeIn("left", "tween", 0.5, 0.5)}
+          className={styles.descriptionPhoto}
+          src={MyPhoto}
+          alt="MyPhoto"
+        />
       </div>
-    </div>
+    </motion.div>
   );
 };

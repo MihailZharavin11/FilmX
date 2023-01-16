@@ -8,6 +8,7 @@
   padding-top: 36px;
   padding-bottom: 144px;
   border-bottom: 1px solid #adadad;
+  overflow: hidden;
   @media (max-width: variablesForMedia.$layout-breakpoint-md) {
     padding: 48px 0px;
     gap: 16px;

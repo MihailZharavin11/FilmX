@@ -20,6 +20,7 @@
   border: 2px solid #000;
   border-radius: 59px;
   font-weight: 500;
+  cursor: default;
   @include adaptive-FS(16, 28);
   line-height: 34px;
   @media (max-width: variablesForMedia.$layout-breakpoint-md) {

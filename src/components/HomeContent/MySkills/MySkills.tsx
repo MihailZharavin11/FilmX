@@ -2,6 +2,8 @@ import React from "react";
 import { HomeTitle } from "../HomeTitle/HomeTitle";
 import styles from "./mySkills.module.scss";
 import { SkillItem } from "./SkillItem";
+// @ts-ignore
+import { Shake } from "reshake";
 
 export const MySkills = () => {
   const skills = [
@@ -26,7 +28,20 @@ export const MySkills = () => {
       <HomeTitle title="skills" />
       <div className={styles.skillsBox}>
         {skills.map((skill, index) => (
-          <SkillItem key={skill + index} skillName={skill} />
+          <Shake
+            key={index}
+            h={0}
+            v={5}
+            r={3}
+            dur={830}
+            int={15}
+            max={100}
+            fixed={false}
+            fixedStop={true}
+            freez={false}
+          >
+            <SkillItem skillName={skill} />
+          </Shake>
         ))}
       </div>
     </div>

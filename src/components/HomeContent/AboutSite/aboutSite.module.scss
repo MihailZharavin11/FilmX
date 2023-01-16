@@ -61,8 +61,10 @@
       gap: 16px;
       align-items: center;
       font-weight: 700;
+      overflow: hidden;
       @include adaptive-FS(18, 20);
       line-height: 24px;
+      transition: all 0.5s ease-in-out;
       a {
         text-decoration: none;
         color: #fff;
@@ -70,6 +72,12 @@
       .arrow {
         margin-left: 16px;
       }
+
+      &:hover {
+        background-color: #3d48bf;
+        transition: all 0.5s ease-in-out;
+      }
+
       @media (max-width: variablesForMedia.$layout-breakpoint-md) {
         font-weight: 700;
         line-height: 22px;
