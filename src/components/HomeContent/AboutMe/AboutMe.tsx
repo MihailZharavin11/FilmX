@@ -6,7 +6,13 @@ import MyPhoto from "../../../img/Home/Me.png";
 import { Avatar } from "antd";
 import { motion } from "framer-motion";
 
-export const AboutMe: React.FC = () => {
+type AboutMeProps = {
+  handlerClickButtonSkill: () => void;
+};
+
+export const AboutMe: React.FC<AboutMeProps> = ({
+  handlerClickButtonSkill,
+}) => {
   const fadeIn = (
     direction: string,
     type: string,
@@ -56,7 +62,10 @@ export const AboutMe: React.FC = () => {
               Hello, I’m Mikhail, Junior Front-end Developer.
             </h1>
           </div>
-          <button className={styles.descriptionButton}>
+          <button
+            onClick={handlerClickButtonSkill}
+            className={styles.descriptionButton}
+          >
             skills I have{" "}
             <span className={styles.arrow}>
               <DownCircleFilled />

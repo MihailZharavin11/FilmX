@@ -5,9 +5,12 @@ import { LinkBox } from "./LinkBox";
 
 export const ContactMe = () => {
   const links = [
-    { title: "gmail", link: "gmail" },
-    { title: "linkedIn", link: "linkedIn" },
-    { title: "telegram", link: "telegram" },
+    { title: "gmail", link: "mailto:mikhail.zharavin65@gmail.com" },
+    {
+      title: "linkedIn",
+      link: "https://www.linkedin.com/in/mikhail-zharavin-75091123a/",
+    },
+    { title: "telegram", link: "https://t.me/MZharavin" },
   ];
   return (
     <div className={styles.contactWrapper}>

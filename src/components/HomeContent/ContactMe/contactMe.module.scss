@@ -12,8 +12,13 @@
 
 .contactLink {
   display: grid;
-  grid-template: minmax(160px, 453px) / repeat(3, minmax(343px, 452px));
+  grid-template: minmax(160px, 453px) / repeat(3, minmax(300px, 452px));
   justify-content: space-between;
+  gap: 20px;
+  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    gap: 10px;
+    grid-template: minmax(160px, 322px) / repeat(3, minmax(235px, 318px));
+  }
   @media (max-width: variablesForMedia.$layout-breakpoint-md) {
     grid-template: repeat(3, 160px) / minmax(343px, 452px);
     justify-content: center;
@@ -26,6 +31,8 @@
   border: 2px solid #000;
   border-radius: 40px;
   font-weight: 500;
+  width: 100%;
+  height: 100%;
   @include adaptive-FS(28, 56);
   line-height: 96%;
   letter-spacing: -0.03em;
@@ -42,7 +49,7 @@
   display: flex;
   justify-content: flex-end;
   align-self: flex-end;
-  a {
+  .linkIcon {
     text-decoration: none;
     color: #3d48bf;
     transform: rotate(-45deg);

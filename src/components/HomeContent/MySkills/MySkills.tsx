@@ -1,11 +1,15 @@
-import React from "react";
+import React, { LegacyRef } from "react";
 import { HomeTitle } from "../HomeTitle/HomeTitle";
 import styles from "./mySkills.module.scss";
 import { SkillItem } from "./SkillItem";
 // @ts-ignore
 import { Shake } from "reshake";
 
-export const MySkills = () => {
+type MySkillProps = {
+  skillRef: LegacyRef<HTMLDivElement> | undefined;
+};
+
+export const MySkills: React.FC<MySkillProps> = ({ skillRef }) => {
   const skills = [
     "HTML",
     "CSS",
@@ -24,7 +28,7 @@ export const MySkills = () => {
     "SCSS",
   ];
   return (
-    <div className={styles.mySkillsWrapper}>
+    <div ref={skillRef} className={styles.mySkillsWrapper}>
       <HomeTitle title="skills" />
       <div className={styles.skillsBox}>
         {skills.map((skill, index) => (

@@ -21,7 +21,7 @@
   justify-content: space-between;
 
   @media (max-width: variablesForMedia.$layout-breakpoint-md) {
-    grid-template: 260px / minmax(343px, 690px);
+    grid-template: 260px / minmax(343px, auto);
   }
 }
 

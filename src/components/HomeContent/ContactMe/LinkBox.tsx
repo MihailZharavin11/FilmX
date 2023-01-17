@@ -13,10 +13,12 @@ export const LinkBox: React.FC<LinkBoxProps> = ({ linkName, src }) => {
   return (
     <div className={styles.linkWrapper}>
       <div className="linkName">{linkName}</div>
-      <motion.div whileHover={{ scale: 1.3 }} className={styles.link}>
-        <Link to={src}>
-          <RightCircleFilled />
-        </Link>
+      <motion.div
+        onClick={() => window.open(src)}
+        whileHover={{ scale: 1.3 }}
+        className={styles.link}
+      >
+        <RightCircleFilled className={styles.linkIcon} />
       </motion.div>
     </div>
   );
