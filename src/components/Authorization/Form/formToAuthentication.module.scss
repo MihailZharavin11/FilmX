@@ -1,4 +1,4 @@
-@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 
 .form {
   width: 500px;
@@ -11,13 +11,13 @@
     margin: 0 auto;
   }
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     width: 350px;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     width: 350px;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+  @media (max-width: $layout-breakpoint-esm) {
     width: 300px;
   }
 }

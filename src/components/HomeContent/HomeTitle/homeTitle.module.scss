@@ -1,4 +1,4 @@
-@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/variables/variablesForMedia.scss";
 
 .title {
@@ -7,7 +7,7 @@
   @include adaptive-FS(36, 80);
   line-height: 97px;
   letter-spacing: -0.04em;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     font-weight: 700;
     font-size: 36px;
     line-height: 96.52%;
@@ -17,7 +17,7 @@
 
 .titleBox {
   max-width: 550px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     max-width: 300px;
   }
 }

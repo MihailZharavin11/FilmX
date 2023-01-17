@@ -1,4 +1,4 @@
-@use "../../styles/variables/variablesForMedia.scss";
+@import "../../styles/variables/variablesForMedia.scss";
 
 .column {
   display: flex;
@@ -20,13 +20,13 @@
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  @media (max-width: variablesForMedia.$layout-breakpoint-xl) {
+  @media (max-width: $layout-breakpoint-xl) {
     justify-content: space-around;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     justify-content: flex-start;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+  @media (max-width: $layout-breakpoint-esm) {
     justify-content: center;
   }
 }
@@ -40,14 +40,14 @@
 .pagination_row {
   display: flex;
   margin: 30px 30px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     justify-content: flex-start;
     margin: 30px 0px;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     justify-content: center;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+  @media (max-width: $layout-breakpoint-esm) {
     justify-content: center;
   }
 }

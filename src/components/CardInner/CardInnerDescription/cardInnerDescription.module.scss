@@ -1,37 +1,37 @@
-@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 
 .description__aboutFilm {
   display: flex;
   flex-direction: column;
   gap: 30px;
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     gap: 15px;
     margin-bottom: 15px;
   }
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+  @media (max-width: $layout-breakpoint-sm) {
     align-items: center;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+  @media (max-width: $layout-breakpoint-esm) {
     padding: 10px;
   }
   .description__aboutFimTitle {
     font-size: 24px;
     margin-left: 5px;
 
-    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    @media (max-width: $layout-breakpoint-md) {
       margin-top: 40px;
       font-size: 20px;
       text-align: center;
     }
-    @media (max-width: variablesForMedia.$layout-breakpoint-esm) {
+    @media (max-width: $layout-breakpoint-esm) {
       margin-left: 0px;
       font-size: 28px;
     }
   }
   .description__aboutFilmTable {
-    @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+    @media (max-width: $layout-breakpoint-sm) {
       display: flex;
       flex-direction: column;
     }

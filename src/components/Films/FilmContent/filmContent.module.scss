@@ -1,4 +1,4 @@
-@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/raiting.scss";
 
 .presentationFilm {
@@ -25,7 +25,7 @@
       border-radius: 20px;
       background-color: #ededed;
     }
-    @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+    @media (max-width: $layout-breakpoint-lg) {
       height: 80px;
     }
   }
@@ -34,7 +34,7 @@
     font-size: 25px;
   }
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-sm) {
+  @media (max-width: $layout-breakpoint-sm) {
     display: flex;
     justify-content: center;
   }

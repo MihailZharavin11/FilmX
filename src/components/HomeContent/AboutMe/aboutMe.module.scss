@@ -1,4 +1,4 @@
-@use "../../../styles/variables/variablesForMedia.scss";
+@import "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/variables/variablesForMedia.scss";
 
 .aboutMeWrapper {
@@ -9,7 +9,7 @@
   padding-bottom: 144px;
   border-bottom: 1px solid #adadad;
   overflow: hidden;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     padding: 48px 0px;
     gap: 16px;
   }
@@ -20,7 +20,7 @@
   grid-template: minmax(260px, 548px) / repeat(2, minmax(343px, 690px));
   justify-content: space-between;
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     grid-template: 260px / minmax(343px, auto);
   }
 }
@@ -33,16 +33,16 @@
   align-items: flex-start;
   border: 2px solid #000000;
   border-radius: 48px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     padding: 37px 38px;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     padding: 20px;
     display: flex;
   }
   .boxDescriptionPhoto {
     display: none;
-    @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+    @media (max-width: $layout-breakpoint-md) {
       display: inline-block;
     }
   }
@@ -59,10 +59,10 @@
   line-height: 68px;
 
   color: #000000;
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     line-height: 54px;
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     line-height: 29px;
     display: inline-block;
     width: 80%;
@@ -83,7 +83,7 @@
   gap: 18px;
   align-items: center;
   justify-content: center;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     font-weight: 500;
     line-height: 19px;
     padding: 8px 13px 8px 15px;
@@ -93,7 +93,7 @@
 
 .arrow {
   margin-top: 3px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     font-size: 24px;
   }
 }
@@ -103,7 +103,7 @@
   height: 100%;
   border-radius: 48px;
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     display: none;
   }
 }

@@ -1,10 +1,9 @@
-@use "../../../styles/variables/variablesForMedia.scss";
 @import "../../../styles/variables/variablesForMedia.scss";
 .contactWrapper {
   display: flex;
   flex-direction: column;
   gap: 50px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     padding: 48px 0px;
     gap: 16px;
   }
@@ -15,11 +14,11 @@
   grid-template: minmax(160px, 453px) / repeat(3, minmax(300px, 452px));
   justify-content: space-between;
   gap: 20px;
-  @media (max-width: variablesForMedia.$layout-breakpoint-lg) {
+  @media (max-width: $layout-breakpoint-lg) {
     gap: 10px;
     grid-template: minmax(160px, 322px) / repeat(3, minmax(235px, 318px));
   }
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     grid-template: repeat(3, 160px) / minmax(343px, 452px);
     justify-content: center;
     gap: 20px;
@@ -40,7 +39,7 @@
   flex-direction: column;
   justify-content: space-between;
 
-  @media (max-width: variablesForMedia.$layout-breakpoint-md) {
+  @media (max-width: $layout-breakpoint-md) {
     padding: 20px;
   }
 }
