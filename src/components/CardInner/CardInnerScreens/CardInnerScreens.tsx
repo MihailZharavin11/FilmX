@@ -1,10 +1,8 @@
-import React, { useState, useRef, useEffect } from "react";
+import React from "react";
 import styles from "./cardInnerScreens.module.scss";
 import { useAppSelector } from "../../../redux/store";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { motion } from "framer-motion";
-import { Carousel } from "antd";
 import Slider from "react-slick";
 
 const CardInnerScreens = () => {

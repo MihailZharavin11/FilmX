@@ -12,6 +12,7 @@ import styles from "./filmContent.module.scss";
 import EmptyContent from "../../EmptyContent/EmptyContent";
 import { descriptionFilmSelector } from "../../../redux/slices/filmItemSlice/filmItemSelectors";
 import { getFilmInfo } from "../../../redux/slices/filmItemSlice/filmItemThunk";
+import { clearItemFilm } from "../../../redux/slices/filmItemSlice/filmItemSlice";
 
 const FilmContent: React.FC = () => {
   const { id } = useParams();
@@ -26,6 +27,9 @@ const FilmContent: React.FC = () => {
   useEffect(() => {
     if (!id) return;
     dispatch(getFilmInfo(id));
+    return () => {
+      dispatch(clearItemFilm());
+    };
   }, [dispatch, id]);
 
   if (loadingStatus === "error") {

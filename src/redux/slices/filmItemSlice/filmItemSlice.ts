@@ -38,6 +38,11 @@ const filmItemSlice = createSlice({
     addMoviePictures: (state, action: PayloadAction<TMoviePictures[]>) => {
       state.moviePictures = action.payload;
     },
+    clearItemFilm: (state) => {
+      state.selectFilm = null;
+      state.moviePictures = [];
+      state.actors = [];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -69,4 +74,5 @@ const { reducer, actions } = filmItemSlice;
 
 export default reducer;
 
-export const { addItemFilm, addActors, addMoviePictures } = actions;
+export const { addItemFilm, addActors, addMoviePictures, clearItemFilm } =
+  actions;

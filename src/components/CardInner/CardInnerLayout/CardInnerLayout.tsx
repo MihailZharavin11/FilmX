@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { clearItemFilm } from "../../../redux/slices/filmItemSlice/filmItemSlice";
+import { useAppDispatch } from "../../../redux/store";
 import styles from "./cardInnerLayout.module.scss";
 
 type CardInnerProps = {
