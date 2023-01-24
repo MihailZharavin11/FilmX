@@ -5,14 +5,16 @@ import { deleteFavoriteFilm } from "../../redux/slices/userSlice/userSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/store";
 import { SelectedFilmCard } from "../../components/SelectedFilmCard/SelectedFilmCard";
 import styles from "./favoriteFilms.module.scss";
-import { Pagination, PaginationProps } from "antd";
+import { Pagination, PaginationProps, Spin } from "antd";
 import { useEffect, useState } from "react";
 import EmptyContent from "../../components/EmptyContent/EmptyContent";
 
 export const FavoriteFilms = () => {
   const dispatch = useAppDispatch();
   const [currentPage, setCurrentPage] = useState(1);
-  const { favoriteFilms } = useAppSelector((state) => state.user);
+  const { favoriteFilms, loadingStatus } = useAppSelector(
+    (state) => state.user
+  );
   const auth = getAuth();
   const user = auth.currentUser;
   const userid = user?.uid;

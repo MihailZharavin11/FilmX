@@ -8,6 +8,7 @@ import {
 
 const logIn = async (email: string, password: string) => {
   const auth = getAuth();
+
   const { user } = await setPersistence(auth, browserSessionPersistence).then(
     () => {
       return signInWithEmailAndPassword(auth, email, password);

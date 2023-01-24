@@ -1,22 +1,25 @@
-.item {
-  height: 10rem;
-  min-width: 15rem;
-  padding: 8px;
+@import "../../../styles/variables/variablesForMedia.scss";
+
+.wrapper {
+  width: 95%;
+  margin: 0 auto;
+  @media (max-width: $layout-breakpoint-md) {
+    width: 80%;
+  }
 }
 
-.item img {
+.card {
+  width: 100px;
+  height: 250px;
+  padding: 10px;
+  @media (max-width: $layout-breakpoint-md) {
+    height: 200px;
+  }
+}
+
+.screenShot {
   width: 100%;
   height: 100%;
-  border-radius: 16px;
-  pointer-events: none;
-}
-
-.inner__carousel {
-  display: flex;
-}
-
-.carousel {
-  cursor: grab;
-  overflow: hidden;
-  bottom: 0;
+  border: 1px solid grey;
+  border-radius: 30px;
 }

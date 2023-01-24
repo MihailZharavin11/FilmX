@@ -4,37 +4,60 @@ import { useAppSelector } from "../../../redux/store";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { motion } from "framer-motion";
+import { Carousel } from "antd";
+import Slider from "react-slick";
 
 const CardInnerScreens = () => {
-  const { moviePictures } = useAppSelector((state) => state.filmItem);
-  const [width, setWidth] = useState(0);
-  const carousel = useRef<HTMLDivElement>(null);
+  const moviePictures = useAppSelector((state) => state.filmItem.moviePictures);
 
-  useEffect(() => {
-    if (carousel.current) {
-      setWidth(carousel.current.scrollWidth - carousel.current.offsetWidth);
-    }
-  }, [carousel.current?.scrollWidth]);
+  const settings = {
+    infinite: false,
+    speed: 500,
+    slidesToShow: 4,
+    slidesToScroll: 4,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
+  };
+
   return (
-    <motion.div
-      ref={carousel}
-      className={styles.carousel}
-      whileTap={{ cursor: "grabbing" }}
-    >
-      <motion.div
-        drag="x"
-        dragConstraints={{ right: 0, left: -width }}
-        className={styles.inner__carousel}
-      >
-        {moviePictures?.map((element) => {
-          return (
-            <motion.div key={element.imageUrl} className={styles.item}>
-              <img src={element.imageUrl} alt={"MoviePhoto"} />
-            </motion.div>
-          );
-        })}
-      </motion.div>
-    </motion.div>
+    <div className={styles.wrapper}>
+      <Slider {...settings}>
+        {moviePictures.map((screenShot, index) => (
+          <div key={index} className={styles.card}>
+            <img
+              className={styles.screenShot}
+              src={screenShot.imageUrl}
+              alt="ScreenShot"
+            />
+          </div>
+        ))}
+      </Slider>
+    </div>
   );
 };
 
